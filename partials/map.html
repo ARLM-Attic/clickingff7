@@ -3,7 +3,7 @@
         <ul>
             <li ng-repeat="zone in game.zones.list" ng-class="{current: game.zones.level === zone.level}"
                 ng-click="game.zones.goZone(zone.level)">
-                Zone {{zone.level}}
+                {{'Zone'|translate}} {{zone.level}}
             </li>
         </ul>
     </div>

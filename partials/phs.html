@@ -1,6 +1,6 @@
 <div class="c1">
 
-    <h3>Team</h3>
+    <h3>{{'Team'|translate}}</h3>
 
     <div ng-repeat="character in game.characters.getTeam()" class="phs_character">
         <img ng-src="{{character.image}}" alt="character" width="80" style="float: left"
@@ -26,7 +26,7 @@
 
 --><div class="c3">
 
-    <h3>Backup</h3>
+    <h3>{{'Backup'|translate}}</h3>
 
     <span ng-repeat="character in game.characters.getBackup()" class="phs_character">
         <img ng-src="{{character.image}}" alt="character" width="80" style="float: left"
