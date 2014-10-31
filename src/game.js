@@ -37,7 +37,7 @@ class Game {
      * @returns {*}
      */
         getLanguage(language, def) {
-        var languages = ['en', 'fr'];
+        var languages = ['en', 'fr', 'es'];
         for (var l of languages) {
             if (l === language) {
                 return language;
