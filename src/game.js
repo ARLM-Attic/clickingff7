@@ -102,7 +102,7 @@ class Game {
         this.language = this.getLanguage(this.$translate.preferredLanguage());
         this.difficulty = 2;
         this.time = 0;
-        this.version = "1.1.1";
+        this.version = "1.1.2";
     }
 
     /**
