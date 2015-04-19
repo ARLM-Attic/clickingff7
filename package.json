@@ -17,7 +17,7 @@
     "url": "https://github.com/Menencia/clickingff7/issues"
   },
   "devDependencies": {
-    "gulp": "~3.8.1",
-    "gulp-traceur": "~0.7.0"
+    "gulp": "~3.8.11",
+    "gulp-traceur": "~0.14.1"
   }
 }

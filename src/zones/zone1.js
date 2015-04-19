@@ -1,3 +1,5 @@
+import {Zone} from '../zone';
+
 class Zone1 extends Zone {
 
     /**
@@ -24,3 +26,5 @@ class Zone1 extends Zone {
     }
 
 }
+
+export {Zone1};

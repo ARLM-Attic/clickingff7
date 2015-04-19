@@ -86,3 +86,5 @@ class Battle {
         this.game.characters.refresh();
     }
 }
+
+export {Battle};

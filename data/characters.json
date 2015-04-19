@@ -1,48 +1,56 @@
 {
-  "cloud": {
-    "ref": "cloud",
-    "name": "Cloud Strife",
-    "image": "cloud.png",
-    "hpBase": 14,
-    "xp_formula": "Math.pow(x,2)*15",
-    "zone": 1
-  },
-  "barret": {
-    "ref": "barret",
-    "name": "Barret Wallace",
-    "image": "barret.png",
-    "hpBase": 16,
-    "xp_formula": "Math.pow(x,2)*13",
-    "zone": 1,
-    "notAvailable": [3]
-  },
-  "tifa": {
-    "ref": "tifa",
-    "name": "Tifa Lockhart",
-    "image": "tifa.png",
-    "hpBase": 13,
-    "xp_formula": "Math.pow(x,2)*11",
-    "zone": 2,
-    "level": 4,
-    "notAvailable": [3]
-  },
-  "aerith": {
-    "ref": "aerith",
-    "name": "Aerith Gainsborough",
-    "image": "aerith.png",
-    "hpBase": 12,
-    "xp_formula": "Math.pow(x,2)*17",
-    "zone": 3,
-    "level": 8,
-    "notAvailable": [4, 5]
-  },
-  "redxiii": {
-    "ref": "redxiii",
-    "name": "Red XIII",
-    "image": "redxiii.png",
-    "hpBase": 17,
-    "xp_formula": "Math.pow(x,2)*14",
-    "zone": 5,
-    "level": 16
-  }
+    "cloud": {
+        "name": "Cloud Strife",
+        "image": "/img/characters/cloud.jpg",
+        "hpBase": 14,
+        "xp_formula": "Math.pow(x,2)*15"
+    },
+    "barret": {
+        "name": "Barret Wallace",
+        "image": "/img/characters/barret.jpg",
+        "hpBase": 16,
+        "xp_formula": "Math.pow(x,2)*13"
+    },
+    "tifa": {
+        "name": "Tifa Lockhart",
+        "image": "tifa.png",
+        "hpBase": 13,
+        "xp_formula": "Math.pow(x,2)*11"
+    },
+    "aerith": {
+        "name": "Aerith Gainsborough",
+        "image": "aerith.png",
+        "hpBase": 12,
+        "xp_formula": "Math.pow(x,2)*17"
+    },
+    "redxiii": {
+        "name": "Red XIII",
+        "image": "redxiii.png",
+        "hpBase": 17,
+        "xp_formula": "Math.pow(x,2)*14"
+    },
+    "yuffie": {
+        "name": "Yuffie",
+        "image": "redxiii.png",
+        "hpBase": 17,
+        "xp_formula": "Math.pow(x,2)*14"
+    },
+    "caitsith": {
+        "name": "Cait Sith",
+        "image": "redxiii.png",
+        "hpBase": 17,
+        "xp_formula": "Math.pow(x,2)*14"
+    },
+    "vincent": {
+        "name": "Vincent",
+        "image": "redxiii.png",
+        "hpBase": 17,
+        "xp_formula": "Math.pow(x,2)*14"
+    },
+    "cid": {
+        "name": "Cid",
+        "image": "redxiii.png",
+        "hpBase": 17,
+        "xp_formula": "Math.pow(x,2)*14"
+    }
 }

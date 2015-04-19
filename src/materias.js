@@ -50,3 +50,5 @@ class Materias {
         return json;
     }
 }
+
+export {Materias};

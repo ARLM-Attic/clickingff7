@@ -52,3 +52,5 @@ class Weapons {
         return json;
     }
 }
+
+export {Weapons};

@@ -209,4 +209,4 @@ class Enemies {
 
 }
 
-
+export {Enemies};

@@ -48,40 +48,10 @@
 <div class="wrapper">
 
     <div class="c1">
-        <!-- characters bars -->
-        <div class="bars">
-            <div class="enemies_hits">
-                <div class="hit hit_{{$index+1}}" ng-repeat="hit in game.enemies.arrHits track by $index">{{hit}}</div>
-            </div>
-
-            <div>
-                <div class="progress characters_hp" id="step2">
-                    <div class="characters_hp_progress"
-                         ng-style="{width: game.characters.hpProgress(300) + 'px'}"></div>
-                    <span class="bar-label">{{game.characters.hp}} / {{game.characters.hpMax}} HP</span>
-                </div>
-            </div>
-
-            <div>
-                <div class="progress characters_mp" id="step3">
-                    <div class="characters_mp_progress"
-                         ng-style="{width: game.characters.mpProgress(300) + 'px'}"></div>
-                    <span class="bar-label">{{game.characters.mp}} / {{game.characters.mpMax}} MP</span>
-                </div>
-            </div>
-
-            <div>
-                <div class="progress characters_limit" id="step4">
-                    <div class="characters_limit_progress"
-                         ng-style="{width: game.characters.limitProgress(300) + 'px'}"></div>
-                    <span class="bar-label">LIMIT</span>
-                </div>
-            </div>
-        </div>
 
         <!-- characters list -->
         <div id="step1">
-            <div ng-repeat="(i, character) in game.characters.getTeam()" class="card">
+            <div ng-repeat="(i, character) in game.getTeam()" class="card">
                 <div class="avatar">
                     <img ng-src="{{character.image}}" alt="avatar" width="80" class="icon"/>
                 </div>
@@ -94,7 +64,7 @@
                         <span class="bar-label">{{character.xp}} / {{character.getXpMax()}} EXP</span>
                     </div>
 
-                    <div>{{character.name}} <strong>(LVL{{character.level}})</strong></div>
+                    <div>{{character.name}} <strong>(LVL{{character.lvl}})</strong></div>
                     <div ng-if="character.level > 0">
                         <span class="label">hp</span> {{character.getHpMax()}}
                         <span class="label">mp</span> {{character.getMpMax()}}

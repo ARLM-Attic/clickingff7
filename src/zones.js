@@ -137,3 +137,5 @@ class Zones {
     }
 
 }
+
+export {Zones};

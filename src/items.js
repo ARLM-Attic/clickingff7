@@ -57,3 +57,5 @@ class Items {
         return json;
     }
 }
+
+export {Items};

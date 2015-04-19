@@ -15,12 +15,13 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
-<body ng-controller="IndexCtrl">
+<body ng-controller="IndexController">
 
 <header>
     <div class="wrapper">
         clicking ff7
         <span ng-click="help()" class="help" ng-show="game.loaded">{{"How to play?"|translate}}</span>
+
         <div class="progress game_load" ng-show="!game.loaded">
             <div class="game_load_progress" style="width:{{game.loader.loadProgress(300)}}px;"></div>
             <span class="bar-label">{{game.loader.filesLoaded}} / {{game.loader.nbFiles}} – {{game.loader.currentLabel}}</span>
@@ -82,34 +83,38 @@
     </div>
 </footer>
 
-<script src="/bower_components/headjs/dist/1.0.0/head.min.js"></script>
+
+<script src="/bower_components/traceur-runtime/traceur-runtime.min.js"></script>
+<script src="/bower_components/es6-module-loader/dist/es6-module-loader.js"></script>
+<script src="/bower_components/system.js/dist/system.js"></script>
+
+<!--script src="/dist/config.js"></script-->
 <script>
-    head.load(
-            "bower_components/jquery/dist/jquery.min.js",
-            "bower_components/lodash/dist/lodash.min.js",
-            "bower_components/angular/angular.min.js",
-            "bower_components/angular-route/angular-route.min.js",
-            "bower_components/angular-cookies/angular-cookies.min.js",
-            "bower_components/traceur-runtime/traceur-runtime.min.js",
-            "bower_components/angular-translate/angular-translate.min.js",
-            "bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js",
-            "bower_components/intro.js/minified/intro.min.js",
-            "bower_components/phpjs/functions/info/version_compare.js",
-            "dist/app.js",
-            "dist/game.js",
-            "dist/loader.js"
-    );
-    head.ready(function () {
-        angular.bootstrap(document, ['clickingff7']);
+    System.config({
+        meta: {
+            'bower_components/angular/angular'                                    : {exports: 'angular'},
+            'bower_components/angular-route/angular-route'                        : {deps: ['angular']},
+            'bower_components/angular-route/angular-translate'                    : {deps: ['angular']},
+            'bower_components/angular-route/angular-translate-loader-static-files': {deps: ['angular']},
+            'bower_components/lodash/lodash'                                      : {}
+        },
+        map : {
+            'angular'                              : 'bower_components/angular/angular',
+            'angular-route'                        : 'bower_components/angular-route/angular-route',
+            'angular-translate'                    : 'bower_components/angular-translate/angular-translate',
+            'angular-translate-loader-static-files': 'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files',
+            'lodash'                               : 'bower_components/lodash/lodash'
+        }
     });
+    System.import('dist/bootstrap');
 </script>
 
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
         a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
         a.async = 1;
@@ -120,58 +125,6 @@
     ga('create', 'UA-44996905-1', 'auto');
     ga('send', 'pageview');
 
-</script>
-
-<script>
-    // Include the UserVoice JavaScript SDK (only needed once on a page)
-    UserVoice = window.UserVoice || [];
-    (function () {
-        var uv = document.createElement('script');
-        uv.type = 'text/javascript';
-        uv.async = true;
-        uv.src = '//widget.uservoice.com/sAiSkTkIFiYPTLCHBdEfaw.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(uv, s)
-    })();
-
-    //
-    // UserVoice Javascript SDK developer documentation:
-    // https://www.uservoice.com/o/javascript-sdk
-    //
-
-    // Set colors
-    UserVoice.push(['set', {
-        accent_color            : '#808283',
-        trigger_color           : 'white',
-        trigger_background_color: 'rgba(46, 49, 51, 0.6)'
-    }]);
-
-    // Identify the user and pass traits
-    // To enable, replace sample data with actual user traits and uncomment the line
-    UserVoice.push(['identify', {
-        //email:      'john.doe@example.com', // User’s email address
-        //name:       'John Doe', // User’s real name
-        //created_at: 1364406966, // Unix timestamp for the date the user signed up
-        //id:         123, // Optional: Unique id of the user (if set, this should not change)
-        //type:       'Owner', // Optional: segment your users by type
-        //account: {
-        //  id:           123, // Optional: associate multiple users with a single account
-        //  name:         'Acme, Co.', // Account name
-        //  created_at:   1364406966, // Unix timestamp for the date the account was created
-        //  monthly_rate: 9.99, // Decimal; monthly rate of the account
-        //  ltv:          1495.00, // Decimal; lifetime value of the account
-        //  plan:         'Enhanced' // Plan name for the account
-        //}
-    }]);
-
-    // Add default trigger to the bottom-right corner of the window:
-    UserVoice.push(['addTrigger', { mode: 'satisfaction', trigger_position: 'bottom-right' }]);
-
-    // Or, use your own custom trigger:
-    //UserVoice.push(['addTrigger', '#id', { mode: 'satisfaction' }]);
-
-    // Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
-    UserVoice.push(['autoprompt', {}]);
 </script>
 
 </body>
