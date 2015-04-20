@@ -42,7 +42,7 @@ class Game {
      * Build store from json files (path : /data)
      */
     preload() {
-        let files = ['characters'];
+        let files = ['characters', 'weapons'];
 
         this._preload(files);
     }
@@ -90,15 +90,15 @@ class Game {
         // add all characters
         // note : cloud & barret are in the team
         this.characters = [];
-        this.characters.push(new Character(this, this.getFromStore('characters', 'cloud'), true));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'barret'), true));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'tifa')));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'aerith')));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'redxiii')));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'yuffie')));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'caitsith')));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'vincent')));
-        this.characters.push(new Character(this, this.getFromStore('characters', 'cid')));
+        this.characters.push(new Character(this, this.getCharacterFromData('cloud'), true));
+        this.characters.push(new Character(this, this.getCharacterFromData('barret'), true));
+        this.characters.push(new Character(this, this.getCharacterFromData('tifa')));
+        this.characters.push(new Character(this, this.getCharacterFromData('aerith')));
+        this.characters.push(new Character(this, this.getCharacterFromData('redxiii')));
+        this.characters.push(new Character(this, this.getCharacterFromData('yuffie')));
+        this.characters.push(new Character(this, this.getCharacterFromData('caitsith')));
+        this.characters.push(new Character(this, this.getCharacterFromData('vincent')));
+        this.characters.push(new Character(this, this.getCharacterFromData('cid')));
 
         //this.weapons.push(new Weapon(this, 'BusterSword'));
 
@@ -108,13 +108,22 @@ class Game {
     }
 
     /**
-     * Return store data
-     * @param type
-     * @param ref
+     *
+     * @param name
      * @returns {*}
      */
-    getFromStore(type, ref) {
-        return this.store[type][ref];
+    getCharacterFromData(name) {
+        return _.find(this.store['characters'], {name: name});
+    }
+
+    /**
+     *
+     * @param type
+     * @param name
+     * @returns {*}
+     */
+    getWeaponFromData(type, name) {
+        return this.store['weapons'][type][name];
     }
 
     /**

@@ -1,56 +1,128 @@
-{
-    "cloud": {
-        "name": "Cloud Strife",
+[
+    {
         "image": "/img/characters/cloud.jpg",
-        "hpBase": 14,
-        "xp_formula": "Math.pow(x,2)*15"
+        "name": "cloud",
+        "hp": 9400,
+        "mp": 940,
+        "str": 100,
+        "def": 90,
+        "mgi": 95,
+        "res": 95,
+        "dex": 14,
+        "lck": 16,
+        "weaponType": "broadswords",
+        "weaponName": "busterSword"
     },
-    "barret": {
-        "name": "Barret Wallace",
+    {
         "image": "/img/characters/barret.jpg",
-        "hpBase": 16,
-        "xp_formula": "Math.pow(x,2)*13"
+        "name": "barret",
+        "hp": 10000,
+        "mp": 760,
+        "str": 95,
+        "def": 100,
+        "mgi": 65,
+        "res": 75,
+        "dex": 8,
+        "lck": 12,
+        "weaponType": "gunArms",
+        "weaponName": "gatlingGun"
     },
-    "tifa": {
-        "name": "Tifa Lockhart",
-        "image": "tifa.png",
-        "hpBase": 13,
-        "xp_formula": "Math.pow(x,2)*11"
+    {
+        "image": "/img/characters/tifa.jpg",
+        "name": "tifa",
+        "hp": 8500,
+        "mp": 850,
+        "str": 90,
+        "def": 80,
+        "mgi": 75,
+        "res": 90,
+        "dex": 16,
+        "lck": 18,
+        "weaponType": "knuckles",
+        "weaponName": "leatherGlove"
     },
-    "aerith": {
-        "name": "Aerith Gainsborough",
-        "image": "aerith.png",
-        "hpBase": 12,
-        "xp_formula": "Math.pow(x,2)*17"
+    {
+        "image": "/img/characters/aerith.jpg",
+        "name": "aerith",
+        "hp": 7900,
+        "mp": 1000,
+        "str": 60,
+        "def": 75,
+        "mgi": 100,
+        "res": 100,
+        "dex": 10,
+        "lck": 14,
+        "weaponType": "staves",
+        "weaponName": "guardStick"
     },
-    "redxiii": {
-        "name": "Red XIII",
-        "image": "redxiii.png",
-        "hpBase": 17,
-        "xp_formula": "Math.pow(x,2)*14"
+    {
+        "image": "/img/characters/aerith.jpg",
+        "name": "redxiii",
+        "hp": 9700,
+        "mp": 880,
+        "str": 80,
+        "def": 85,
+        "mgi": 80,
+        "res": 90,
+        "dex": 20,
+        "lck": 14,
+        "weaponType": "headdresses",
+        "weaponName": "mythrilClip"
     },
-    "yuffie": {
-        "name": "Yuffie",
-        "image": "redxiii.png",
-        "hpBase": 17,
-        "xp_formula": "Math.pow(x,2)*14"
+    {
+        "image": "/img/characters/aerith.jpg",
+        "name": "yuffie",
+        "hp": 8200,
+        "mp": 820,
+        "str": 75,
+        "def": 80,
+        "mgi": 85,
+        "res": 85,
+        "dex": 18,
+        "lck": 20,
+        "weaponType": "shuriken",
+        "weaponName": "4pShuriken"
     },
-    "caitsith": {
-        "name": "Cait Sith",
-        "image": "redxiii.png",
-        "hpBase": 17,
-        "xp_formula": "Math.pow(x,2)*14"
+    {
+        "image": "/img/characters/aerith.jpg",
+        "name": "caitsith",
+        "hp": 8800,
+        "mp": 910,
+        "str": 70,
+        "def": 70,
+        "mgi": 90,
+        "res": 95,
+        "dex": 10,
+        "lck": 18,
+        "weaponType": "megaphones",
+        "weaponName": "yellowMp"
     },
-    "vincent": {
-        "name": "Vincent",
-        "image": "redxiii.png",
-        "hpBase": 17,
-        "xp_formula": "Math.pow(x,2)*14"
+    {
+        "image": "/img/characters/aerith.jpg",
+        "name": "vincent",
+        "hp": 7600,
+        "mp": 970,
+        "str": 65,
+        "def": 70,
+        "mgi": 90,
+        "res": 95,
+        "dex": 10,
+        "lck": 18,
+        "weaponType": "guns",
+        "weaponName": "quicksilver"
     },
-    "cid": {
-        "name": "Cid",
-        "image": "redxiii.png",
-        "hpBase": 17,
-        "xp_formula": "Math.pow(x,2)*14"
+    {
+        "image": "/img/characters/aerith.jpg",
+        "name": "cid",
+        "hp": 9100,
+        "mp": 790,
+        "str": 85,
+        "def": 95,
+        "mgi": 70,
+        "res": 80,
+        "dex": 12,
+        "lck": 12,
+        "weaponType": "spears",
+        "weaponName": "spear"
     }
-}
+]

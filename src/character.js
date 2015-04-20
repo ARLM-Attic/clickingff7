@@ -1,3 +1,5 @@
+import Weapon from './weapon';
+
 export default class Character {
 
     constructor(game, data, inTeam = false) {
@@ -17,9 +19,23 @@ export default class Character {
     }
 
     load(data) {
-        for (let i in data) {
-            this[i] = data[i];
-        }
+        this.data = data;
+
+        // initial weapon
+        let weaponData = this.game.getWeaponFromData(data.weaponType, data.weaponName);
+        this.weapon = new Weapon(this.game, weaponData);
+
+        // refresh hp & mp
+        this.hp = this.hpMax;
+        this.mp = this.mpMax;
+    }
+
+    get hpMax() {
+        return Math.floor(this.data.hp / 100 * this.lvl);
+    }
+
+    get mpMax() {
+        return Math.floor(this.data.mp / 100 * this.lvl);
     }
 
 }
