@@ -56,7 +56,7 @@
         "weaponName": "guardStick"
     },
     {
-        "image": "/img/characters/aerith.jpg",
+        "image": "/img/characters/redxiii.jpg",
         "name": "redxiii",
         "hp": 9700,
         "mp": 880,
@@ -70,7 +70,7 @@
         "weaponName": "mythrilClip"
     },
     {
-        "image": "/img/characters/aerith.jpg",
+        "image": "/img/characters/yuffie.jpg",
         "name": "yuffie",
         "hp": 8200,
         "mp": 820,
@@ -84,7 +84,7 @@
         "weaponName": "4pShuriken"
     },
     {
-        "image": "/img/characters/aerith.jpg",
+        "image": "/img/characters/caitsith.jpg",
         "name": "caitsith",
         "hp": 8800,
         "mp": 910,
@@ -98,7 +98,7 @@
         "weaponName": "yellowMp"
     },
     {
-        "image": "/img/characters/aerith.jpg",
+        "image": "/img/characters/vincent.jpg",
         "name": "vincent",
         "hp": 7600,
         "mp": 970,
@@ -112,7 +112,7 @@
         "weaponName": "quicksilver"
     },
     {
-        "image": "/img/characters/aerith.jpg",
+        "image": "/img/characters/cid.jpg",
         "name": "cid",
         "hp": 9100,
         "mp": 790,

@@ -13,6 +13,9 @@ class Game {
         // binding
         this.$rootScope.game = this;
 
+        // one mode per time
+        this.mode = 'free';
+
         // timer
         this.timer = null;
 
@@ -89,22 +92,18 @@ class Game {
     newGame(level) {
         // add all characters
         // note : cloud & barret are in the team
-        this.characters = [];
-        this.characters.push(new Character(this, this.getCharacterFromData('cloud'), true));
-        this.characters.push(new Character(this, this.getCharacterFromData('barret'), true));
-        this.characters.push(new Character(this, this.getCharacterFromData('tifa')));
-        this.characters.push(new Character(this, this.getCharacterFromData('aerith')));
-        this.characters.push(new Character(this, this.getCharacterFromData('redxiii')));
-        this.characters.push(new Character(this, this.getCharacterFromData('yuffie')));
-        this.characters.push(new Character(this, this.getCharacterFromData('caitsith')));
-        this.characters.push(new Character(this, this.getCharacterFromData('vincent')));
-        this.characters.push(new Character(this, this.getCharacterFromData('cid')));
+        this.team = [];
+        this.team.push(new Character(this, this.getCharacterFromData('cloud')));
+        this.team.push(new Character(this, this.getCharacterFromData('barret')));
 
-        //this.weapons.push(new Weapon(this, 'BusterSword'));
-
-        //this.materias.push(new Materia(this, 'Bolt', true));
-        //this.materias.push(new Materia(this, 'Ice', true));
-
+        this.backup = [];
+        this.backup.push(new Character(this, this.getCharacterFromData('tifa')));
+        this.backup.push(new Character(this, this.getCharacterFromData('aerith')));
+        this.backup.push(new Character(this, this.getCharacterFromData('redxiii')));
+        this.backup.push(new Character(this, this.getCharacterFromData('yuffie')));
+        this.backup.push(new Character(this, this.getCharacterFromData('caitsith')));
+        this.backup.push(new Character(this, this.getCharacterFromData('vincent')));
+        this.backup.push(new Character(this, this.getCharacterFromData('cid')));
     }
 
     /**
@@ -131,6 +130,16 @@ class Game {
      */
     getTeam() {
         return _.where(this.characters, {inTeam: true});
+    }
+
+    joinTeam(character) {
+        _.remove(this.backup, character);
+        this.team.push(character);
+    }
+
+    leaveTeam(character) {
+        _.remove(this.team, character);
+        this.backup.push(character);
     }
 
 }

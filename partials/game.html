@@ -51,7 +51,7 @@
 
         <!-- characters list -->
         <div id="step1">
-            <div ng-repeat="(i, character) in game.getTeam()" class="card">
+            <div ng-repeat="(i, character) in game.team" class="card">
                 <div class="avatar">
                     <img ng-src="{{character.data.image}}" alt="avatar" width="80" class="icon"/>
                 </div>
@@ -65,7 +65,7 @@
                     </div>
 
                     <div>{{character.data.name}} <strong>(LVL{{character.lvl}})</strong></div>
-                    <div ng-if="character.lvl > 0">
+                    <div>
                         <span class="label">hp</span> {{character.hpMax}}
                         <span class="label">mp</span> {{character.mpMax}}
                     </div>

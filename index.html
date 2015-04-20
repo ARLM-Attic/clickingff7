@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
-<body ng-controller="IndexController">
+<body ng-controller="IndexController as g">
 
 <header>
     <div class="wrapper">
@@ -33,20 +33,18 @@
 
     <nav class="game-menu" id="step10">
         <ul>
-            <li ng-click="goGame()" ng-class="{ current: isActive('/game')}">{{"Game"|translate}}</li>
-            <li ng-click="goMap()" ng-class="{ current: isActive('/map')}">
+            <li ng-click="g.goGame()" ng-class="{ current: g.isActive('/game')}">{{"Game"|translate}}</li>
+            <li ng-click="g.goMap()" ng-class="{ current: g.isActive('/map')}">
                 <div class="pull-right new" ng-show="game.zones.nextZone">NEW</div>
                 {{"Map"|translate}}
             </li>
-            <li ng-click="goShop()" ng-class="{ current: isActive('/shop')}">{{"Shop"|translate}}</li>
-            <li ng-click="goEquip()" ng-class="{ current: isActive('/equip')}">{{"Equip"|translate}}</li>
-            <li ng-click="goMateria()" ng-class="{ current: isActive('/materia')}">{{"Materia"|translate}}</li>
-            <li ng-click="goItems()" ng-class="{ current: isActive('/items')}">{{"Items"|translate}}</li>
-            <li ng-click="goConfig()" ng-class="{ current: isActive('/config')}">{{"Config"|translate}}</li>
-            <li ng-click="goPHS()" ng-class="{ current: isActive('/phs'), disabled: game.zones.levelMax < 5}">
-                {{"PHS"|translate}}
-            </li>
-            <li ng-click="goSave()" ng-class="{ current: isActive('/save')}">{{"Save"|translate}}</li>
+            <li ng-click="g.goShop()" ng-class="{ current: g.isActive('/shop')}">{{"Shop"|translate}}</li>
+            <li ng-click="g.goEquip()" ng-class="{ current: g.isActive('/equip')}">{{"Equip"|translate}}</li>
+            <li ng-click="g.goMateria()" ng-class="{ current: g.isActive('/materia')}">{{"Materia"|translate}}</li>
+            <li ng-click="g.goItems()" ng-class="{ current: g.isActive('/items')}">{{"Items"|translate}}</li>
+            <li ng-click="g.goConfig()" ng-class="{ current: g.isActive('/config')}">{{"Config"|translate}}</li>
+            <li ng-click="g.goPHS()" ng-class="{ current: g.isActive('/phs')}">{{"PHS"|translate}}</li>
+            <li ng-click="g.goSave()" ng-class="{ current: g.isActive('/save')}">{{"Save"|translate}}</li>
         </ul>
     </nav>
 

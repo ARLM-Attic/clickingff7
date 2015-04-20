@@ -82,7 +82,7 @@ class IndexController {
      * Go to the PHS
      */
     goPHS(ev) {
-        if (!this.game.battle.isBattle && Game.zones.levelMax >= 5) {
+        if (this.game.mode !== 'battle') {
             this.$location.path("/phs");
         }
     }

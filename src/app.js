@@ -1,5 +1,6 @@
 import IndexController from './controllers/index';
 import GameController from './controllers/game';
+import PHSController from './controllers/phs';
 
 import Game from './game';
 
@@ -40,7 +41,7 @@ function config($routeProvider) {
         }).
         when('/phs', {
             templateUrl: 'partials/phs.html',
-            controller : 'PHSCtrl'
+            controller : 'PHSController as ctrl'
         }).
         when('/save', {
             templateUrl: 'partials/save.html',
@@ -75,6 +76,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     })
     .controller('IndexController', IndexController)
     .controller('GameController', GameController)
+    .controller('PHSController', PHSController)
     .service('Game', Game);
 
 export default 'clickingff7';
