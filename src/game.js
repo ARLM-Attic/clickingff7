@@ -29,7 +29,7 @@ class Game {
         this.time = 0;
 
         // current version
-        this.version = "1.1.2";
+        this.version = "2.0.0-alpha.1";
 
         // general data (characters, weapons, ..)
         this.store = {};
