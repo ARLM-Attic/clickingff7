@@ -75,12 +75,10 @@ class Game {
      * Run the game, after preloading
      */
     run() {
-        // search for save
-        var save = localStorage.save;
-
         // load save
-        if (save) {
-            this.load(save);
+        if (localStorage.save) {
+            let save = JSON.parse(localStorage.save)
+            this.loadGame(save);
         } else {
             this.newGame();
         }
@@ -93,17 +91,29 @@ class Game {
         // add all characters
         // note : cloud & barret are in the team
         this.team = [];
-        this.team.push(new Character(this, this.getCharacterFromData('cloud')));
-        this.team.push(new Character(this, this.getCharacterFromData('barret')));
+        this.team.push(Character.get(this, 'cloud'));
+        this.team.push(Character.get(this, 'barret'));
 
         this.backup = [];
-        this.backup.push(new Character(this, this.getCharacterFromData('tifa')));
-        this.backup.push(new Character(this, this.getCharacterFromData('aerith')));
-        this.backup.push(new Character(this, this.getCharacterFromData('redxiii')));
-        this.backup.push(new Character(this, this.getCharacterFromData('yuffie')));
-        this.backup.push(new Character(this, this.getCharacterFromData('caitsith')));
-        this.backup.push(new Character(this, this.getCharacterFromData('vincent')));
-        this.backup.push(new Character(this, this.getCharacterFromData('cid')));
+        this.backup.push(Character.get(this, 'tifa'));
+        this.backup.push(Character.get(this, 'aerith'));
+        this.backup.push(Character.get(this, 'redxiii'));
+        this.backup.push(Character.get(this, 'yuffie'));
+        this.backup.push(Character.get(this, 'caitsith'));
+        this.backup.push(Character.get(this, 'vincent'));
+        this.backup.push(Character.get(this, 'cid'));
+    }
+
+    loadGame(save) {
+        this.team = [];
+        for (let i of save.team) {
+            this.team.push(new Character(this, i));
+        }
+
+        this.backup = [];
+        for (let i of save.backup) {
+            this.backup.push(new Character(this, i));
+        }
     }
 
     /**
@@ -122,7 +132,10 @@ class Game {
      * @returns {*}
      */
     getWeaponFromData(type, name) {
-        return this.store['weapons'][type][name];
+        let w = this.store['weapons'][type][name];
+        w.name = name;
+        w.type = type;
+        return w;
     }
 
     /**
@@ -140,6 +153,26 @@ class Game {
     leaveTeam(character) {
         _.remove(this.team, character);
         this.backup.push(character);
+    }
+
+    save() {
+        localStorage.save = JSON.stringify(this._save());
+    }
+
+    _save() {
+        let save = {};
+
+        save.team = [];
+        for (let i of this.team) {
+            save.team.push(i.save());
+        }
+
+        save.backup = [];
+        for (let i of this.backup) {
+            save.backup.push(i.save());
+        }
+
+        return save;
     }
 
 }

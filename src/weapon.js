@@ -6,11 +6,29 @@ export default class Weapon {
         this.game = game;
 
         // load weapon data
-        this.load(data);
+        if (data) {
+            this.load(data);
+        }
+    }
+
+    static get(game, type, name) {
+        let w = new Weapon(game);
+
+        w.data = game.getWeaponFromData(type, name);
+
+        return w;
     }
 
     load(data) {
-        this.data = data;
+        this.data = this.game.getWeaponFromData(data.type, data.name);
+    }
+
+    save() {
+        let save = {};
+
+        save.name = this.data.name;
+
+        return save;
     }
 
 }

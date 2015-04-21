@@ -10,8 +10,10 @@
         "res": 95,
         "dex": 14,
         "lck": 16,
-        "weaponType": "broadswords",
-        "weaponName": "busterSword"
+        "weapon": {
+            "type": "broadswords",
+            "name": "busterSword"
+        }
     },
     {
         "image": "/img/characters/barret.jpg",
@@ -24,8 +26,10 @@
         "res": 75,
         "dex": 8,
         "lck": 12,
-        "weaponType": "gunArms",
-        "weaponName": "gatlingGun"
+        "weapon": {
+            "type": "gunArms",
+            "name": "gatlingGun"
+        }
     },
     {
         "image": "/img/characters/tifa.jpg",
@@ -38,8 +42,10 @@
         "res": 90,
         "dex": 16,
         "lck": 18,
-        "weaponType": "knuckles",
-        "weaponName": "leatherGlove"
+        "weapon": {
+            "type": "knuckles",
+            "name": "leatherGlove"
+        }
     },
     {
         "image": "/img/characters/aerith.jpg",
@@ -52,8 +58,10 @@
         "res": 100,
         "dex": 10,
         "lck": 14,
-        "weaponType": "staves",
-        "weaponName": "guardStick"
+        "weapon": {
+            "type": "staves",
+            "name": "guardStick"
+        }
     },
     {
         "image": "/img/characters/redxiii.jpg",
@@ -66,8 +74,10 @@
         "res": 90,
         "dex": 20,
         "lck": 14,
-        "weaponType": "headdresses",
-        "weaponName": "mythrilClip"
+        "weapon": {
+            "type": "headdresses",
+            "name": "mythrilClip"
+        }
     },
     {
         "image": "/img/characters/yuffie.jpg",
@@ -80,8 +90,10 @@
         "res": 85,
         "dex": 18,
         "lck": 20,
-        "weaponType": "shuriken",
-        "weaponName": "4pShuriken"
+        "weapon": {
+            "type": "shuriken",
+            "name": "4pShuriken"
+        }
     },
     {
         "image": "/img/characters/caitsith.jpg",
@@ -94,8 +106,10 @@
         "res": 95,
         "dex": 10,
         "lck": 18,
-        "weaponType": "megaphones",
-        "weaponName": "yellowMp"
+        "weapon": {
+            "type": "megaphones",
+            "name": "yellowMp"
+        }
     },
     {
         "image": "/img/characters/vincent.jpg",
@@ -108,8 +122,10 @@
         "res": 95,
         "dex": 10,
         "lck": 18,
-        "weaponType": "guns",
-        "weaponName": "quicksilver"
+        "weapon": {
+            "type": "guns",
+            "name": "quicksilver"
+        }
     },
     {
         "image": "/img/characters/cid.jpg",
@@ -122,7 +138,9 @@
         "res": 80,
         "dex": 12,
         "lck": 12,
-        "weaponType": "spears",
-        "weaponName": "spear"
+        "weapon": {
+            "type": "spears",
+            "name": "spear"
+        }
     }
 ]

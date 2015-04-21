@@ -2,30 +2,51 @@ import Weapon from './weapon';
 
 export default class Character {
 
-    constructor(game, data, inTeam = false) {
+    constructor(game, data) {
 
         // game reference
         this.game = game;
 
-        // character is active (in team)
-        this.inTeam = inTeam;
-
         // load character data
-        this.load(data);
+        if (data) {
+            this.load(data);
+        }
+    }
+
+    static get(game, name) {
+        let c = new Character(game);
+
+        c.data = game.getCharacterFromData(name);
+
+        // initial weapon
+        c.weapon = Weapon.get(game, c.data.weapon.type, c.data.weapon.name);
 
         // level
-        this.lvl = 1;
+        c.lvl = 1;
 
+        // fill hp & mp
+        c.recover();
+
+        return c;
     }
 
     load(data) {
-        this.data = data;
+        this.data = this.game.getCharacterFromData(data.name);
 
-        // initial weapon
-        let weaponData = this.game.getWeaponFromData(data.weaponType, data.weaponName);
-        this.weapon = new Weapon(this.game, weaponData);
+        // weapon
+        this.weapon = new Weapon(this.game, this.data.weapon);
 
-        // refresh hp & mp
+        // level
+        this.lvl = data.lvl;
+
+        // fill hp & mp
+        this.recover();
+    }
+
+    /**
+     * Recover HP & MP
+     */
+    recover() {
         this.hp = this.hpMax;
         this.mp = this.mpMax;
     }
@@ -36,6 +57,15 @@ export default class Character {
 
     get mpMax() {
         return Math.floor(this.data.mp / 100 * this.lvl);
+    }
+
+    save() {
+        var save = _.pick(this, 'lvl');
+
+        save.name = this.data.name;
+        save.weapon = this.weapon.save();
+
+        return save;
     }
 
 }

@@ -10,12 +10,14 @@ class PHSController extends Controller {
         if (this.game.team.length < 3) {
             this.game.joinTeam(character);
         }
+        this.game.save();
     }
 
     leaveTeam(character) {
         if (this.game.team.length > 1) {
             this.game.leaveTeam(character);
         }
+        this.game.save();
     }
 
 }
