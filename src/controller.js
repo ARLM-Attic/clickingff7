@@ -12,9 +12,9 @@ export default class Controller {
      * @override
      */
     redirect() {
-        if (!this.game.loaded) {
-            this.$location.path('/game');
-        }
+        /*if (!this.game.loaded) {
+         this.$location.path('/game');
+         }*/
     }
 
 }

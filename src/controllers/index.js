@@ -34,83 +34,11 @@ class IndexController {
     }
 
     /**
-     * Go to the shop
-     */
-    goShop() {
-        if (!this.game.battle.isBattle) {
-            this.$location.path("/shop");
-        }
-    }
-
-    /**
-     * Go to the items
-     */
-    goItems() {
-        if (!this.game.battle.isBattle) {
-            this.$location.path("/items");
-        }
-    }
-
-    /**
-     * Go to the weapons
-     */
-    goEquip() {
-        if (!this.game.battle.isBattle) {
-            $location.path("/equip");
-        }
-    }
-
-    /**
-     * Go to the materias
-     */
-    goMateria() {
-        if (!this.game.battle.isBattle) {
-            this.$location.path("/materia");
-        }
-    }
-
-    /**
-     * Go to the game configuration
-     */
-    goConfig(ev) {
-        if (!this.game.battle.isBattle) {
-            this.$location.path("/config");
-        }
-    }
-
-    /**
      * Go to the PHS
      */
     goPHS(ev) {
         if (this.game.mode !== 'battle') {
             this.$location.path("/phs");
-        }
-    }
-
-    /**
-     * Save the game
-     */
-    goSave(ev) {
-        if (!this.game.battle.isBattle) {
-            this.$location.path("/save");
-        }
-    }
-
-    // Show help
-    help(ev) {
-        if (!this.game.battle.isBattle) {
-            this.$location.path("/game");
-
-            $http({method: 'GET', url: 'help/' + Game.language + '.json'}).
-                success(function (data, status, headers, config) {
-                    var intro = introJs();
-                    intro.setOptions(data);
-                    intro.start();
-                }).
-                error(function (data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
         }
     }
 

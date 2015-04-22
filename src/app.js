@@ -2,6 +2,7 @@ import IndexController from './controllers/index';
 import GameController from './controllers/game';
 import PHSController from './controllers/phs';
 import StoryController from './controllers/story';
+import BattleController from './controllers/battle';
 
 import Game from './game';
 
@@ -27,6 +28,10 @@ function config($routeProvider, $translateProvider) {
         when('/story', {
             templateUrl: 'partials/story.html',
             controller : 'StoryController as ctrl'
+        }).
+        when('/battle', {
+            templateUrl: 'partials/battle.html',
+            controller : 'BattleController as ctrl'
         }).
         when('/shop', {
             templateUrl: 'partials/shop.html',
@@ -87,6 +92,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('GameController', GameController)
     .controller('PHSController', PHSController)
     .controller('StoryController', StoryController)
+    .controller('BattleController', BattleController)
     .service('Game', Game);
 
 export default 'clickingff7';

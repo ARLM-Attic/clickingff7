@@ -1,90 +1,62 @@
-class Battle {
+import Enemy from './enemy';
 
-    constructor(game) {
+export default class Battle {
+
+    constructor(game, storyNo, partNo) {
         this.game = game;
-        this.isBattle = false;
+        this.storyNo = storyNo;
+        this.partNo = partNo;
+
+        this.enemies = [];
+        this.chooseEnemies();
+
+        this.run();
     }
 
-    /**
-     * Characters start auto-attacking
-     */
-        startRandom() {
-        if (!this.isBattle) {
-            this.isBattle = true;
+    getStory() {
+        return this.game.stories[this.storyNo - 1];
+    }
 
-            this.game.enemies.fightRandom();
-            this.game.enemies.refresh();
-            this.game.enemies.autoFighting();
+    getPart() {
+        return this.getStory().data.parts[this.partNo - 1];
+    }
+
+    chooseEnemies() {
+        let groups = this.getPart().enemies;
+        let group = _.sample(groups);
+        for (let e of group) {
+            this.addEnemy(this.storyNo, e);
         }
     }
 
     /**
-     * Returns true if zone boss is available
-     * @returns {boolean}
+     * Add an enemy
+     * @param storyNo
+     * @param name
      */
-        canFightBoss() {
-        var levelMax = this.game.characters.levelMax;
-        var zone = this.game.zones.current();
-        return (!this.isBattle && zone.nbFights >= zone.MAX_FIGHTS && !zone.completed);
+    addEnemy(storyNo, name) {
+        this.enemies.push(Enemy.get(this.game, storyNo, name));
     }
 
     /**
-     * Characters start auto-attacking
+     * DO THE BATTLE
      */
-        startBoss() {
-        if (!this.isBattle) {
-            this.isBattle = true;
+    run() {
+        console.log('BATTLE BEGINS');
+    }
 
-            this.game.enemies.fightBoss();
-            this.game.enemies.refresh();
-            this.game.enemies.autoFighting();
-        }
+    end() {
+        // clean registy
+        this.game.battle = null;
+        this.game.story = null;
     }
 
     /**
-     * Characters stop attacking and wait for next fight
-     * @param  {boolean} victory
+     * todo save team hp/mp + enemies
+     * @returns {*}
      */
-        end(victory) {
-        this.isBattle = false;
-
-        this.game.enemies.stopFighting();
-
-        var enemies = this.game.enemies.list;
-        var characters = this.game.characters.getTeam();
-        var materias = this.game.materias.getEquipped();
-
-        for (var enemy of enemies) {
-
-            // Rewards if victory
-            if (victory) {
-                this.game.gils += enemy.gilsReward();
-
-                if (enemy.boss && this.game.zones.level + 1 > this.game.zones.levelMax) {
-                    // Complete zone
-                    this.game.zones.complete();
-                }
-
-                // XP for characters
-                var xp = enemy.xpReward();
-                for (var character of characters) {
-                    character.setXp(xp);
-                }
-
-                // AP for materias
-                var ap = enemy.apReward();
-                for (var materia of materias) {
-                    materia.setAp(ap);
-                }
-
-                this.game.zones.current().nbFights++;
-            }
-        }
-
-        this.game.enemies.remove();
-        this.game.enemies.refresh();
-        this.game.characters.refresh();
+    save() {
+        return _.pick(this, 'storyNo', 'partNo');
     }
+
 }
-
-export {Battle};

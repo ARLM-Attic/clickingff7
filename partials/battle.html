@@ -1,0 +1,56 @@
+<div class="wrapper">
+
+    <div class="c1">
+
+        <!-- characters list -->
+        <div id="step1">
+            <div ng-repeat="character in ctrl.game.team" class="card">
+                <div class="avatar">
+                    <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
+                </div>
+                <!--
+                        -->
+                <div class="main">
+
+                    <div class="progress characters_xp">
+                        <div class="xp_progress" ng-style="{width: character.xpProgress(200) + 'px'}"></div>
+                        <span class="bar-label">{{character.xp}} / {{character.getXpMax()}} EXP</span>
+                    </div>
+
+                    <div>{{character.data.name}} <strong>(LVL{{character.lvl}})</strong></div>
+                    <div>
+                        <span class="label">hp</span> {{character.hpMax}}
+                        <span class="label">mp</span> {{character.mpMax}}
+                    </div>
+                </div>
+
+                <div style="clear: left"></div>
+            </div>
+        </div>
+    </div><!--
+
+    --><div class="c3" id="step5">
+        <!-- enemies list -->
+        <div ng-repeat="enemy in ctrl.game.battle.enemies" class="card_enemy">
+            <div class="avatar_enemy">
+                <img ng-src="{{enemy.data.image}}" alt="avatar" height="80" />
+            </div>
+            <!--
+                        -->
+            <div class="main_enemy">
+
+                <div>{{enemy.data.name|translate}} <strong>(LVL{{enemy.data.lvl}})</strong>
+                    <span ng-if="enemy.boss" class="boss">ZONE BOSS</span>
+                    <span ng-if="enemy.miboss" class="boss">BOSS</span>
+                </div>
+
+                <div>
+                    <span class="label">hp</span> {{enemy.data.hp}}
+                </div>
+            </div>
+
+            <div style="clear: left"></div>
+        </div>
+    </div>
+
+</div>

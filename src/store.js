@@ -37,4 +37,15 @@ export default class Store {
         }
     }
 
+    getEnemy(storyNo, name) {
+        try {
+            let e = this.enemies[storyNo][name];
+            e.storyNo = storyNo;
+            e.name = name;
+            return e;
+        } catch (err) {
+            throw new Error('Enemy not found');
+        }
+    }
+
 }

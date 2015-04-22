@@ -1,16 +1,18 @@
 import Character from './character';
 import Story from './story';
 import Store from './store';
+import Battle from './battle';
 
 class Game {
 
-    constructor($rootScope, $http, $timeout, $translate) {
+    constructor($rootScope, $http, $timeout, $translate, $location) {
 
         // angular vars
         this.$rootScope = $rootScope;
         this.$http = $http;
         this.$timeout = $timeout;
         this.$translate = $translate;
+        this.$location = $location;
 
         // binding
         this.$rootScope.game = this;
@@ -51,7 +53,7 @@ class Game {
      * Build store from json files (path : /data)
      */
     preload() {
-        let files = ['characters', 'weapons', 'stories'];
+        let files = ['characters', 'weapons', 'stories', 'enemies'];
 
         this._preload(files);
     }
@@ -133,6 +135,11 @@ class Game {
             for (let i of save.stories) {
                 this.stories.push(new Story(this, i));
             }
+
+            // do the battle if any ongoing
+            if (save.battle) {
+                this.newBattle(save.battle.storyNo, save.battle.partNo);
+            }
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
         }
@@ -153,6 +160,16 @@ class Game {
      */
     addStory(nbr) {
         this.stories.push(Story.get(this, nbr));
+    }
+
+    /**
+     * CREATE NEW BATTLE
+     */
+    newBattle(storyNo, partNo) {
+        this.battle = new Battle(this, storyNo, partNo);
+        this.mode = 'battle';
+        this.save();
+        this.$location.path('/battle');
     }
 
     /**
@@ -194,11 +211,15 @@ class Game {
             save.stories.push(i.save());
         }
 
+        if (this.battle) {
+            save.battle = this.battle.save();
+        }
+
         localStorage.save = JSON.stringify(save);
     }
 
 }
 
-Game.$inject = ['$rootScope', '$http', '$timeout', '$translate'];
+Game.$inject = ['$rootScope', '$http', '$timeout', '$translate', '$location'];
 
 export default Game;

@@ -1,3 +1,5 @@
+import Battle from './battle';
+
 export default class Story {
 
     constructor(game, data) {
@@ -7,6 +9,9 @@ export default class Story {
 
         // completed once at least
         this.completed = false;
+
+        // current part to do
+        this.current = 1;
 
         // load story data
         if (data) {
@@ -28,6 +33,10 @@ export default class Story {
         this.completed = data.completed;
     }
 
+    getPart() {
+        return this.data.parts[this.current - 1];
+    }
+
     complete() {
         this.completed = true;
 
@@ -43,6 +52,7 @@ export default class Story {
         var save = _.pick(this, 'completed');
 
         save.nbr = this.data.nbr;
+        save.current = this.current;
 
         return save;
     }

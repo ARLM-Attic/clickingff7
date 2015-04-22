@@ -10,8 +10,13 @@ class StoryController extends Controller {
         this.current = story;
     }
 
-    selectPart(part) {
-        // todo handle battle
+    selectPart(partNo) {
+        // do the battle :-)
+        let storyNo = this.current.data.nbr;
+        this.game.newBattle(storyNo, partNo);
+
+        // go to battle section
+        this.$location.path('/battle');
     }
 
 }

@@ -292,71 +292,18 @@ table tr.item td {
     position: relative;
 }
 
-.characters_hits, .enemies_hits {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.hit {
-    width: 40px;
-    text-align: center;
-}
-
-.hit_1 {
-    font-size: 30px;
-}
-
-.hit_2 {
-    font-size: 26px;
-}
-
-.hit_3 {
-    font-size: 22px;
-}
-
-.hit_4 {
-    font-size: 18px;
-}
-
-.hit_5 {
-    font-size: 14px;
-}
-
-.card {
+.card, .card_enemy {
     margin-bottom: 10px;
     clear: left;
 }
 
-.card .avatar {
+.avatar, .avatar_enemy {
     float: left;
     margin-right: 5px;
 }
 
-.card .line {
-    font-size: 12px;
-    font-weight: bold;
-    padding-top: 5px;
-}
-
-.card_enemy {
-    position: relative;
-}
-
 .avatar_enemy {
-    position: absolute;
-    z-index: 0;
-}
-
-.main_enemy {
-    position: absolute;
-    left: 90px;
-    background-color: rgba(255, 255, 255, 0.6);
-    z-index: 1;
-}
-
-.card .main {
-
+    border: 1px solid #999;
 }
 
 /* style pour l'ennemi */

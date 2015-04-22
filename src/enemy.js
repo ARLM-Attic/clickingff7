@@ -1,71 +1,49 @@
-class Enemy {
+export default class Enemy {
 
-    /**
-     * Init
-     * @param game
-     */
-        constructor(game) {
+    constructor(game, data) {
+
+        // game reference
         this.game = game;
+
+        // load character data
+        if (data) {
+            this.load(data);
+        }
+    }
+
+    static get(game, storyNo, name) {
+        let c = new Enemy(game);
+
+        c.data = game.store.getEnemy(storyNo, name);
+
+        // fill hp & mp
+        c.recover();
+
+        return c;
+    }
+
+    load(data) {
+        this.data = this.game.store.getEnemy(data.name);
+
+        // fill hp & mp
+        this.recover();
     }
 
     /**
-     * Get the enemy to the given level
-     * @param levelSum
-     * @private
+     * Recover HP & MP
      */
-        _toLevel(levelSum) {
-
-        // Difficulty
-        levelSum *= (1 + (this.game.difficulty - 2) * 20 / 100);
-        levelSum = Math.ceil(levelSum);
-
-        this.level = Math.ceil(levelSum / 3);
-
-        this._hpMax = Math.ceil(((this.hpMax - 3) * 10 / 100 + 1) * 25 * levelSum);
-        this._hits = Math.ceil(((this.hits - 3) * 10 / 100 + 1) * levelSum);
-        this._xp = Math.ceil(((this.xp - 3) * 10 / 100 + 1) * 5 * levelSum);
-        this._ap = Math.ceil(((this.ap - 3) * 10 / 100 + 1) * 2 * levelSum);
-        this._gils = Math.ceil(((this.gils - 3) * 10 / 100 + 1) * (30 + levelSum));
+    recover() {
+        this.hp = this.hpMax;
+        this.mp = this.mpMax;
     }
 
-    /**
-     * Returns enemy HP
-     * @return {int}
-     */
-        getHpMax() {
-        return this._hpMax;
-    }
+    save() {
+        var save = {};
 
-    /**
-     * Returns enemy pwr
-     * @return {int}
-     */
-        getHits() {
-        return this._hits;
-    }
+        save.storyNo = this.data.storyNo;
+        save.name = this.data.name;
 
-    /**
-     * returns enemy XP reward
-     * @return {int}
-     */
-        xpReward() {
-        return this._xp;
-    }
-
-    /**
-     * returns enemy AP reward
-     * @return {int}
-     */
-        apReward() {
-        return this._ap;
-    }
-
-    /**
-     * returns enemy gils reward
-     * @return {int}
-     */
-        gilsReward() {
-        return this._gils;
+        return save;
     }
 
 }
