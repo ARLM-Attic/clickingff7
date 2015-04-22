@@ -34,9 +34,9 @@
     <nav class="game-menu" id="step10">
         <ul>
             <li ng-click="g.goGame()" ng-class="{ current: g.isActive('/game')}">{{"Game"|translate}}</li>
-            <li ng-click="g.goMap()" ng-class="{ current: g.isActive('/map')}">
-                <div class="pull-right new" ng-show="game.zones.nextZone">NEW</div>
-                {{"Map"|translate}}
+            <li ng-click="g.goStory()" ng-class="{ current: g.isActive('/story')}">
+                <div class="pull-right new">NEW</div>
+                {{"Story"|translate}}
             </li>
             <li ng-click="g.goShop()" ng-class="{ current: g.isActive('/shop')}">{{"Shop"|translate}}</li>
             <li ng-click="g.goEquip()" ng-class="{ current: g.isActive('/equip')}">{{"Equip"|translate}}</li>

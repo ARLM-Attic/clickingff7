@@ -14,13 +14,13 @@ export default class Weapon {
     static get(game, type, name) {
         let w = new Weapon(game);
 
-        w.data = game.getWeaponFromData(type, name);
+        w.data = game.store.getWeapon(type, name);
 
         return w;
     }
 
     load(data) {
-        this.data = this.game.getWeaponFromData(data.type, data.name);
+        this.data = this.game.store.getWeapon(data.type, data.name);
     }
 
     save() {

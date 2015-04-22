@@ -1,0 +1,23 @@
+<div class="c1">
+
+    <img ng-src="{{ctrl.current.data.image}}" alt="story" width="60" style="float: left"/>
+
+    <div class="main">
+        <p>
+            {{'Story '+ctrl.current.data.nbr|translate}} <strong>(#{{ctrl.current.data.nbr}})</strong>
+        </p>
+
+        <div class="part" ng-repeat="part in ctrl.current.data.parts" ng-click="selectPart($index+1)">
+            {{'Story '+ctrl.current.data.nbr+' part '+($index+1)|translate}} — {{'Stamina'|translate}} {{ctrl.current.data.stamina}}
+        </div>
+    </div>
+
+</div><!--
+
+--><div class="c3">
+
+    <div class="story" ng-repeat="story in ctrl.game.stories" ng-click="ctrl.selectStory(story)">
+        <img ng-src="{{story.data.image}}" alt="story" width="30" />
+        {{'Story '+story.data.nbr|translate}}
+    </div>
+</div>

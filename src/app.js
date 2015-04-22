@@ -1,6 +1,7 @@
 import IndexController from './controllers/index';
 import GameController from './controllers/game';
 import PHSController from './controllers/phs';
+import StoryController from './controllers/story';
 
 import Game from './game';
 
@@ -9,15 +10,23 @@ import 'angular-translate';
 import 'angular-translate-loader-static-files';
 import _ from 'lodash';
 
-function config($routeProvider) {
+function config($routeProvider, $translateProvider) {
+
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'languages/',
+        suffix: '.json'
+    });
+
+    $translateProvider.determinePreferredLanguage();
+
     $routeProvider.
         when('/game', {
             templateUrl: 'partials/game.html',
             controller : 'GameController'
         }).
-        when('/map', {
-            templateUrl: 'partials/map.html',
-            controller : 'MapCtrl'
+        when('/story', {
+            templateUrl: 'partials/story.html',
+            controller : 'StoryController as ctrl'
         }).
         when('/shop', {
             templateUrl: 'partials/shop.html',
@@ -52,7 +61,7 @@ function config($routeProvider) {
         });
 }
 
-config.$inject = ['$routeProvider'];
+config.$inject = ['$routeProvider', '$translateProvider'];
 
 var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .config(config)
@@ -77,6 +86,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('IndexController', IndexController)
     .controller('GameController', GameController)
     .controller('PHSController', PHSController)
+    .controller('StoryController', StoryController)
     .service('Game', Game);
 
 export default 'clickingff7';

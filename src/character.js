@@ -16,7 +16,7 @@ export default class Character {
     static get(game, name) {
         let c = new Character(game);
 
-        c.data = game.getCharacterFromData(name);
+        c.data = game.store.getCharacter(name);
 
         // initial weapon
         c.weapon = Weapon.get(game, c.data.weapon.type, c.data.weapon.name);
@@ -31,7 +31,7 @@ export default class Character {
     }
 
     load(data) {
-        this.data = this.game.getCharacterFromData(data.name);
+        this.data = this.game.store.getCharacter(data.name);
 
         // weapon
         this.weapon = new Weapon(this.game, this.data.weapon);

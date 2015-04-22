@@ -1,4 +1,6 @@
 import Character from './character';
+import Story from './story';
+import Store from './store';
 
 class Game {
 
@@ -32,7 +34,11 @@ class Game {
         this.version = "2.0.0-alpha.1";
 
         // general data (characters, weapons, ..)
-        this.store = {};
+        this.store = new Store();
+
+        this.team = [];
+        this.backup = [];
+        this.stories = [];
 
         // general data has been loaded
         this.loaded = false;
@@ -45,11 +51,17 @@ class Game {
      * Build store from json files (path : /data)
      */
     preload() {
-        let files = ['characters', 'weapons'];
+        let files = ['characters', 'weapons', 'stories'];
 
         this._preload(files);
     }
 
+    /**
+     * Recursive loading
+     * @todo display progression
+     * @param files
+     * @private
+     */
     _preload(files) {
         let file = files[0];
 
@@ -90,76 +102,81 @@ class Game {
     newGame(level) {
         // add all characters
         // note : cloud & barret are in the team
-        this.team = [];
-        this.team.push(Character.get(this, 'cloud'));
-        this.team.push(Character.get(this, 'barret'));
+        this.addCharacter('team', 'cloud');
+        this.addCharacter('team', 'barret');
 
-        this.backup = [];
-        this.backup.push(Character.get(this, 'tifa'));
-        this.backup.push(Character.get(this, 'aerith'));
-        this.backup.push(Character.get(this, 'redxiii'));
-        this.backup.push(Character.get(this, 'yuffie'));
-        this.backup.push(Character.get(this, 'caitsith'));
-        this.backup.push(Character.get(this, 'vincent'));
-        this.backup.push(Character.get(this, 'cid'));
+        this.addCharacter('backup', 'tifa');
+        this.addCharacter('backup', 'aerith');
+        this.addCharacter('backup', 'redxiii');
+        this.addCharacter('backup', 'yuffie');
+        this.addCharacter('backup', 'caitsith');
+        this.addCharacter('backup', 'vincent');
+        this.addCharacter('backup', 'cid');
+
+        this.addStory(1);
     }
 
+    /**
+     * LOAD GAME
+     * @param save
+     */
     loadGame(save) {
-        this.team = [];
-        for (let i of save.team) {
-            this.team.push(new Character(this, i));
+        try {
+            for (let i of save.team) {
+                this.team.push(new Character(this, i));
+            }
+
+            for (let i of save.backup) {
+                this.backup.push(new Character(this, i));
+            }
+
+            for (let i of save.stories) {
+                this.stories.push(new Story(this, i));
+            }
+        } catch (err) {
+            throw new Error('[Save not valid] ' + err);
         }
-
-        this.backup = [];
-        for (let i of save.backup) {
-            this.backup.push(new Character(this, i));
-        }
     }
 
     /**
-     *
+     * Add a character
+     * @param position
      * @param name
-     * @returns {*}
      */
-    getCharacterFromData(name) {
-        return _.find(this.store['characters'], {name: name});
+    addCharacter(position, name) {
+        this[position].push(Character.get(this, name));
     }
 
     /**
-     *
-     * @param type
-     * @param name
-     * @returns {*}
+     * Add a story
+     * @param nbr
      */
-    getWeaponFromData(type, name) {
-        let w = this.store['weapons'][type][name];
-        w.name = name;
-        w.type = type;
-        return w;
+    addStory(nbr) {
+        this.stories.push(Story.get(this, nbr));
     }
 
     /**
-     * Return active characters (in team)
+     * Let the character join the team
+     * @param character
      */
-    getTeam() {
-        return _.where(this.characters, {inTeam: true});
-    }
-
     joinTeam(character) {
         _.remove(this.backup, character);
         this.team.push(character);
     }
 
+    /**
+     * Let the character leave the team
+     * @param character
+     */
     leaveTeam(character) {
         _.remove(this.team, character);
         this.backup.push(character);
     }
 
+    /**
+     * SAVE GAME
+     */
     save() {
-        localStorage.save = JSON.stringify(this._save());
-    }
-
-    _save() {
         let save = {};
 
         save.team = [];
@@ -172,7 +189,12 @@ class Game {
             save.backup.push(i.save());
         }
 
-        return save;
+        save.stories = [];
+        for (let i of this.stories) {
+            save.stories.push(i.save());
+        }
+
+        localStorage.save = JSON.stringify(save);
     }
 
 }

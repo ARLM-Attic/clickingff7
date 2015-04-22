@@ -25,11 +25,11 @@ class IndexController {
     }
 
     /**
-     * Go to the map
+     * Go to the story
      */
-    goMap() {
-        if (!this.game.battle.isBattle) {
-            this.$location.path("/map");
+    goStory() {
+        if (this.game.mode !== 'battle') {
+            this.$location.path("/story");
         }
     }
 
