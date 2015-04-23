@@ -138,7 +138,7 @@ class Game {
 
             // do the battle if any ongoing
             if (save.battle) {
-                this.newBattle(save.battle.storyNo, save.battle.partNo);
+                this.newBattle(save.battle.storyNo, save.battle.partNo, save.battle.battleNo);
             }
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
@@ -165,8 +165,8 @@ class Game {
     /**
      * CREATE NEW BATTLE
      */
-    newBattle(storyNo, partNo) {
-        this.battle = new Battle(this, storyNo, partNo);
+    newBattle(storyNo, partNo, battleNo) {
+        this.battle = new Battle(this, storyNo, partNo, battleNo);
         this.mode = 'battle';
         this.save();
         this.$location.path('/battle');

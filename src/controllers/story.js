@@ -13,7 +13,7 @@ class StoryController extends Controller {
     selectPart(partNo) {
         // do the battle :-)
         let storyNo = this.current.data.nbr;
-        this.game.newBattle(storyNo, partNo);
+        this.game.newBattle(storyNo, partNo, 1);
 
         // go to battle section
         this.$location.path('/battle');

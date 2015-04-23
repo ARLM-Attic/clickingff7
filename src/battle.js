@@ -2,10 +2,11 @@ import Enemy from './enemy';
 
 export default class Battle {
 
-    constructor(game, storyNo, partNo) {
+    constructor(game, storyNo, partNo, battleNo) {
         this.game = game;
         this.storyNo = storyNo;
         this.partNo = partNo;
+        this.battleNo = battleNo;
 
         this.enemies = [];
         this.chooseEnemies();
@@ -42,13 +43,27 @@ export default class Battle {
      * DO THE BATTLE
      */
     run() {
-        console.log('BATTLE BEGINS');
+        console.log('[BATTLE BEGINS] ' + this.storyNo + '/' + this.partNo + '+' + this.battleNo);
+        this.game.$timeout(() => {
+            this.end();
+        }, 15000);
     }
 
     end() {
-        // clean registy
-        this.game.battle = null;
-        this.game.story = null;
+        // todo handle rewards
+
+        this.battleNo++;
+
+        if (this.battleNo <= this.getPart().battles) {
+            this.game.newBattle(this.storyNo, this.partNo, this.battleNo);
+        } else {
+            // clean registy
+            console.log('[BATTLE ENDS]');
+            this.getStory().complete();
+            this.game.battle = null;
+            this.game.story = null;
+            this.game.save();
+        }
     }
 
     /**
@@ -56,7 +71,7 @@ export default class Battle {
      * @returns {*}
      */
     save() {
-        return _.pick(this, 'storyNo', 'partNo');
+        return _.pick(this, 'storyNo', 'partNo', 'battleNo');
     }
 
 }
