@@ -91,7 +91,7 @@ class Game {
     run() {
         // load save
         if (localStorage.save) {
-            let save = JSON.parse(localStorage.save)
+            let save = JSON.parse(localStorage.save);
             this.loadGame(save);
         } else {
             this.newGame();
@@ -138,7 +138,7 @@ class Game {
 
             // do the battle if any ongoing
             if (save.battle) {
-                this.newBattle(save.battle.storyNo, save.battle.partNo, save.battle.battleNo);
+                this.newBattle(save.battle);
             }
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
@@ -156,19 +156,19 @@ class Game {
 
     /**
      * Add a story
-     * @param nbr
+     * @param storyNo
      */
-    addStory(nbr) {
-        this.stories.push(Story.get(this, nbr));
+    addStory(storyNo) {
+        this.stories.push(Story.get(this, storyNo));
     }
 
     /**
      * CREATE NEW BATTLE
      */
-    newBattle(storyNo, partNo, battleNo) {
-        this.battle = new Battle(this, storyNo, partNo, battleNo);
+    newBattle(data) {
+        this.battle = new Battle(this, data);
+        this.battle.run();
         this.mode = 'battle';
-        this.save();
         this.$location.path('/battle');
     }
 

@@ -7,8 +7,11 @@
             {{'Story '+ctrl.current.data.nbr|translate}} <strong>(#{{ctrl.current.data.nbr}})</strong>
         </p>
 
-        <div class="part" ng-repeat="part in ctrl.current.data.parts" ng-click="ctrl.selectPart($index+1)">
-            {{'Story '+ctrl.current.data.nbr+' part '+($index+1)|translate}} — {{'Stamina'|translate}} {{ctrl.current.data.stamina}}
+        <div class="part" ng-repeat="part in ctrl.current.data.parts" ng-click="ctrl.selectPart($index+1)"
+             ng-class="{disabled: (ctrl.current.partNo < $index+1)}">
+            {{'Story '+ctrl.current.data.storyNo+' part '+($index+1)|translate}} — {{'Battles'|translate}}
+            {{part.battles}} — {{'Stamina'|translate}}
+            {{part.stamina}}
         </div>
     </div>
 
@@ -17,7 +20,7 @@
 --><div class="c3">
 
     <div class="story" ng-repeat="story in ctrl.game.stories" ng-click="ctrl.selectStory(story)">
-        <img ng-src="{{story.data.image}}" alt="story" width="30" />
-        {{'Story '+story.data.nbr|translate}}
+        <img ng-src="{{story.data.image}}" alt="story" width="30"/>
+        {{'Story '+story.data.storyNo|translate}}
     </div>
 </div>

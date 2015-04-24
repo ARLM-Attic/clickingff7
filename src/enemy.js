@@ -37,13 +37,4 @@ export default class Enemy {
         this.mp = this.mpMax;
     }
 
-    save() {
-        var save = {};
-
-        save.storyNo = this.data.storyNo;
-        save.name = this.data.name;
-
-        return save;
-    }
-
 }

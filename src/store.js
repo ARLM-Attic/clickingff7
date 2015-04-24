@@ -27,10 +27,10 @@ export default class Store {
         }
     }
 
-    getStory(nbr) {
+    getStory(storyNo) {
         try {
-            let s = this.stories[nbr];
-            s.nbr = nbr;
+            let s = this.stories[storyNo];
+            s.storyNo = storyNo;
             return s;
         } catch (err) {
             throw new Error('Story not found');

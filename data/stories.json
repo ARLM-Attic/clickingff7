@@ -1,17 +1,21 @@
 {
-    "1": {
-        "image": "/img/stories/1.png",
-        "parts": [
-            {
-                "enemies": [
-                    ["1stRay"]
-                ],
-                "battles": 2,
-                "stamina": 1
-            },
-            {
-                "enemies": ["guardScorpion"]
-            }
-        ]
-    }
+  "1": {
+    "image": "/img/stories/1.png",
+    "parts": [
+      {
+        "enemies": [
+          ["1stRay"]
+        ],
+        "battles": 2,
+        "stamina": 2
+      },
+      {
+        "enemies": [
+          ["1stRay", "1stRay"]
+        ],
+        "battles": 2,
+        "stamina": 2
+      }
+    ]
+  }
 }

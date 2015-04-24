@@ -10,8 +10,8 @@ export default class Story {
         // completed once at least
         this.completed = false;
 
-        // current part to do
-        this.current = 1;
+        // max part to do
+        this.partNo = 1;
 
         // load story data
         if (data) {
@@ -19,40 +19,52 @@ export default class Story {
         }
     }
 
-    static get(game, nbr) {
+    static get(game, storyNo) {
         let s = new Story(game);
 
-        s.data = game.store.getStory(nbr);
+        s.data = game.store.getStory(storyNo);
 
         return s;
     }
 
     load(data) {
-        this.data = this.game.store.getStory(data.nbr);
+        this.data = this.game.store.getStory(data.storyNo);
 
         this.completed = data.completed;
+
+        this.partNo = data.partNo;
     }
 
     getPart() {
-        return this.data.parts[this.current - 1];
+        return this.data.parts[this.partNo - 1];
+    }
+
+    nextPart(part) {
+        if (part == this.partNo) {
+            this.partNo++;
+            if (this.partNo > this.data.parts.length) {
+                this.complete();
+            }
+        }
+
     }
 
     complete() {
+        this.partNo = 1;
         this.completed = true;
 
-        // search for next story ?
-        let next = this.data.nbr++;
+        // todo search for next story
+        /*let next = this.data.nbr + 1;
         let added = this.game.addStory(next);
         if (!added) {
             // todo display popup
-        }
+        }*/
     }
 
     save() {
-        var save = _.pick(this, 'completed');
+        var save = _.pick(this, 'completed', 'partNo');
 
-        save.nbr = this.data.nbr;
-        save.current = this.current;
+        save.storyNo = this.data.storyNo;
 
         return save;
     }

@@ -2,16 +2,26 @@ import Enemy from './enemy';
 
 export default class Battle {
 
-    constructor(game, storyNo, partNo, battleNo) {
+    constructor(game, data) {
         this.game = game;
-        this.storyNo = storyNo;
-        this.partNo = partNo;
-        this.battleNo = battleNo;
 
         this.enemies = [];
-        this.chooseEnemies();
 
-        this.run();
+        this.load(data);
+    }
+
+    load(data) {
+        this.storyNo = data.storyNo;
+        this.partNo = data.partNo;
+        this.battleNo = data.battleNo;
+
+        if (data.enemies) {
+            for (let e of data.enemies) {
+                this.enemies.push(Enemy.get(this.game, this.storyNo, e));
+            }
+        } else {
+            this.chooseEnemies();
+        }
     }
 
     getStory() {
@@ -43,6 +53,7 @@ export default class Battle {
      * DO THE BATTLE
      */
     run() {
+        this.game.save();
         console.log('[BATTLE BEGINS] ' + this.storyNo + '/' + this.partNo + '+' + this.battleNo);
         this.game.$timeout(() => {
             this.end();
@@ -55,14 +66,16 @@ export default class Battle {
         this.battleNo++;
 
         if (this.battleNo <= this.getPart().battles) {
-            this.game.newBattle(this.storyNo, this.partNo, this.battleNo);
+            this.run();
         } else {
             // clean registy
             console.log('[BATTLE ENDS]');
-            this.getStory().complete();
+            this.getStory().nextPart(this.partNo);
             this.game.battle = null;
             this.game.story = null;
             this.game.save();
+            this.game.mode = 'free';
+            this.game.$location.path('/story');
         }
     }
 
@@ -71,7 +84,14 @@ export default class Battle {
      * @returns {*}
      */
     save() {
-        return _.pick(this, 'storyNo', 'partNo', 'battleNo');
+        let save = _.pick(this, 'storyNo', 'partNo', 'battleNo');
+
+        save.enemies = [];
+        for (var e of this.enemies) {
+            save.enemies.push(e.data.name);
+        }
+
+        return save;
     }
 
 }

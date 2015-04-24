@@ -306,6 +306,10 @@ table tr.item td {
     border: 1px solid #999;
 }
 
+.part.disabled {
+    color: #999;
+}
+
 /* style pour l'ennemi */
 
 .no-enemies {

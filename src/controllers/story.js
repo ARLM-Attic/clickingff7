@@ -11,9 +11,18 @@ class StoryController extends Controller {
     }
 
     selectPart(partNo) {
+        // todo improve this test
+        if (this.current.partNo < partNo) {
+            return;
+        }
+
         // do the battle :-)
-        let storyNo = this.current.data.nbr;
-        this.game.newBattle(storyNo, partNo, 1);
+        let data = {
+            storyNo : this.current.data.storyNo,
+            partNo  : partNo,
+            battleNo: 1
+        };
+        this.game.newBattle(data);
 
         // go to battle section
         this.$location.path('/battle');
