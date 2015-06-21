@@ -12,6 +12,14 @@ class BattleController extends Controller {
         }
     }
 
+    selectTarget(target) {
+        this.game.battle.target = [target];
+    }
+
+    doAttack() {
+        this.game.battle.execute('attack');
+    }
+
 }
 
 BattleController.$inject = ['Game', '$location'];

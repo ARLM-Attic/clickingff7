@@ -2,62 +2,101 @@ import Enemy from './enemy';
 
 export default class Battle {
 
-    constructor(game, data) {
+    constructor(game) {
         this.game = game;
-
-        this.enemies = [];
-
-        this.load(data);
-    }
-
-    load(data) {
-        this.storyNo = data.storyNo;
-        this.partNo = data.partNo;
-        this.battleNo = data.battleNo;
-
-        if (data.enemies) {
-            for (let e of data.enemies) {
-                this.enemies.push(Enemy.get(this.game, this.storyNo, e));
-            }
-        } else {
-            this.chooseEnemies();
-        }
-    }
-
-    getStory() {
-        return this.game.stories[this.storyNo - 1];
-    }
-
-    getPart() {
-        return this.getStory().data.parts[this.partNo - 1];
+        this.chooseEnemies();
+        this.run();
     }
 
     chooseEnemies() {
-        let groups = this.getPart().enemies;
+        let groups = this.story().enemies;
         let group = _.sample(groups);
+
+        this.enemies = [];
         for (let e of group) {
-            this.addEnemy(this.storyNo, e);
+            this.enemies.push(Enemy.get(this.game, e));
         }
     }
 
-    /**
-     * Add an enemy
-     * @param storyNo
-     * @param name
-     */
-    addEnemy(storyNo, name) {
-        this.enemies.push(Enemy.get(this.game, storyNo, name));
+    story() {
+        return this.game.story.data;
     }
 
     /**
      * DO THE BATTLE
      */
     run() {
-        this.game.save();
-        console.log('[BATTLE BEGINS] ' + this.storyNo + '/' + this.partNo + '+' + this.battleNo);
-        this.game.$timeout(() => {
-            this.end();
-        }, 15000);
+
+    }
+
+    nextTurn() {
+        let auto = false;
+        let turns = this.getTurns();
+        let unit = turns[0];
+        let playerTurn = unit.constructor.name == 'Character';
+
+        // choose default enemy target
+        if (!this.target) {
+            this.target = this.enemies[0];
+        }
+
+        if (playerTurn || auto) { // <-- HERE
+            unit.attack(() => {
+                this.nextTurn();
+            });
+        } else {
+            this.currentUnit = unit;
+        }
+    }
+
+    execute(type, args = []) {
+        let name;
+        switch (type) {
+            case 'attack':
+                this.currentUnit.attack(() => {
+                    this.nextTurn();
+                });
+                break;
+            case 'guard':
+                unit.guard();
+                break;
+            case 'materia':
+                name = [0];
+                unit.materia(name);
+                break;
+            case 'item':
+                name = args[0];
+                unit.item(name);
+                break;
+        }
+    }
+
+    /**
+     * Get the next turns actions
+     * @returns {Array}
+     */
+    getTurns() {
+        // gathering everyone
+        let units = _.union(this.game.team, this.enemies);
+
+        // initialize
+        let sums = {};
+        for (let i of units) {
+            sums[i.data.name] = 0;
+        }
+
+        // simulating
+        let turns = [];
+        while (turns.length < 6) {
+            for (let i of units) {
+                i.sum += i.getMove();
+            }
+            let unit = _.max(units, 'sum');
+            unit.sum = 0;
+            turns.push(unit);
+        }
+
+        return turns;
     }
 
     end() {

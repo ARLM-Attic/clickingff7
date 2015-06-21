@@ -1,4 +1,5 @@
 import Controller from '../controller';
+import Battle from '../battle';
 
 class StoryController extends Controller {
 
@@ -7,25 +8,15 @@ class StoryController extends Controller {
     }
 
     selectStory(story) {
-        this.current = story;
+        this.story = story;
     }
 
-    selectPart(partNo) {
-        // todo improve this test
-        if (this.current.partNo < partNo) {
-            return;
-        }
+    goSelectedStory() {
+        this.game.story = this.story;
+        this.game.battle = new Battle(this.game);
 
-        // do the battle :-)
-        let data = {
-            storyNo : this.current.data.storyNo,
-            partNo  : partNo,
-            battleNo: 1
-        };
-        this.game.newBattle(data);
-
-        // go to battle section
-        this.$location.path('/battle');
+        // go to game section
+        this.$location.path('/game');
     }
 
 }

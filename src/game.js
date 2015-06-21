@@ -40,7 +40,8 @@ class Game {
 
         this.team = [];
         this.backup = [];
-        this.stories = [];
+        this.story = null;
+        this.battle = null;
 
         // general data has been loaded
         this.loaded = false;
@@ -115,7 +116,8 @@ class Game {
         this.addCharacter('backup', 'vincent');
         this.addCharacter('backup', 'cid');
 
-        this.addStory(1);
+        this.currentStory = 0;
+        this.refreshStories();
     }
 
     /**
@@ -155,11 +157,13 @@ class Game {
     }
 
     /**
-     * Add a story
-     * @param storyNo
+     * Get available stories
      */
-    addStory(storyNo) {
-        this.stories.push(Story.get(this, storyNo));
+    refreshStories() {
+        this.stories = [];
+        for (let i = 0; i <= this.currentStory; i++ ) {
+            this.stories.push(Story.get(this, i));
+        }
     }
 
     /**

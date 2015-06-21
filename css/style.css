@@ -249,12 +249,8 @@ table tr.item td {
 
 /* style de la page /game */
 
-.actions {
-    position: absolute;
-    width: 200px;
-    top: -10px;
-    left: -60px;
-    z-index: 2;
+.actions div {
+    display: inline-block;
 }
 
 .block {
@@ -300,6 +296,8 @@ table tr.item td {
 .avatar, .avatar_enemy {
     float: left;
     margin-right: 5px;
+    width: 80px;
+    height: 93px;
 }
 
 .avatar_enemy {
@@ -417,11 +415,11 @@ table tr.item td {
     left: 0;
 }
 
-.characters_xp {
+.characters_hp, .characters_mp, .characters_xp {
     width: 200px;
 }
 
-.xp_progress {
+.hp_progress, .mp_progress, .xp_progress {
     background-color: #C6B7D6;
     position: absolute;
     height: 9px;

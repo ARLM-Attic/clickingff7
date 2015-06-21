@@ -1,20 +1,11 @@
-export default class Enemy {
+import Unit from './unit';
 
-    constructor(game, data) {
+export default class Enemy extends Unit {
 
-        // game reference
-        this.game = game;
-
-        // load character data
-        if (data) {
-            this.load(data);
-        }
-    }
-
-    static get(game, storyNo, name) {
+    static get(game, ref) {
         let c = new Enemy(game);
 
-        c.data = game.store.getEnemy(storyNo, name);
+        c.data = game.store.getEnemy(ref);
 
         // fill hp & mp
         c.recover();
@@ -23,7 +14,7 @@ export default class Enemy {
     }
 
     load(data) {
-        this.data = this.game.store.getEnemy(data.name);
+        this.data = this.game.store.getEnemy(data.ref);
 
         // fill hp & mp
         this.recover();
@@ -33,8 +24,8 @@ export default class Enemy {
      * Recover HP & MP
      */
     recover() {
-        this.hp = this.hpMax;
-        this.mp = this.mpMax;
+        this.hp = this.data.hp;
+        this.hpMax = this.data.hp;
     }
 
 }

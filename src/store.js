@@ -27,22 +27,17 @@ export default class Store {
         }
     }
 
-    getStory(storyNo) {
+    getStory(ref) {
         try {
-            let s = this.stories[storyNo];
-            s.storyNo = storyNo;
-            return s;
+            return _.find(this.stories, {ref: ref});
         } catch (err) {
             throw new Error('Story not found');
         }
     }
 
-    getEnemy(storyNo, name) {
+    getEnemy(ref) {
         try {
-            let e = this.enemies[storyNo][name];
-            e.storyNo = storyNo;
-            e.name = name;
-            return e;
+            return _.find(this.enemies, {ref: ref});
         } catch (err) {
             throw new Error('Enemy not found');
         }

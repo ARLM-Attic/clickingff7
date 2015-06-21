@@ -1,17 +1,7 @@
+import Unit from './unit';
 import Weapon from './weapon';
 
-export default class Character {
-
-    constructor(game, data) {
-
-        // game reference
-        this.game = game;
-
-        // load character data
-        if (data) {
-            this.load(data);
-        }
-    }
+export default class Character extends Unit {
 
     static get(game, name) {
         let c = new Character(game);
@@ -57,6 +47,10 @@ export default class Character {
 
     get mpMax() {
         return Math.floor(this.data.mp / 100 * this.lvl);
+    }
+
+    get dex() {
+        return this.data.dex;
     }
 
     save() {

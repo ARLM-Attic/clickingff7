@@ -1,3 +1,22 @@
+<nav class="actions">
+    <div class="block">
+        <ul>
+            <li ng-click="ctrl.doAttack()">
+                {{"Attack"|translate}}
+            </li>
+            <li ng-click="doGuard()">
+                {{"Guard"|translate}}
+            </li>
+            <li ng-repeat="materia in ctrl.game.battle.materias" ng-click="doMateria(materia)">
+                {{"Materia "+item|translate}}
+            </li>
+            <li ng-repeat="item in ctrl.game.battle.items" ng-click="doItem(item)">
+                {{"Item "+item|translate}}
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div class="wrapper">
 
     <div class="c1">
@@ -5,7 +24,7 @@
         <!-- characters list -->
         <div id="step1">
             <div ng-repeat="character in ctrl.game.team" class="card">
-                <div class="avatar">
+                <div class="avatar" ng-click="selectTarget(character)">
                     <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
                 </div>
                 <!--
@@ -29,11 +48,11 @@
         </div>
     </div><!--
 
-    --><div class="c3" id="step5">
+        --><div class="c3" id="step5">
         <!-- enemies list -->
         <div ng-repeat="enemy in ctrl.game.battle.enemies" class="card_enemy">
-            <div class="avatar_enemy">
-                <img ng-src="{{enemy.data.image}}" alt="avatar" height="80" />
+            <div class="avatar_enemy" ng-click="selectTarget(character)">
+                <img ng-src="{{enemy.data.image}}" alt="avatar" height="80"/>
             </div>
             <!--
                         -->

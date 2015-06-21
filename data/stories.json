@@ -1,21 +1,18 @@
-{
-  "1": {
-    "image": "/img/stories/1.png",
-    "parts": [
-      {
+[
+    {
+        "image": "/img/stories/1.png",
         "enemies": [
-          ["1stRay"]
+            ["MP", "MP", "MonoDrive"],
+            ["1stRay", "1stRay", "Grunt"],
+            ["MonoDrive", "MonoDrive", "1stRay"],
+            ["Grunt", "Grunt", "MonoDrive"],
+            ["Grunt", "Grunt", "MonoDrive"],
+            ["Grunt", "Grunt", "Sweeper"]
         ],
-        "battles": 2,
-        "stamina": 2
-      },
-      {
-        "enemies": [
-          ["1stRay", "1stRay"]
-        ],
-        "battles": 2,
-        "stamina": 2
-      }
-    ]
-  }
-}
+        "boss": [["GuardScorpion"]],
+        "nbBattles": 10,
+        "level": 3,
+        "characters": ["cloud", "barret"],
+        "ref": 0
+    }
+]
