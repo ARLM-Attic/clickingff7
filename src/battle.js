@@ -6,6 +6,12 @@ export default class Battle {
         this.game = game;
         this.story = story;
 
+        this.reload();
+    }
+
+    reload() {
+        this.results = false;
+
         // list of actions to execute
         // Action[]
         this.actionsPanel = [];
@@ -14,8 +20,8 @@ export default class Battle {
         this.chooseEnemies();
 
         // check actions
-        this.run();
         console.log('[BATTLE BEGINS]');
+        this.run();
     }
 
     /**
@@ -23,7 +29,7 @@ export default class Battle {
      */
     chooseEnemies() {
         let enemies = this.story.data.enemies;
-        let nbr = _.random(1, 3);
+        let nbr = 1;//_.random(1, 3);
         let choose = _.sample(enemies, nbr);
 
         this.enemies = [];
@@ -37,7 +43,7 @@ export default class Battle {
      * @returns {Array|*}
      */
     units() {
-        var units;
+        let units;
         units = _.union(this.game.team, this.enemies);
         units = _.filter(units, (u) => {
             return u.hp > 0;
@@ -49,34 +55,42 @@ export default class Battle {
      * DO THE BATTLE
      */
     run() {
-        // check end
-        if (this.checkEnd()) {
-            this.game.$timeout.cancel(this.timer);
-            this.end();
-            return;
-        }
+        console.log('');
+        console.log('waiting 2s..');
+        console.log('');
+        this.timer = this.game.$timeout(() => {
 
-        // move all units
-        var units = this.units();
-        for (var u of units) {
-            u.atb += u.dex;
-        }
+            // check end
+            if (this.checkEnd()) {
+                this.game.$timeout.cancel(this.timer);
+                this.end();
+                return;
+            }
 
-        // choose the fastest unit
-        var unit = _.max(units, "atb");
+            console.log('begin turn');
 
-        // set its atb to 0
-        unit.atb = 0;
+            // move all units
+            let units = this.units();
+            for (let u of units) {
+                u.atb += u.dex;
+            }
 
-        // make his move
-        unit.ai(this, () => {
+            // choose the fastest unit
+            let unit = _.max(units, "atb");
 
-            // when his move over, go next turn
-            this.timer = this.game.$timeout(() => {
+            // set its atb to 0
+            unit.atb = 0;
+
+            // make his move
+            console.log('-unit ai', unit.id);
+            unit.ai(this, () => {
+
+                // when his move over, go next turn
+                console.log('-end turn');
                 this.run();
-            }, 2000);
 
-        });
+            });
+        }, 1500);
     }
 
     /**
@@ -92,11 +106,11 @@ export default class Battle {
      * @returns {boolean}
      */
     checkEnd() {
-        var sumHpAllies = _.reduce(this.game.team, function (sum, ally) {
+        let sumHpAllies = _.reduce(this.game.team, function (sum, ally) {
             return sum + ally.hp;
         }, 0);
 
-        var sumHpEnemies = _.reduce(this.enemies, function (sum, ally) {
+        let sumHpEnemies = _.reduce(this.enemies, function (sum, ally) {
             return sum + ally.hp;
         }, 0);
 
@@ -108,6 +122,32 @@ export default class Battle {
      */
     end() {
         console.log('[BATTLE ENDS]');
+        this.results = true;
+
+        let sumHpAllies = _.reduce(this.game.team, function (sum, ally) {
+            return sum + ally.hp;
+        }, 0);
+
+        let fail = (sumHpAllies <= 0);
+
+        if (!fail) {
+            this.count = 5;
+            this.newBattle();
+        } else {
+            this.goStory();
+        }
+    }
+
+    newBattle() {
+        if (this.count == 0) {
+            this.game.battle = new Battle(this.game, this.story);
+            this.game.$timeout.cancel(this.timer);
+            return;
+        }
+        this.timer = this.game.$timeout(() => {
+            this.count--;
+            this.newBattle();
+        }, 1000);
     }
 
 }

@@ -22,13 +22,13 @@ export default class Character extends Unit {
         c.data = game.store.getCharacter(ref);
 
         // initial weapon
-        c.weapon = Weapon.get(game, c.data.weapon.type, c.data.weapon.name);
+        c.weapon = Weapon.get(game, c.data.weapon.ref);
 
         // level
         c.lvl = 1;
 
         // css reference
-        c.id = _.uniqueId(name);
+        c.id = _.uniqueId(ref);
 
         // fill hp & mp
         c.recover();

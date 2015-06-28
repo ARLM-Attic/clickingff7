@@ -88,8 +88,26 @@ export default class Action {
      * @param fn
      */
     animAttack(unit, damage, fn) {
-        let selector = '#' + unit.id + ' .damage';
-        $(selector).text(damage.hits);
+        let selector;
+
+        // Attacker animation
+        selector = '#' + this.character.id + ' .avatar';
+        let seq = [
+            {e: $(selector), p: {translateX: 5}, o: {duration: 400}},
+            {e: $(selector), p: {translateX: -1}, o: {duration: 400}}
+        ];
+        $.Velocity.RunSequence(seq);
+
+        // Damage animation
+        selector = '#' + unit.id + ' .damage';
+
+        let html = '';
+        if (damage.critical) {
+            html += '<div class="critical">Critique</div>';
+        }
+        html +='<div class="hits">' + damage.hits + '</div>';
+        $(selector).html(html);
+
         $(selector).velocity("transition.slideUpIn", 1000, () => {
             $(selector).text("");
             unit.getDamaged(damage);

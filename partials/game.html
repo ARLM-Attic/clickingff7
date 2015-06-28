@@ -47,7 +47,7 @@
         </div>
 
         <!-- enemies list -->
-        <div ng-repeat="enemy in game.battle.enemies" class="card_enemy" id="{{enemy.id}}">
+        <div ng-if="game.battle && !game.battle.results" ng-repeat="enemy in game.battle.enemies" class="card_enemy" id="{{enemy.id}}">
             <div class="avatar avatar-enemy">
                 <div class="damage"></div>
                 <img ng-src="{{enemy.data.image}}" alt="avatar" height="80" />
@@ -69,6 +69,17 @@
 
             <div style="clear: left"></div>
         </div>
+
+        <!-- enemies list -->
+        <div ng-if="game.battle && game.battle.results" class="results">
+
+            <div>WIN</div>
+
+            <div>{{game.battle.count}}..</div>
+
+        </div>
     </div>
+
+
 
 </div>

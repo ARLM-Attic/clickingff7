@@ -4,24 +4,20 @@ export default class Store {
         this.characters = [];
         this.weapons = [];
         this.stories = [];
+        this.enemies = [];
     }
 
     getCharacter(ref) {
         try {
-            let c = _.find(this.characters, {ref: ref});
-            c.ref = ref;
-            return c;
+            return _.find(this.characters, {ref: ref});
         } catch (err) {
             throw new Error('Character not found');
         }
     }
 
-    getWeapon(type, ref) {
+    getWeapon(ref) {
         try {
-            let w = _.find(this.weapons, {ref: ref});
-            w.ref = ref;
-            w.type = type;
-            return w;
+            return _.find(this.weapons, {ref: ref});
         } catch (err) {
             throw new Error('Weapon not found');
         }
