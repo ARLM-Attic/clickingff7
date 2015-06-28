@@ -1,90 +1,84 @@
-{
-    "broadswords": {
-        "busterSword": {
-            "att": 18,
-            "att%": -4,
-            "mgi": 2,
-            "gils": 0,
-            "holes": 1
-        },"busterSword2": {
-            "att": 18,
-            "att%": -4,
-            "mgi": 2,
-            "gils": 0,
-            "holes": 1
-        }
+[
+    {
+        "ref": "busterSword",
+        "type": "broadsword",
+        "att": 18,
+        "att%": -4,
+        "mgi": 2,
+        "gils": 0,
+        "holes": 1
     },
-    "gunArms": {
-        "gatlingGun": {
-            "att": 14,
-            "att%": -3,
-            "mgi": 0,
-            "gils": 0,
-            "holes": 1
-        }
+    {
+        "ref": "gatlingGun",
+        "type": "gunArm",
+        "att": 14,
+        "att%": -3,
+        "mgi": 0,
+        "gils": 0,
+        "holes": 1
     },
-    "knuckles": {
-        "leatherGlove": {
-            "att": 13,
-            "att%": -1,
-            "mgi": 0,
-            "lck": 2,
-            "gils": 0,
-            "holes": 1
-        }
+    {
+        "ref": "leatherGlove",
+        "type": "knuckle",
+        "att": 13,
+        "att%": -1,
+        "mgi": 0,
+        "lck": 2,
+        "gils": 0,
+        "holes": 1
     },
-    "staves": {
-        "guardStick": {
-            "att": 12,
-            "att%": -1,
-            "mgi": 2,
-            "res": 4,
-            "def": 1,
-            "gils": 0,
-            "holes": 1
-        }
+    {
+        "ref": "guardStick",
+        "type": "stave",
+        "att": 12,
+        "att%": -1,
+        "mgi": 2,
+        "res": 4,
+        "def": 1,
+        "gils": 0,
+        "holes": 1
     },
-    "headdresses": {
-        "mythrilClip": {
-            "att": 24,
-            "mgi": 6,
-            "gils": 0,
-            "holes": 1
-        }
+    {
+        "ref": "mythrilClip",
+        "type": "headdresse",
+        "att": 24,
+        "mgi": 6,
+        "gils": 0,
+        "holes": 1
     },
-    "shuriken": {
-        "4pShuriken": {
-            "att": 23,
-            "mgi": 6,
-            "gils": 0,
-            "holes": 1
-        }
+    {
+        "ref": "4pShuriken",
+        "type": "shuriken",
+        "att": 23,
+        "mgi": 6,
+        "gils": 0,
+        "holes": 1
     },
-    "megaphones": {
-        "yellowMp": {
-            "att": 36,
-            "mgi": 8,
-            "gils": 0,
-            "holes": 2
-        }
+    {
+        "ref": "yellowMp",
+        "type": "megaphone",
+        "att": 36,
+        "mgi": 8,
+        "gils": 0,
+        "holes": 2
     },
-    "guns": {
-        "quicksilver": {
-            "att": 38,
-            "att%": 10,
-            "mgi": 10,
-            "gils": 0,
-            "holes": 2
-        }
+    {
+        "ref": "quicksilver",
+        "type": "gun",
+        "att": 38,
+        "att%": 10,
+        "mgi": 10,
+        "gils": 0,
+        "holes": 2
     },
-    "spears": {
-        "spear": {
-            "att": 44,
-            "att%": -3,
-            "mgi": 8,
-            "gils": 0,
-            "holes": 2,
-            "linked": true
-        }
+    {
+        "ref": "spear",
+        "type": "spear",
+        "att": 44,
+        "att%": -3,
+        "mgi": 8,
+        "gils": 0,
+        "holes": 2,
+        "linked": true
     }
-}
+]

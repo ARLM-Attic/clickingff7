@@ -1,138 +1,146 @@
-{
-  "cloud": {
-    "image": "/img/characters/cloud.jpg",
-    "name": "cloud",
-    "hp": 9400,
-    "mp": 940,
-    "str": 100,
-    "def": 90,
-    "mgi": 95,
-    "res": 95,
-    "dex": 14,
-    "lck": 16,
-    "weapon": {
-      "type": "broadswords",
-      "name": "busterSword"
+[
+    {
+        "image": "/img/characters/cloud.jpg",
+        "ref": "cloud",
+        "hp": 80,
+        "mp": 9,
+        "str": 10,
+        "def": 9,
+        "mgi": 9,
+        "res": 9,
+        "dex": 7,
+        "lck": 8,
+        "weapon": {
+            "type": "broadswords",
+            "name": "busterSword"
+        }
+    },
+    {
+        "image": "/img/characters/barret.jpg",
+        "ref": "barret",
+        "hp": 100,
+        "mp": 7,
+        "str": 9,
+        "def": 10,
+        "mgi": 6,
+        "res": 7,
+        "dex": 4,
+        "lck": 6,
+        "weapon": {
+            "type": "gunArms",
+            "name": "gatlingGun"
+        }
+    },
+    {
+        "image": "/img/characters/tifa.jpg",
+        "ref": "tifa",
+        "hp": 8500,
+        "mp": 850,
+        "str": 90,
+        "def": 80,
+        "mgi": 75,
+        "res": 90,
+        "dex": 16,
+        "lck": 18,
+        "weapon": {
+            "type": "knuckles",
+            "name": "leatherGlove"
+        }
+    },
+    {
+        "image": "/img/characters/aerith.jpg",
+        "ref": "aerith",
+        "hp": 7900,
+        "mp": 1000,
+        "str": 60,
+        "def": 75,
+        "mgi": 100,
+        "res": 100,
+        "dex": 10,
+        "lck": 14,
+        "weapon": {
+            "type": "staves",
+            "name": "guardStick"
+        }
+    },
+    {
+        "image": "/img/characters/redxiii.jpg",
+        "ref": "redxiii",
+        "hp": 9700,
+        "mp": 880,
+        "str": 80,
+        "def": 85,
+        "mgi": 80,
+        "res": 90,
+        "dex": 20,
+        "lck": 14,
+        "weapon": {
+            "type": "headdresses",
+            "name": "mythrilClip"
+        }
+    },
+    {
+        "image": "/img/characters/yuffie.jpg",
+        "ref": "yuffie",
+        "hp": 8200,
+        "mp": 820,
+        "str": 75,
+        "def": 80,
+        "mgi": 85,
+        "res": 85,
+        "dex": 18,
+        "lck": 20,
+        "weapon": {
+            "type": "shuriken",
+            "name": "4pShuriken"
+        }
+    },
+    {
+        "image": "/img/characters/caitsith.jpg",
+        "ref": "caitsith",
+        "hp": 8800,
+        "mp": 910,
+        "str": 70,
+        "def": 70,
+        "mgi": 90,
+        "res": 95,
+        "dex": 10,
+        "lck": 18,
+        "weapon": {
+            "type": "megaphones",
+            "name": "yellowMp"
+        }
+    },
+    {
+        "image": "/img/characters/vincent.jpg",
+        "ref": "vincent",
+        "hp": 7600,
+        "mp": 970,
+        "str": 65,
+        "def": 70,
+        "mgi": 90,
+        "res": 95,
+        "dex": 10,
+        "lck": 18,
+        "weapon": {
+            "type": "guns",
+            "name": "quicksilver"
+        }
+    },
+    {
+        "image": "/img/characters/cid.jpg",
+        "ref": "cid",
+        "hp": 9100,
+        "mp": 790,
+        "str": 85,
+        "def": 95,
+        "mgi": 70,
+        "res": 80,
+        "dex": 12,
+        "lck": 12,
+        "weapon": {
+            "type": "spears",
+            "name": "spear"
+        }
     }
-  },
-  "barret": {
-    "image": "/img/characters/barret.jpg",
-    "hp": 10000,
-    "mp": 760,
-    "str": 95,
-    "def": 100,
-    "mgi": 65,
-    "res": 75,
-    "dex": 8,
-    "lck": 12,
-    "weapon": {
-      "type": "gunArms",
-      "name": "gatlingGun"
-    }
-  },
-  "tifa": {
-    "image": "/img/characters/tifa.jpg",
-    "hp": 8500,
-    "mp": 850,
-    "str": 90,
-    "def": 80,
-    "mgi": 75,
-    "res": 90,
-    "dex": 16,
-    "lck": 18,
-    "weapon": {
-      "type": "knuckles",
-      "name": "leatherGlove"
-    }
-  },
-  "aerith": {
-    "image": "/img/characters/aerith.jpg",
-    "hp": 7900,
-    "mp": 1000,
-    "str": 60,
-    "def": 75,
-    "mgi": 100,
-    "res": 100,
-    "dex": 10,
-    "lck": 14,
-    "weapon": {
-      "type": "staves",
-      "name": "guardStick"
-    }
-  },
-  "redxiii": {
-    "image": "/img/characters/redxiii.jpg",
-    "hp": 9700,
-    "mp": 880,
-    "str": 80,
-    "def": 85,
-    "mgi": 80,
-    "res": 90,
-    "dex": 20,
-    "lck": 14,
-    "weapon": {
-      "type": "headdresses",
-      "name": "mythrilClip"
-    }
-  },
-  "yuffie": {
-    "image": "/img/characters/yuffie.jpg",
-    "hp": 8200,
-    "mp": 820,
-    "str": 75,
-    "def": 80,
-    "mgi": 85,
-    "res": 85,
-    "dex": 18,
-    "lck": 20,
-    "weapon": {
-      "type": "shuriken",
-      "name": "4pShuriken"
-    }
-  },
-  "caitsith": {
-    "image": "/img/characters/caitsith.jpg",
-    "hp": 8800,
-    "mp": 910,
-    "str": 70,
-    "def": 70,
-    "mgi": 90,
-    "res": 95,
-    "dex": 10,
-    "lck": 18,
-    "weapon": {
-      "type": "megaphones",
-      "name": "yellowMp"
-    }
-  },
-  "vincent": {
-    "image": "/img/characters/vincent.jpg",
-    "hp": 7600,
-    "mp": 970,
-    "str": 65,
-    "def": 70,
-    "mgi": 90,
-    "res": 95,
-    "dex": 10,
-    "lck": 18,
-    "weapon": {
-      "type": "guns",
-      "name": "quicksilver"
-    }
-  },
-  "cid": {
-    "image": "/img/characters/cid.jpg",
-    "hp": 9100,
-    "mp": 790,
-    "str": 85,
-    "def": 95,
-    "mgi": 70,
-    "res": 80,
-    "dex": 12,
-    "lck": 12,
-    "weapon": {
-      "type": "spears",
-      "name": "spear"
-    }
-  }
-}
+]

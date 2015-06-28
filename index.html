@@ -90,18 +90,24 @@
 <script>
     System.config({
         meta: {
+            'bower_components/jquery/dist/jquery'                                 : {},
             'bower_components/angular/angular'                                    : {exports: 'angular'},
             'bower_components/angular-route/angular-route'                        : {deps: ['angular']},
             'bower_components/angular-route/angular-translate'                    : {deps: ['angular']},
             'bower_components/angular-route/angular-translate-loader-static-files': {deps: ['angular']},
-            'bower_components/lodash/lodash'                                      : {}
+            'bower_components/lodash/lodash'                                      : {},
+            'bower_components/velocity/velocity'                                  : {},
+            'bower_components/velocity/velocity.ui'                               : {}
         },
         map : {
+            'jquery'                               : 'bower_components/jquery/dist/jquery',
             'angular'                              : 'bower_components/angular/angular',
             'angular-route'                        : 'bower_components/angular-route/angular-route',
             'angular-translate'                    : 'bower_components/angular-translate/angular-translate',
             'angular-translate-loader-static-files': 'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files',
-            'lodash'                               : 'bower_components/lodash/lodash'
+            'lodash'                               : 'bower_components/lodash/lodash',
+            'velocity'                             : 'bower_components/velocity/velocity',
+            'velocity.ui'                          : 'bower_components/velocity/velocity.ui'
         }
     });
     System.import('dist/bootstrap');

@@ -2,135 +2,112 @@ import Enemy from './enemy';
 
 export default class Battle {
 
-    constructor(game) {
+    constructor(game, story) {
         this.game = game;
+        this.story = story;
+
+        // list of actions to execute
+        // Action[]
+        this.actionsPanel = [];
+
+        // choose enemies
         this.chooseEnemies();
+
+        // check actions
         this.run();
+        console.log('[BATTLE BEGINS]');
     }
 
+    /**
+     *
+     */
     chooseEnemies() {
-        let groups = this.story().enemies;
-        let group = _.sample(groups);
+        let enemies = this.story.data.enemies;
+        let nbr = _.random(1, 3);
+        let choose = _.sample(enemies, nbr);
 
         this.enemies = [];
-        for (let e of group) {
-            this.enemies.push(Enemy.get(this.game, e));
+        for (let e of choose) {
+            this.enemies.push(Enemy.get(this, e));
         }
     }
 
-    story() {
-        return this.game.story.data;
+    /**
+     *
+     * @returns {Array|*}
+     */
+    units() {
+        var units;
+        units = _.union(this.game.team, this.enemies);
+        units = _.filter(units, (u) => {
+            return u.hp > 0;
+        });
+        return units;
     }
 
     /**
      * DO THE BATTLE
      */
     run() {
-
-    }
-
-    nextTurn() {
-        let auto = false;
-        let turns = this.getTurns();
-        let unit = turns[0];
-        let playerTurn = unit.constructor.name == 'Character';
-
-        // choose default enemy target
-        if (!this.target) {
-            this.target = this.enemies[0];
+        // check end
+        if (this.checkEnd()) {
+            this.game.$timeout.cancel(this.timer);
+            this.end();
+            return;
         }
 
-        if (playerTurn || auto) { // <-- HERE
-            unit.attack(() => {
-                this.nextTurn();
-            });
-        } else {
-            this.currentUnit = unit;
+        // move all units
+        var units = this.units();
+        for (var u of units) {
+            u.atb += u.dex;
         }
-    }
 
-    execute(type, args = []) {
-        let name;
-        switch (type) {
-            case 'attack':
-                this.currentUnit.attack(() => {
-                    this.nextTurn();
-                });
-                break;
-            case 'guard':
-                unit.guard();
-                break;
-            case 'materia':
-                name = [0];
-                unit.materia(name);
-                break;
-            case 'item':
-                name = args[0];
-                unit.item(name);
-                break;
-        }
+        // choose the fastest unit
+        var unit = _.max(units, "atb");
+
+        // set its atb to 0
+        unit.atb = 0;
+
+        // make his move
+        unit.ai(this, () => {
+
+            // when his move over, go next turn
+            this.timer = this.game.$timeout(() => {
+                this.run();
+            }, 2000);
+
+        });
     }
 
     /**
-     * Get the next turns actions
-     * @returns {Array}
+     *
+     * @param action
      */
-    getTurns() {
-        // gathering everyone
-        let units = _.union(this.game.team, this.enemies);
-
-        // initialize
-        let sums = {};
-        for (let i of units) {
-            sums[i.data.name] = 0;
-        }
-
-        // simulating
-        let turns = [];
-        while (turns.length < 6) {
-            for (let i of units) {
-                i.sum += i.getMove();
-            }
-            let unit = _.max(units, 'sum');
-            unit.sum = 0;
-            turns.push(unit);
-        }
-
-        return turns;
+    addAction(action) {
+        this.actionsPanel.push(action);
     }
 
+    /**
+     *
+     * @returns {boolean}
+     */
+    checkEnd() {
+        var sumHpAllies = _.reduce(this.game.team, function (sum, ally) {
+            return sum + ally.hp;
+        }, 0);
+
+        var sumHpEnemies = _.reduce(this.enemies, function (sum, ally) {
+            return sum + ally.hp;
+        }, 0);
+
+        return (sumHpAllies == 0 || sumHpEnemies == 0);
+    }
+
+    /**
+     *
+     */
     end() {
-        // todo handle rewards
-
-        this.battleNo++;
-
-        if (this.battleNo <= this.getPart().battles) {
-            this.run();
-        } else {
-            // clean registy
-            console.log('[BATTLE ENDS]');
-            this.getStory().nextPart(this.partNo);
-            this.game.battle = null;
-            this.game.story = null;
-            this.game.save();
-            this.game.mode = 'free';
-            this.game.$location.path('/story');
-        }
-    }
-
-    /**
-     * todo save team hp/mp + enemies
-     * @returns {*}
-     */
-    save() {
-        let save = _.pick(this, 'storyNo', 'partNo', 'battleNo');
-
-        save.enemies = [];
-        for (var e of this.enemies) {
-            save.enemies.push(e.data.name);
-        }
-
-        return save;
+        console.log('[BATTLE ENDS]');
     }
 
 }

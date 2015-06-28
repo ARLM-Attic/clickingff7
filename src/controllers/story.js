@@ -12,8 +12,8 @@ class StoryController extends Controller {
     }
 
     goSelectedStory() {
-        this.game.story = this.story;
-        this.game.battle = new Battle(this.game);
+        // new battle
+        this.game.battle = new Battle(this.game, this.story);
 
         // go to game section
         this.$location.path('/game');

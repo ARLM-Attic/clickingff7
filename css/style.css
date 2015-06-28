@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+
 body {
     margin: 0;
     padding: 0;
@@ -293,14 +295,15 @@ table tr.item td {
     clear: left;
 }
 
-.avatar, .avatar_enemy {
+.avatar {
     float: left;
     margin-right: 5px;
     width: 80px;
     height: 93px;
+    position: relative;
 }
 
-.avatar_enemy {
+.avatar-enemy {
     border: 1px solid #999;
 }
 
@@ -325,7 +328,7 @@ table tr.item td {
 
 /* style pour les barres */
 
-.bar-label {
+.progress-label {
     position: absolute;
     right: 0;
     color: #000;
@@ -333,13 +336,13 @@ table tr.item td {
 
 .progress {
     position: relative;
-    margin-top: 2px;
     text-align: center;
     font-size: 11px;
     color: #fff;
-    height: 18px;
+    height: 11px;
     margin-top: 5px;
     border-top: 1px solid #999;
+    width: 200px;
 }
 
 .game_load {
@@ -355,106 +358,59 @@ table tr.item td {
     left: 0;
 }
 
-.enemy_hp {
-    width: 300px;
-}
-
-.enemy_hp_progress {
-    background-color: #D49B9B;
+.progress-bar {
     position: absolute;
-    height: 18px;
+    height: 11px;
     top: 0;
     left: 0;
-}
-
-.enemy_mp {
-    width: 300px;
-}
-
-.enemy_mp_progress {
-    background-color: #656565;
-    position: absolute;
-    height: 18px;
-    top: 0;
-    right: 0;
-}
-
-.characters_hp {
-    width: 300px;
-}
-
-.characters_hp_progress {
-    background-color: #BEECBE;
-    position: absolute;
-    height: 18px;
-    top: 0;
-    left: 0;
-}
-
-.characters_mp {
-    width: 300px;
-}
-
-.characters_mp_progress {
-    background-color: #C9DBF8;
-    position: absolute;
-    height: 18px;
-    top: 0;
-    left: 0;
-}
-
-.characters_limit {
-    width: 300px;
-}
-
-.characters_limit_progress {
-    background-color: #F0BE98;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
-}
-
-.characters_hp, .characters_mp, .characters_xp {
     width: 200px;
-}
-
-.hp_progress, .mp_progress, .xp_progress {
-    background-color: #C6B7D6;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
-}
-
-.materia_ap {
-    width: 200px;
-}
-
-.materia_ap_progress {
-    background-color: #C6B7D6;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
-}
-
-.xp_progress,
-.ap_progress,
-.enemy_hp_progress,
-.enemy_mp_progress,
-.characters_hp_progress,
-.characters_mp_progress,
-.characters_limit_progress {
     -webkit-transition: 0.5s linear all;
     -moz-transition: 0.5s linear all;
     -o-transition: 0.5s linear all;
     transition: 0.5s linear all;
 }
 
-.weakness, .resistance {
-    width: 16px;
-    margin-bottom: -3px;
+.progress-full {
+    -webkit-transition-duration: 0s;
+    -moz-transition-duration: 0s;
+    -o-transition-duration: 0s;
+    transition-duration: 0s;
+    background-color: orange;
+}
+
+.progress-hp-enemy {
+    background-color: #D49B9B;
+}
+
+.progress-hp {
+    background-color: #BEECBE;
+}
+
+.progress-mp {
+    background-color: #C9DBF8;
+}
+
+.progress-limit {
+    background-color: #F0BE98;
+    height: 9px;
+}
+
+.progress-atb {
+    background-color: yellow;
+    height: 9px;
+}
+
+.progress-ap, .progress-xp {
+    background-color: #C6B7D6;
+}
+
+.damage {
+    position: absolute;
+    font-size: 16px;
+    color: #FFF;
+    text-shadow: 0px 0px 10px #000;
+    font-family: 'Press Start 2P', cursive;
+    z-index: 9999;
 }
 
 /* phs section */

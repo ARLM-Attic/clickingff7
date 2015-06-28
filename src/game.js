@@ -149,7 +149,7 @@ class Game {
 
     /**
      * Add a character
-     * @param position
+     * @param position (backup|team)
      * @param name
      */
     addCharacter(position, name) {
@@ -164,16 +164,6 @@ class Game {
         for (let i = 0; i <= this.currentStory; i++ ) {
             this.stories.push(Story.get(this, i));
         }
-    }
-
-    /**
-     * CREATE NEW BATTLE
-     */
-    newBattle(data) {
-        this.battle = new Battle(this, data);
-        this.battle.run();
-        this.mode = 'battle';
-        this.$location.path('/battle');
     }
 
     /**

@@ -4,29 +4,25 @@
 
         <!-- characters list -->
         <div id="step1">
-            <div ng-repeat="(i, character) in game.team" class="card">
-                <div class="avatar">
+            <div ng-repeat="(i, character) in game.team" class="card" id="{{character.id}}">
+                <div class="avatar avatar-team">
+                    <div class="damage"></div>
                     <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
                 </div><!--
 
                 --><div class="main">
 
-                    <div class="progress characters_hp">
-                        <div class="hp_progress" ng-style="{width: character.hpProgress(200) + 'px'}"></div>
-                        <span class="bar-label">{{character.hp}} / {{character.getHpMax()}} HP</span>
+                    <div class="progress">
+                        <div class="progress-bar progress-hp" ng-style="{width: character.progress('hp', 200) + 'px'}"></div>
+                        <span class="progress-label">{{character.hpMax}} HP</span>
                     </div>
 
-                    <div class="progress characters_mp">
-                        <div class="mp_progress" ng-style="{width: character.mpProgress(200) + 'px'}"></div>
-                        <span class="bar-label">{{character.mp}} / {{character.getMpMax()}} MP</span>
+                    <div class="progress">
+                        <div class="progress-bar progress-mp" ng-style="{width: character.progress('mp', 200) + 'px'}"></div>
+                        <span class="progress-label">{{character.mpMax}} MP</span>
                     </div>
 
-                    <div class="progress characters_atb">
-                        <div class="atb_progress" ng-style="{width: character.atbProgress(200) + 'px'}"></div>
-                        <span class="bar-label">ATB</span>
-                    </div>
-
-                    <div>{{character.data.name}} <strong>(LVL{{character.lvl}})</strong></div>
+                    <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
 
                     <div class="actions">
                         <div>[A]</div>
@@ -51,16 +47,17 @@
         </div>
 
         <!-- enemies list -->
-        <div ng-repeat="enemy in game.battle.enemies" class="card_enemy">
-            <div class="avatar_enemy">
+        <div ng-repeat="enemy in game.battle.enemies" class="card_enemy" id="{{enemy.id}}">
+            <div class="avatar avatar-enemy">
+                <div class="damage"></div>
                 <img ng-src="{{enemy.data.image}}" alt="avatar" height="80" />
             </div><!--
 
-            --><div class="main_enemy">
+            --><div class="main">
 
-                <div class="progress enemies_hp">
-                    <div class="hp_progress" ng-style="{width: enemy.hpProgress(200) + 'px'}"></div>
-                    <span class="bar-label">{{enemy.hp}} / {{enemy.hpMax}} HP</span>
+                <div class="progress">
+                    <div class="progress-bar progress-hp-enemy" ng-style="{width: enemy.progress('hp', 200) + 'px'}"></div>
+                    <span class="progress-label">{{enemy.hp}} HP</span>
                 </div>
 
                 <div>{{enemy.data.ref}} <span ng-if="enemy.boss" class="boss">BOSS</span></div>

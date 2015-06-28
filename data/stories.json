@@ -2,16 +2,13 @@
     {
         "image": "/img/stories/1.png",
         "enemies": [
-            ["MP", "MP", "MonoDrive"],
-            ["1stRay", "1stRay", "Grunt"],
-            ["MonoDrive", "MonoDrive", "1stRay"],
-            ["Grunt", "Grunt", "MonoDrive"],
-            ["Grunt", "Grunt", "MonoDrive"],
-            ["Grunt", "Grunt", "Sweeper"]
+            "MP", "MonoDrive",
+            "1stRay", "Grunt",
+            "Sweeper"
         ],
         "boss": [["GuardScorpion"]],
         "nbBattles": 10,
-        "level": 3,
+        "level": 1,
         "characters": ["cloud", "barret"],
         "ref": 0
     }

@@ -2,10 +2,16 @@ import Unit from './unit';
 
 export default class Enemy extends Unit {
 
-    static get(game, ref) {
-        let c = new Enemy(game);
+    static get(battle, ref) {
+        let c = new Enemy(battle.game);
 
-        c.data = game.store.getEnemy(ref);
+        c.data = battle.game.store.getEnemy(ref);
+
+        // level
+        c.lvl = battle.story.data.level;
+
+        // css reference
+        c.id = _.uniqueId(ref);
 
         // fill hp & mp
         c.recover();
@@ -16,16 +22,11 @@ export default class Enemy extends Unit {
     load(data) {
         this.data = this.game.store.getEnemy(data.ref);
 
+        // css reference
+        c.id = _.uniqueId(data.ref);
+
         // fill hp & mp
         this.recover();
-    }
-
-    /**
-     * Recover HP & MP
-     */
-    recover() {
-        this.hp = this.data.hp;
-        this.hpMax = this.data.hp;
     }
 
 }

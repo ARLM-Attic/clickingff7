@@ -20,13 +20,13 @@ export default class Weapon {
     }
 
     load(data) {
-        this.data = this.game.store.getWeapon(data.type, data.name);
+        this.data = this.game.store.getWeapon(data.type, data.ref);
     }
 
     save() {
         let save = {};
 
-        save.name = this.data.name;
+        save.ref = this.data.ref;
 
         return save;
     }
