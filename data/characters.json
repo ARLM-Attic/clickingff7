@@ -11,8 +11,8 @@
         "dex": 7,
         "lck": 8,
         "weapon": {
-            "type": "broadswords",
-            "name": "busterSword"
+            "type": "broadsword",
+            "ref": "busterSword"
         }
     },
     {
@@ -27,8 +27,8 @@
         "dex": 4,
         "lck": 6,
         "weapon": {
-            "type": "gunArms",
-            "name": "gatlingGun"
+            "type": "gun-arm",
+            "ref": "gatlingGun"
         }
     },
     {
@@ -43,8 +43,8 @@
         "dex": 16,
         "lck": 18,
         "weapon": {
-            "type": "knuckles",
-            "name": "leatherGlove"
+            "type": "knuckle",
+            "ref": "leatherGlove"
         }
     },
     {
@@ -59,8 +59,8 @@
         "dex": 10,
         "lck": 14,
         "weapon": {
-            "type": "staves",
-            "name": "guardStick"
+            "type": "stave",
+            "ref": "guardStick"
         }
     },
     {
@@ -75,8 +75,8 @@
         "dex": 20,
         "lck": 14,
         "weapon": {
-            "type": "headdresses",
-            "name": "mythrilClip"
+            "type": "headdresse",
+            "ref": "mythrilClip"
         }
     },
     {
@@ -92,7 +92,7 @@
         "lck": 20,
         "weapon": {
             "type": "shuriken",
-            "name": "4pShuriken"
+            "ref": "4pShuriken"
         }
     },
     {
@@ -107,8 +107,8 @@
         "dex": 10,
         "lck": 18,
         "weapon": {
-            "type": "megaphones",
-            "name": "yellowMp"
+            "type": "megaphone",
+            "ref": "yellowMp"
         }
     },
     {
@@ -123,8 +123,8 @@
         "dex": 10,
         "lck": 18,
         "weapon": {
-            "type": "guns",
-            "name": "quicksilver"
+            "type": "gun",
+            "ref": "quicksilver"
         }
     },
     {
@@ -139,8 +139,8 @@
         "dex": 12,
         "lck": 12,
         "weapon": {
-            "type": "spears",
-            "name": "spear"
+            "type": "spear",
+            "ref": "spear"
         }
     }
 ]

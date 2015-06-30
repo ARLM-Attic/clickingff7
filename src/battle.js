@@ -18,10 +18,6 @@ export default class Battle {
 
         // choose enemies
         this.chooseEnemies();
-
-        // check actions
-        console.log('[BATTLE BEGINS]');
-        this.run();
     }
 
     /**
@@ -49,6 +45,15 @@ export default class Battle {
             return u.hp > 0;
         });
         return units;
+    }
+
+    /**
+     *
+     */
+    start() {
+        // check actions
+        console.log('[BATTLE BEGINS]');
+        this.run();
     }
 
     /**
@@ -124,6 +129,8 @@ export default class Battle {
         console.log('[BATTLE ENDS]');
         this.results = true;
 
+        // [saving]
+
         let sumHpAllies = _.reduce(this.game.team, function (sum, ally) {
             return sum + ally.hp;
         }, 0);
@@ -140,8 +147,12 @@ export default class Battle {
 
     newBattle() {
         if (this.count == 0) {
-            this.game.battle = new Battle(this.game, this.story);
             this.game.$timeout.cancel(this.timer);
+            this.game.battle = new Battle(this.game, this.story);
+
+            // [saving]
+
+            this.game.battle.start();
             return;
         }
         this.timer = this.game.$timeout(() => {

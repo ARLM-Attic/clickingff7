@@ -15,8 +15,10 @@ class StoryController extends Controller {
         // new battle
         this.game.battle = new Battle(this.game, this.story);
 
+        // [saving]
+
         // go to game section
-        this.$location.path('/game');
+        this.$location.path('/battle');
     }
 
 }

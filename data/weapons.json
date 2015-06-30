@@ -10,7 +10,7 @@
     },
     {
         "ref": "gatlingGun",
-        "type": "gunArm",
+        "type": "gun-arm",
         "att": 14,
         "att%": -3,
         "mgi": 0,

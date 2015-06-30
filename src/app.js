@@ -1,5 +1,5 @@
 import IndexController from './controllers/index';
-import GameController from './controllers/game';
+import HomeController from './controllers/home';
 import PHSController from './controllers/phs';
 import StoryController from './controllers/story';
 import BattleController from './controllers/battle';
@@ -21,9 +21,9 @@ function config($routeProvider, $translateProvider) {
     $translateProvider.determinePreferredLanguage();
 
     $routeProvider.
-        when('/game', {
-            templateUrl: 'partials/game.html',
-            controller : 'GameController'
+        when('/home', {
+            templateUrl: 'partials/home.html',
+            controller : 'HomeController as ctrl'
         }).
         when('/story', {
             templateUrl: 'partials/story.html',
@@ -62,7 +62,7 @@ function config($routeProvider, $translateProvider) {
             controller : 'SaveCtrl'
         }).
         otherwise({
-            redirectTo: '/game'
+            redirectTo: '/home'
         });
 }
 
@@ -89,7 +89,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
         };
     })
     .controller('IndexController', IndexController)
-    .controller('GameController', GameController)
+    .controller('HomeController', HomeController)
     .controller('PHSController', PHSController)
     .controller('StoryController', StoryController)
     .controller('BattleController', BattleController)

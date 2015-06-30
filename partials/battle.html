@@ -1,75 +1,82 @@
-<nav class="actions">
-    <div class="block">
-        <ul>
-            <li ng-click="ctrl.doAttack()">
-                {{"Attack"|translate}}
-            </li>
-            <li ng-click="doGuard()">
-                {{"Guard"|translate}}
-            </li>
-            <li ng-repeat="materia in ctrl.game.battle.materias" ng-click="doMateria(materia)">
-                {{"Materia "+item|translate}}
-            </li>
-            <li ng-repeat="item in ctrl.game.battle.items" ng-click="doItem(item)">
-                {{"Item "+item|translate}}
-            </li>
-        </ul>
-    </div>
-</nav>
-
 <div class="wrapper">
 
     <div class="c1">
 
         <!-- characters list -->
         <div id="step1">
-            <div ng-repeat="character in ctrl.game.team" class="card">
-                <div class="avatar" ng-click="selectTarget(character)">
+            <div ng-repeat="(i, character) in game.team" class="card" id="{{character.id}}">
+                <div class="avatar avatar-team">
+                    <div class="damage"></div>
                     <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
-                </div>
-                <!--
-                        -->
-                <div class="main">
+                </div><!--
 
-                    <div class="progress characters_xp">
-                        <div class="xp_progress" ng-style="{width: character.xpProgress(200) + 'px'}"></div>
-                        <span class="bar-label">{{character.xp}} / {{character.getXpMax()}} EXP</span>
-                    </div>
+                --><div class="main">
 
-                    <div>{{character.data.name}} <strong>(LVL{{character.lvl}})</strong></div>
-                    <div>
-                        <span class="label">hp</span> {{character.hpMax}}
-                        <span class="label">mp</span> {{character.mpMax}}
-                    </div>
+                <div class="progress">
+                    <div class="progress-bar progress-hp" ng-style="{width: character.progress('hp', 200) + 'px'}"></div>
+                    <span class="progress-label">{{character.hpMax}} HP</span>
                 </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-mp" ng-style="{width: character.progress('mp', 200) + 'px'}"></div>
+                    <span class="progress-label">{{character.mpMax}} MP</span>
+                </div>
+
+                <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
+
+                <div class="actions">
+                    <img ng-repeat="action in character.actions" ng-src="{{action.img}}" />
+                </div>
+
+                <div class="effects">
+
+                </div>
+            </div>
 
                 <div style="clear: left"></div>
             </div>
         </div>
     </div><!--
 
-        --><div class="c3" id="step5">
-        <!-- enemies list -->
-        <div ng-repeat="enemy in ctrl.game.battle.enemies" class="card_enemy">
-            <div class="avatar_enemy" ng-click="selectTarget(character)">
-                <img ng-src="{{enemy.data.image}}" alt="avatar" height="80"/>
-            </div>
-            <!--
-                        -->
-            <div class="main_enemy">
+    --><div class="c3" id="step5">
+    <div ng-hide="game.battle" class="no-data">
+        {{"No enemies"|translate}}
+    </div>
 
-                <div>{{enemy.data.name|translate}} <strong>(LVL{{enemy.data.lvl}})</strong>
-                    <span ng-if="enemy.boss" class="boss">ZONE BOSS</span>
-                    <span ng-if="enemy.miboss" class="boss">BOSS</span>
-                </div>
+    <!-- enemies list -->
+    <div ng-if="game.battle && !game.battle.results" ng-repeat="enemy in game.battle.enemies" class="card_enemy" id="{{enemy.id}}">
+        <div class="avatar avatar-enemy">
+            <div class="damage"></div>
+            <img ng-src="{{enemy.data.image}}" alt="avatar" height="80" />
+        </div><!--
 
-                <div>
-                    <span class="label">hp</span> {{enemy.data.hp}}
-                </div>
-            </div>
+            --><div class="main">
 
-            <div style="clear: left"></div>
+        <div class="progress">
+            <div class="progress-bar progress-hp-enemy" ng-style="{width: enemy.progress('hp', 200) + 'px'}"></div>
+            <span class="progress-label">{{enemy.hp}} HP</span>
+        </div>
+
+        <div>{{enemy.data.ref}} <span ng-if="enemy.boss" class="boss">BOSS</span></div>
+
+        <div class="effects">
+
         </div>
     </div>
+
+        <div style="clear: left"></div>
+    </div>
+
+    <!-- enemies list -->
+    <div ng-if="game.battle && game.battle.results" class="results">
+
+        <div>WIN</div>
+
+        <div>{{game.battle.count}}..</div>
+
+    </div>
+</div>
+
+
 
 </div>

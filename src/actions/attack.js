@@ -4,6 +4,8 @@ export default class ActionAttack extends Action {
 
     constructor(character) {
         super(character);
+
+        this.img = 'img/icons/weapons/' + character.data.weapon.type + '.png';
     }
 
     execute(fn) {

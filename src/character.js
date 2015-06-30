@@ -33,6 +33,8 @@ export default class Character extends Unit {
         // fill hp & mp
         c.recover();
 
+        c.refreshActions();
+
         return c;
     }
 
@@ -50,10 +52,14 @@ export default class Character extends Unit {
 
         // fill hp & mp
         this.recover();
+
+        this.refreshActions();
     }
 
-    // todo
-    get actions() {
+    /**
+     *
+     */
+    refreshActions() {
         let res = [];
 
         // [1]
@@ -77,7 +83,7 @@ export default class Character extends Unit {
          res.push(i);
          }*/
 
-        return res;
+        this.actions = res;
     }
 
     /**

@@ -25,10 +25,7 @@
                     <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
 
                     <div class="actions">
-                        <div>[A]</div>
-                        <div>[D]</div>
-                        <div>[L]</div>
-                        <div ng-repeat="action in character.getActions()">[{{action.ref}}]</div>
+                        <img ng-repeat="action in character.actions" ng-src="{{action.img}}" />
                     </div>
 
                     <div class="effects">
@@ -42,42 +39,11 @@
     </div><!--
 
     --><div class="c3" id="step5">
-        <div ng-hide="game.battle" class="no-data">
-            {{"No enemies"|translate}}
+        <div ng-hide="game.story" class="no-data">
+            {{"No story"|translate}}
         </div>
 
-        <!-- enemies list -->
-        <div ng-if="game.battle && !game.battle.results" ng-repeat="enemy in game.battle.enemies" class="card_enemy" id="{{enemy.id}}">
-            <div class="avatar avatar-enemy">
-                <div class="damage"></div>
-                <img ng-src="{{enemy.data.image}}" alt="avatar" height="80" />
-            </div><!--
 
-            --><div class="main">
-
-                <div class="progress">
-                    <div class="progress-bar progress-hp-enemy" ng-style="{width: enemy.progress('hp', 200) + 'px'}"></div>
-                    <span class="progress-label">{{enemy.hp}} HP</span>
-                </div>
-
-                <div>{{enemy.data.ref}} <span ng-if="enemy.boss" class="boss">BOSS</span></div>
-
-                <div class="effects">
-
-                </div>
-            </div>
-
-            <div style="clear: left"></div>
-        </div>
-
-        <!-- enemies list -->
-        <div ng-if="game.battle && game.battle.results" class="results">
-
-            <div>WIN</div>
-
-            <div>{{game.battle.count}}..</div>
-
-        </div>
     </div>
 
 
