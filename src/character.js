@@ -9,11 +9,6 @@ export default class Character extends Unit {
 
     constructor(game, data) {
         super(game, data);
-
-        this.weapon = null;
-        this.armor = null;
-        this.accessory = null;
-        this.limit = null;
     }
 
     static get(game, ref) {

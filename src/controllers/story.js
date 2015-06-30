@@ -1,24 +1,26 @@
 import Controller from '../controller';
-import Battle from '../battle';
 
 class StoryController extends Controller {
 
     constructor(game, $location) {
         super(game, $location);
+
+        this.seeStory(this.game.story);
     }
 
-    selectStory(story) {
+    seeStory(story) {
         this.story = story;
     }
 
-    goSelectedStory() {
-        // new battle
-        this.game.battle = new Battle(this.game, this.story);
+    selectStory() {
+        // select story
+        this.game.story = this.story;
 
         // [saving]
+        this.game.save();
 
         // go to game section
-        this.$location.path('/battle');
+        this.$location.path('/home');
     }
 
 }

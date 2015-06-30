@@ -16,32 +16,39 @@ export default class Story {
         }
     }
 
-    static get(game, storyNo) {
+    static get(game, ref) {
         let s = new Story(game);
 
-        s.data = game.store.getStory(storyNo);
+        s.data = game.store.getStory(ref);
+
+        s.ref = s.data.ref;
 
         return s;
     }
 
     load(data) {
-        this.data = this.game.store.getStory(data.number);
-        this.completed = data.completed;
+        this.data = this.game.store.getStory(data.ref);
+        this.ref = this.data.ref;
+        this.completed = (typeof data.completed === 'undefined');
     }
 
     complete() {
         this.completed = true;
 
-        // todo search for next story
-        /*let next = this.data.nbr + 1;
-        let added = this.game.addStory(next);
-        if (!added) {
-            // todo display popup
-        }*/
+        // search for next story
+        let next = this.data.ref + 1;
+        let story = _.find(this.game.stories, {ref: next});
+        if (!story) {
+            this.game.story(Story.get(next));
+        }
     }
 
     save() {
-        return _.pick(this, 'completed');
+        let save = _.pick(this, 'ref');
+        if (!this.completed) {
+            save.completed = false;
+        }
+        return save;
     }
 
 }

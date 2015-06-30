@@ -10,6 +10,6 @@
         "nbBattles": 10,
         "level": 1,
         "characters": ["cloud", "barret"],
-        "ref": 0
+        "ref": 1
     }
 ]

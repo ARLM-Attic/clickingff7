@@ -40,45 +40,37 @@ class Game {
 
         this.team = [];
         this.backup = [];
-        this.story = null;
-        this.battle = null;
+        this.stories = [];
+        this.story = null; // current story
+        this.battle = null; // current battle
 
         // general data has been loaded
         this.loaded = false;
 
         // Do the magic :-)
-        this.preload();
-    }
-
-    /**
-     * Build store from json files (path : /data)
-     */
-    preload() {
-        let files = ['characters', 'weapons', 'stories', 'enemies'];
-
-        this._preload(files);
+        //this.preload();
+        this.files = ['characters', 'weapons', 'stories', 'enemies'];
     }
 
     /**
      * Recursive loading
      * @todo display progression
-     * @param files
-     * @private
+     * @param q
      */
-    _preload(files) {
-        let file = files[0];
+    preload(q) {
+        let file = this.files[0];
 
         this.$http.get(`/data/${file}.json`)
             .success((data) => {
                 this.store[file] = data;
 
-                files.shift();
+                this.files.shift();
 
-                if (files.length > 0) {
-                    this._preload(files);
+                if (this.files.length > 0) {
+                    this.preload(q);
                 } else {
                     this.loaded = true;
-                    this.run();
+                    this.run(q);
                 }
             })
             .error(() => {
@@ -89,7 +81,7 @@ class Game {
     /**
      * Run the game, after preloading
      */
-    run() {
+    run(q) {
         // load save
         if (localStorage.save) {
             let save = JSON.parse(localStorage.save);
@@ -97,12 +89,13 @@ class Game {
         } else {
             this.newGame();
         }
+        q.resolve();
     }
 
     /*
      * NEW GAME
      */
-    newGame(level) {
+    newGame() {
         // add all characters
         // note : cloud & barret are in the team
         this.addCharacter('team', 'cloud');
@@ -116,8 +109,7 @@ class Game {
         this.addCharacter('backup', 'vincent');
         this.addCharacter('backup', 'cid');
 
-        this.currentStory = 0;
-        this.refreshStories();
+        this.addStory(1, true);
     }
 
     /**
@@ -135,13 +127,19 @@ class Game {
             }
 
             for (let i of save.stories) {
-                this.stories.push(new Story(this, i));
+                let story = new Story(this, i);
+                this.stories.push(story);
+
+                // select current story
+                if (save.story && save.story.ref == story.ref) {
+                    this.story = story;
+                }
             }
 
-            // do the battle if any ongoing
-            if (save.battle) {
-                this.newBattle(save.battle);
-            }
+            /*// do the battle if any ongoing
+             if (save.battle) {
+             this.newBattle(save.battle);
+             }*/
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
         }
@@ -157,13 +155,17 @@ class Game {
     }
 
     /**
-     * Get available stories
+     * Add a story
+     * @param ref
+     * @param selected
      */
-    refreshStories() {
-        this.stories = [];
-        for (let i = 0; i <= this.currentStory; i++ ) {
-            this.stories.push(Story.get(this, i));
+    addStory(ref, selected) {
+        let story = Story.get(this, ref);
+        this.stories.push(story);
+        if (selected) {
+            this.story = story;
         }
+
     }
 
     /**
@@ -205,9 +207,13 @@ class Game {
             save.stories.push(i.save());
         }
 
-        if (this.battle) {
-            save.battle = this.battle.save();
+        if (this.story) {
+            save.story = this.story.save();
         }
+
+        /*if (this.battle) {
+         save.battle = this.battle.save();
+         }*/
 
         localStorage.save = JSON.stringify(save);
     }

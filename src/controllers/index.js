@@ -21,7 +21,7 @@ class IndexController {
      * Go to the game
      */
     goGame() {
-        this.$location.path("/game");
+        this.$location.path("/home");
     }
 
     /**

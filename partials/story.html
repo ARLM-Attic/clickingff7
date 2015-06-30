@@ -1,6 +1,6 @@
 <div class="c1">
 
-    <div class="story" ng-repeat="story in ctrl.game.stories" ng-click="ctrl.selectStory(story)">
+    <div class="story" ng-repeat="story in ctrl.game.stories" ng-click="ctrl.seeStory(story)">
         <img ng-src="{{story.data.image}}" alt="story" width="30"/>
         {{'Story '+story.data.number|translate}}
     </div>
@@ -19,11 +19,11 @@
 
         <div class="main">
             <p>
-                {{'Story '+ctrl.story.data.number|translate}} <strong>(#{{ctrl.story.data.number}})</strong>
+                {{'Story '+ctrl.story.ref|translate}} <strong>(#{{ctrl.story.ref}})</strong>
             </p>
 
             <p>
-                <button ng-click="ctrl.goSelectedStory()">Go Story</button>
+                <button ng-click="ctrl.selectStory()">Select story</button>
             </p>
         </div>
 

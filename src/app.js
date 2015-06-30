@@ -1,8 +1,9 @@
 import IndexController from './controllers/index';
 import HomeController from './controllers/home';
-import PHSController from './controllers/phs';
+import PhsController from './controllers/phs';
 import StoryController from './controllers/story';
 import BattleController from './controllers/battle';
+import Route from './route';
 
 import Game from './game';
 
@@ -21,46 +22,10 @@ function config($routeProvider, $translateProvider) {
     $translateProvider.determinePreferredLanguage();
 
     $routeProvider.
-        when('/home', {
-            templateUrl: 'partials/home.html',
-            controller : 'HomeController as ctrl'
-        }).
-        when('/story', {
-            templateUrl: 'partials/story.html',
-            controller : 'StoryController as ctrl'
-        }).
-        when('/battle', {
-            templateUrl: 'partials/battle.html',
-            controller : 'BattleController as ctrl'
-        }).
-        when('/shop', {
-            templateUrl: 'partials/shop.html',
-            controller : 'ShopCtrl'
-        }).
-        when('/items', {
-            templateUrl: 'partials/items.html',
-            controller : 'ItemsCtrl'
-        }).
-        when('/equip', {
-            templateUrl: 'partials/equip.html',
-            controller : 'EquipCtrl'
-        }).
-        when('/materia', {
-            templateUrl: 'partials/materia.html',
-            controller : 'MateriaCtrl'
-        }).
-        when('/config', {
-            templateUrl: 'partials/config.html',
-            controller : 'ConfigCtrl'
-        }).
-        when('/phs', {
-            templateUrl: 'partials/phs.html',
-            controller : 'PHSController as ctrl'
-        }).
-        when('/save', {
-            templateUrl: 'partials/save.html',
-            controller : 'SaveCtrl'
-        }).
+        when('/home', Route.get('home')).
+        when('/story', Route.get('story')).
+        when('/battle', Route.get('battle')).
+        when('/phs', Route.get('phs')).
         otherwise({
             redirectTo: '/home'
         });
@@ -90,7 +55,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     })
     .controller('IndexController', IndexController)
     .controller('HomeController', HomeController)
-    .controller('PHSController', PHSController)
+    .controller('PhsController', PhsController)
     .controller('StoryController', StoryController)
     .controller('BattleController', BattleController)
     .service('Game', Game);

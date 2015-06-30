@@ -1,6 +1,6 @@
 import Controller from '../controller';
 
-class PHSController extends Controller {
+class PhsController extends Controller {
 
     constructor(game, $location) {
         super(game, $location);
@@ -10,6 +10,8 @@ class PHSController extends Controller {
         if (this.game.team.length < 3) {
             this.game.joinTeam(character);
         }
+
+        // [saving]
         this.game.save();
     }
 
@@ -17,11 +19,13 @@ class PHSController extends Controller {
         if (this.game.team.length > 1) {
             this.game.leaveTeam(character);
         }
+
+        // [saving]
         this.game.save();
     }
 
 }
 
-PHSController.$inject = ['Game', '$location'];
+PhsController.$inject = ['Game', '$location'];
 
-export default PHSController;
+export default PhsController;

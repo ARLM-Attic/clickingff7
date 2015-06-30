@@ -2,9 +2,9 @@ import Enemy from './enemy';
 
 export default class Battle {
 
-    constructor(game, story) {
+    constructor(game) {
         this.game = game;
-        this.story = story;
+        this.story = game.story;
 
         this.reload();
     }
@@ -148,7 +148,7 @@ export default class Battle {
     newBattle() {
         if (this.count == 0) {
             this.game.$timeout.cancel(this.timer);
-            this.game.battle = new Battle(this.game, this.story);
+            this.game.battle = new Battle(this.game);
 
             // [saving]
 

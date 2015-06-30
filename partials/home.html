@@ -39,8 +39,20 @@
     </div><!--
 
     --><div class="c3" id="step5">
-        <div ng-hide="game.story" class="no-data">
+        <div ng-hide="ctrl.game.story" class="no-data">
             {{"No story"|translate}}
+        </div>
+
+        <img ng-src="{{ctrl.game.story.data.image}}" alt="story" width="60" style="float: left"/>
+
+        <div class="main">
+            <p>
+                {{'Story '+ctrl.game.story.ref|translate}} <strong>(#{{ctrl.game.story.ref}})</strong>
+            </p>
+
+            <p>
+                <button ng-click="ctrl.battle()">Battle</button>
+            </p>
         </div>
 
 
