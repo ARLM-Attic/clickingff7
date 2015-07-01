@@ -1,18 +1,8 @@
-<nav class="links">
-    <div class="block">
-        <ul>
-            <li ng-click="ctrl.quitBattle()">
-                {{"Quit"|translate}}
-            </li>
-        </ul>
-    </div>
-</nav>
-
 <div class="wrapper">
 
     <div class="c1">
 
-        <!-- team list -->
+        <!-- characters list -->
         <div id="step1">
             <div ng-repeat="(i, character) in ctrl.battle.game.team" class="card" id="{{character.id}}">
                 <div class="avatar avatar-team">
@@ -51,35 +41,15 @@
     </div><!--
 
     --><div class="c3" id="step5">
-        <div ng-hide="game.battle" class="no-data">
-            {{"No enemies"|translate}}
-        </div>
 
         <!-- enemies list -->
-        <div ng-repeat="enemy in ctrl.battle.enemies" class="card_enemy" id="{{enemy.id}}">
-            <div class="avatar avatar-enemy">
-                <div class="damage"></div>
-                <img ng-src="{{enemy.data.image}}" alt="avatar" height="80"/>
-            </div><!--
+        <div class="results">
 
-            --><div class="main">
+            <div>XP: {{ctrl.rewards.xp}}</div>
 
-                <div class="progress">
-                    <div class="progress-bar progress-hp-enemy"
-                         ng-style="{width: enemy.progress('hp', 200) + 'px'}"></div>
-                    <span class="progress-label">{{enemy.hp}} HP</span>
-                </div>
+            <div>Redirection: {{ctrl.rewards.count}}..</div>
 
-                <div>{{enemy.data.ref}} <span ng-if="enemy.boss" class="boss">BOSS</span></div>
-
-                <div class="effects">
-
-                </div>
-            </div>
-
-            <div style="clear: left"></div>
         </div>
     </div>
-
 
 </div>

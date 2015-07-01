@@ -139,7 +139,11 @@ class Game {
 
             if (save.battle) {
                 this.battle = new Battle(this, save.battle);
-                this.$location.path('/battle');
+                if (save.battle.rewards) {
+                    this.$location.path('/rewards');
+                } else {
+                    this.$location.path('/battle');
+                }
             }
 
         } catch (err) {

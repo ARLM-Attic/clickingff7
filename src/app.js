@@ -3,6 +3,7 @@ import HomeController from './controllers/home';
 import PhsController from './controllers/phs';
 import StoryController from './controllers/story';
 import BattleController from './controllers/battle';
+import RewardsController from './controllers/rewards';
 import Route from './route';
 
 import Game from './game';
@@ -25,6 +26,7 @@ function config($routeProvider, $translateProvider) {
         when('/home', Route.get('home')).
         when('/story', Route.get('story')).
         when('/battle', Route.get('battle')).
+        when('/rewards', Route.get('rewards')).
         when('/phs', Route.get('phs')).
         otherwise({
             redirectTo: '/home'
@@ -58,6 +60,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('PhsController', PhsController)
     .controller('StoryController', StoryController)
     .controller('BattleController', BattleController)
+    .controller('RewardsController', RewardsController)
     .service('Game', Game);
 
 export default 'clickingff7';

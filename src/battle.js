@@ -1,4 +1,5 @@
 import Enemy from './enemy';
+import Rewards from './rewards';
 
 export default class Battle {
 
@@ -16,11 +17,16 @@ export default class Battle {
     }
 
     init() {
-        this.results = false;
-
         // list of actions to execute
         // Action[]
         this.actionsPanel = [];
+
+        // list of enemies to fight
+        // Enemy[]
+        this.enemies = [];
+
+        // Battle rewards
+        this.rewards = null;
     }
 
     /**
@@ -28,9 +34,12 @@ export default class Battle {
      * @param data
      */
     load(data) {
-        this.enemies = [];
         for (let i of data.enemies) {
-            this.enemies.push(Enemy.get(this, i.ref));
+            this.enemies.push(Enemy.get(this, i));
+        }
+
+        if (data.rewards) {
+            this.rewards = new Rewards(this, data.rewards);
         }
     }
 
@@ -42,7 +51,6 @@ export default class Battle {
         let nbr = 1;//_.random(1, 3);
         let choose = _.sample(enemies, nbr);
 
-        this.enemies = [];
         for (let e of choose) {
             this.enemies.push(Enemy.get(this, e));
         }
@@ -80,7 +88,8 @@ export default class Battle {
         this.timer = this.game.$timeout(() => {
 
             // check end
-            if (this.checkEnd()) {
+            let health = this.getHealth();
+            if (health.team == 0 || health.enemies == 0) {
                 this.game.$timeout.cancel(this.timer);
                 this.end();
                 return;
@@ -122,18 +131,20 @@ export default class Battle {
 
     /**
      *
-     * @returns {boolean}
+     * @returns {{}}
      */
-    checkEnd() {
-        let sumHpAllies = _.reduce(this.game.team, function (sum, ally) {
+    getHealth() {
+        var res = {};
+
+        res.team = _.reduce(this.game.team, function (sum, ally) {
             return sum + ally.hp;
         }, 0);
 
-        let sumHpEnemies = _.reduce(this.enemies, function (sum, ally) {
+        res.enemies = _.reduce(this.enemies, function (sum, ally) {
             return sum + ally.hp;
         }, 0);
 
-        return (sumHpAllies == 0 || sumHpEnemies == 0);
+        return res;
     }
 
     /**
@@ -141,45 +152,17 @@ export default class Battle {
      */
     end() {
         console.log('[BATTLE ENDS]');
-        this.results = true;
+        this.rewards = new Rewards(this);
 
         // [saving]
+        this.game.save();
 
-        let sumHpAllies = _.reduce(this.game.team, function (sum, ally) {
-            return sum + ally.hp;
-        }, 0);
-
-        let fail = (sumHpAllies <= 0);
-
-        if (!fail) {
-            this.count = 5;
-            this.newBattle();
-        } else {
-            this.goStory();
-        }
+        this.game.$location.path('/results');
     }
 
     /**
      *
      */
-    newBattle() {
-        if (this.count == 0) {
-            this.game.$timeout.cancel(this.timer);
-            this.init();
-            this.chooseEnemies();
-
-            // [saving]
-            this.game.save();
-
-            this.start();
-            return;
-        }
-        this.timer = this.game.$timeout(() => {
-            this.count--;
-            this.newBattle();
-        }, 1000);
-    }
-
     quit() {
         this.game.$timeout.cancel(this.timer);
         this.game.battle = null;
@@ -194,7 +177,11 @@ export default class Battle {
 
         save.enemies = [];
         for (let i of this.enemies) {
-            save.enemies.push(i.save());
+            save.enemies.push(i.ref);
+        }
+
+        if (this.rewards) {
+            save.rewards = this.rewards.save();
         }
 
         return save;

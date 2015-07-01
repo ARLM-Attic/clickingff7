@@ -4,18 +4,30 @@ class BattleController extends Controller {
 
     constructor(game, $location) {
         super(game, $location);
-
-        if (this.game.battle) {
-            this.game.battle.start();
-        }
     }
 
+    /**
+     *
+     */
+    init() {
+        this.battle = this.game.battle;
+        this.battle.start();
+    }
+
+    /**
+     *
+     */
     redirect() {
         if (!this.game.battle) {
             this.$location.path('/home');
+        } else {
+            this.init();
         }
     }
 
+    /**
+     *
+     */
     quitBattle() {
         this.game.battle.quit();
 
