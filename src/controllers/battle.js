@@ -16,6 +16,15 @@ class BattleController extends Controller {
         }
     }
 
+    quitBattle() {
+        this.game.battle.quit();
+
+        // [saving]
+        this.game.save();
+
+        this.$location.path('/home');
+    }
+
 }
 
 BattleController.$inject = ['Game', '$location'];

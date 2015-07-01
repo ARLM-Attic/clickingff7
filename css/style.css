@@ -70,6 +70,14 @@ footer .current:after {
     cursor: pointer;
 }
 
+.links {
+    position: absolute;
+    width: 200px;
+    top: -10px;
+    left: -60px;
+    z-index: 2;
+}
+
 .link {
     font-weight: normal;
     font-size: 14px;

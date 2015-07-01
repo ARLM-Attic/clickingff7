@@ -118,6 +118,7 @@ class Game {
      */
     loadGame(save) {
         try {
+
             for (let i of save.team) {
                 this.team.push(new Character(this, i));
             }
@@ -136,10 +137,11 @@ class Game {
                 }
             }
 
-            /*// do the battle if any ongoing
-             if (save.battle) {
-             this.newBattle(save.battle);
-             }*/
+            if (save.battle) {
+                this.battle = new Battle(this, save.battle);
+                this.$location.path('/battle');
+            }
+
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
         }
@@ -211,9 +213,9 @@ class Game {
             save.story = this.story.save();
         }
 
-        /*if (this.battle) {
-         save.battle = this.battle.save();
-         }*/
+        if (this.battle) {
+            save.battle = this.battle.save();
+        }
 
         localStorage.save = JSON.stringify(save);
     }

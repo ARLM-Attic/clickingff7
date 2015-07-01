@@ -2,22 +2,36 @@ import Enemy from './enemy';
 
 export default class Battle {
 
-    constructor(game) {
+    constructor(game, data) {
         this.game = game;
         this.story = game.story;
 
-        this.reload();
+        this.init();
+
+        if (data) {
+            this.load(data);
+        } else {
+            this.chooseEnemies();
+        }
     }
 
-    reload() {
+    init() {
         this.results = false;
 
         // list of actions to execute
         // Action[]
         this.actionsPanel = [];
+    }
 
-        // choose enemies
-        this.chooseEnemies();
+    /**
+     *
+     * @param data
+     */
+    load(data) {
+        this.enemies = [];
+        for (let i of data.enemies) {
+            this.enemies.push(Enemy.get(this, i.ref));
+        }
     }
 
     /**
@@ -145,20 +159,45 @@ export default class Battle {
         }
     }
 
+    /**
+     *
+     */
     newBattle() {
         if (this.count == 0) {
             this.game.$timeout.cancel(this.timer);
-            this.game.battle = new Battle(this.game);
+            this.init();
+            this.chooseEnemies();
 
             // [saving]
+            this.game.save();
 
-            this.game.battle.start();
+            this.start();
             return;
         }
         this.timer = this.game.$timeout(() => {
             this.count--;
             this.newBattle();
         }, 1000);
+    }
+
+    quit() {
+        this.game.$timeout.cancel(this.timer);
+        this.game.battle = null;
+    }
+
+    /**
+     *
+     * @returns {{}}
+     */
+    save() {
+        var save = {};
+
+        save.enemies = [];
+        for (let i of this.enemies) {
+            save.enemies.push(i.save());
+        }
+
+        return save;
     }
 
 }

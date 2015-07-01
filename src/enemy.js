@@ -13,6 +13,8 @@ export default class Enemy extends Unit {
         // css reference
         c.id = _.uniqueId(ref);
 
+        c.ref = ref;
+
         // fill hp & mp
         c.recover();
 
@@ -25,8 +27,14 @@ export default class Enemy extends Unit {
         // css reference
         c.id = _.uniqueId(data.ref);
 
+        c.ref = data.ref;
+
         // fill hp & mp
         this.recover();
+    }
+
+    save() {
+        return _.pick(this, 'ref');
     }
 
 }
