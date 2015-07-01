@@ -1,0 +1,61 @@
+<nav class="links">
+    <div class="block">
+        <ul>
+            <li ng-repeat="character in ctrl.game.team"
+                ng-class="{selected: character.ref == ctrl.ref}"
+                ng-click="ctrl.selectCharacter(character)"
+                class="link">
+                {{character.ref|translate}}
+            </li>
+        </ul>
+    </div>
+    <div class="block">
+        <ul>
+            <li ng-repeat="character in ctrl.game.backup"
+                ng-class="{selected: character.ref == ctrl.ref}"
+                ng-click="ctrl.selectCharacter(character)"
+                class="link">
+                {{character.ref|translate}}
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="wrapper">
+
+    <div class="c1">
+
+        <!-- team list -->
+        <div id="step1">
+            <div class="avatar avatar-team">
+                <div class="damage"></div>
+                <img ng-src="{{ctrl.character.data.image}}" alt="character" width="80" class="icon"/>
+            </div><!--
+
+            --><div class="main">
+
+                <div class="progress">
+                    <div class="progress-bar progress-hp"
+                         ng-style="{width: ctrl.character.progress('hp', 200) + 'px'}"></div>
+                    <span class="progress-label">{{ctrl.character.hpMax}} HP</span>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-mp"
+                         ng-style="{width: ctrl.character.progress('mp', 200) + 'px'}"></div>
+                    <span class="progress-label">{{ctrl.character.mpMax}} MP</span>
+                </div>
+
+                <div>{{ctrl.character.ref|translate}} <strong>(LVL{{ctrl.character.lvl}})</strong></div>
+            </div>
+        </div>
+    </div>
+    <!--
+
+        -->
+    <div class="c3" id="step5">
+
+    </div>
+
+
+</div>

@@ -38,6 +38,7 @@
                 <div class="pull-right new">NEW</div>
                 {{"Story"|translate}}
             </li>
+            <li ng-click="g.goStatus()" ng-class="{ current: g.isActive('/status')}">{{"Status"|translate}}</li>
             <!--li ng-click="g.goShop()" ng-class="{ current: g.isActive('/shop')}">{{"Shop"|translate}}</li-->
             <!--li ng-click="g.goEquip()" ng-class="{ current: g.isActive('/equip')}">{{"Equip"|translate}}</li-->
             <!--li ng-click="g.goMateria()" ng-class="{ current: g.isActive('/materia')}">{{"Materia"|translate}}</li-->

@@ -89,6 +89,10 @@ class Game {
         } else {
             this.newGame();
         }
+
+        // set selected character
+        this.selectedCharacter = this.team[0];
+
         q.resolve();
     }
 

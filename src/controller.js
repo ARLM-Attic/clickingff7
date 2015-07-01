@@ -12,6 +12,9 @@ export default class Controller {
      * @override
      */
     redirect() {
+        if (this.init) {
+            this.init();
+        }
     }
 
 }

@@ -89,6 +89,10 @@ footer .current:after {
     text-decoration: underline;
 }
 
+.link.selected {
+    font-weight: bold;
+}
+
 /* [style commun] */
 
 nav ul {

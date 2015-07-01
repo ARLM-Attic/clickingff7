@@ -1,8 +1,9 @@
-class IndexController {
+import Controller from '../controller';
+
+class IndexController extends Controller {
 
     constructor(game, $location) {
-        this.game = game;
-        this.$location = $location;
+        super(game, $location);
     }
 
     gameFn() {
@@ -10,7 +11,8 @@ class IndexController {
     }
 
     isActive(route) {
-        return route === this.$location.path();
+        let path = this.$location.path()
+        return (path == route || path.indexOf(route) > -1);
     }
 
     isChannel(host) {
@@ -28,18 +30,22 @@ class IndexController {
      * Go to the story
      */
     goStory() {
-        if (this.game.mode !== 'battle') {
-            this.$location.path("/story");
-        }
+        this.$location.path("/story");
+    }
+
+    /**
+     * Go to the story
+     */
+    goStatus() {
+        let character = this.game.selectedCharacter;
+        this.$location.path("/status/" + character.ref);
     }
 
     /**
      * Go to the PHS
      */
-    goPHS(ev) {
-        if (this.game.mode !== 'battle') {
-            this.$location.path("/phs");
-        }
+    goPHS() {
+        this.$location.path("/phs");
     }
 
 }

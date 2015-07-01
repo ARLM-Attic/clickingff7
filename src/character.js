@@ -30,6 +30,9 @@ export default class Character extends Unit {
         // css reference
         c.id = _.uniqueId(ref);
 
+        // ref
+        c.ref = ref;
+
         // fill hp & mp
         c.recover();
 
@@ -56,6 +59,9 @@ export default class Character extends Unit {
 
         // css reference
         this.id = _.uniqueId(data.ref);
+
+        // ref
+        this.ref = data.ref;
 
         // fill hp & mp
         this.recover();
@@ -131,9 +137,8 @@ export default class Character extends Unit {
      * @returns {*}
      */
     save() {
-        var res = _.pick(this, 'lvl', 'xp');
+        var res = _.pick(this, 'lvl', 'xp', 'ref');
 
-        res.ref = this.data.ref;
         res.weapon = this.weapon.save();
 
         return res;
