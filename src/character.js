@@ -11,6 +11,11 @@ export default class Character extends Unit {
         super(game, data);
     }
 
+    /**
+     *
+     * @param game
+     * @param ref
+     */
     static get(game, ref) {
         let c = new Character(game);
 
@@ -28,11 +33,18 @@ export default class Character extends Unit {
         // fill hp & mp
         c.recover();
 
+        // xp
+        c.xp = 0;
+
         c.refreshActions();
 
         return c;
     }
 
+    /**
+     *
+     * @param data
+     */
     load(data) {
         this.data = this.game.store.getCharacter(data.ref);
 
@@ -48,7 +60,30 @@ export default class Character extends Unit {
         // fill hp & mp
         this.recover();
 
+        // xp
+        this.xp = data.xp;
+
         this.refreshActions();
+    }
+
+    /**
+     *
+     * @returns {number}
+     */
+    get xpMax() {
+        return this.lvl * 100;
+    }
+
+    /**
+     *
+     * @param xp
+     */
+    setXp(xp) {
+        this.xp += xp;
+        while (this.xp >= this.xpMax) {
+            this.xp -= this.xpMax;
+            this.lvl++;
+        }
     }
 
     /**
@@ -91,13 +126,17 @@ export default class Character extends Unit {
         action.execute(fn);
     }
 
+    /**
+     *
+     * @returns {*}
+     */
     save() {
-        var save = _.pick(this, 'lvl');
+        var res = _.pick(this, 'lvl', 'xp');
 
-        save.ref = this.data.ref;
-        save.weapon = this.weapon.save();
+        res.ref = this.data.ref;
+        res.weapon = this.weapon.save();
 
-        return save;
+        return res;
     }
 
 }

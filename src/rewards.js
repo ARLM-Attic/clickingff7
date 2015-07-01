@@ -29,7 +29,7 @@ export default class Rewards {
      * @returns {$TimeoutProvider}
      */
     timeout() {
-       return this.game().$timeout;
+        return this.game().$timeout;
     }
 
     /**
@@ -124,12 +124,59 @@ export default class Rewards {
     }
 
     /**
-     *
+     * duration: 1s
+     */
+    start() {
+        if (this.success) {
+            this.timer = this.game().$timeout(() => {
+                let team = this.game().team;
+                let xp = Math.floor(this.xp / team.length); //65
+                this.animXp(xp);
+                this.giveDrops();
+            }, 2000);
+        } else {
+            // todo handle fail
+        }
+    }
+
+    /**
+     * todo handle drops
+     */
+    giveDrops() {
+        // gain drops
+        /*for (let j of this.drops) {
+         //j.store();
+         }*/
+    }
+
+    /**
+     * duration: 3s
+     */
+    animXp(totalXp, sumXp = 0) {
+        this.timer = this.game().$timeout(() => {
+            for (let i of this.game().team) {
+                let totalSeq = 3000;
+                let partSeq = 300;
+                let xp = Math.ceil(totalXp / (totalSeq / partSeq));
+                if (sumXp + xp > totalXp) {
+                    xp = totalXp - sumXp;
+                }
+                sumXp += xp;
+                i.setXp(xp);
+            }
+            if (sumXp < totalXp) {
+                this.animXp(totalXp, sumXp);
+            } else {
+                this.run();
+            }
+        }, 300);
+    }
+
+    /**
+     * duration: 1s
      */
     run() {
-        if (this.count == 0) {
-            this.timeout().cancel(this.timer);
-
+        this.timer = this.game().$timeout(() => {
             // new battle
             this.battle.init();
             this.battle.chooseEnemies();
@@ -139,13 +186,7 @@ export default class Rewards {
 
             // redirection
             this.location().path('/battle');
-
-            return;
-        }
-        this.timer = this.game().$timeout(() => {
-            this.count--;
-            this.run();
-        }, 1000);
+        }, 2000);
     }
 
     /**

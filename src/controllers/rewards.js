@@ -12,7 +12,7 @@ class RewardsController extends Controller {
     init() {
         this.battle = this.game.battle;
         this.rewards = this.battle.rewards;
-        this.rewards.run();
+        this.rewards.start();
     }
 
     /**

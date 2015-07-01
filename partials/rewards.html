@@ -24,6 +24,12 @@
                         <span class="progress-label">{{character.mpMax}} MP</span>
                     </div>
 
+                <div class="progress">
+                    <div class="progress-bar progress-xp"
+                         ng-style="{width: character.progress('xp', 200) + 'px'}"></div>
+                    <span class="progress-label">{{character.xpMax - character.xp}} xp</span>
+                </div>
+
                     <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
 
                     <div class="actions">

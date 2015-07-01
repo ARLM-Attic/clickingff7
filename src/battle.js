@@ -157,7 +157,7 @@ export default class Battle {
         // [saving]
         this.game.save();
 
-        this.game.$location.path('/results');
+        this.game.$location.path('/rewards');
     }
 
     /**
