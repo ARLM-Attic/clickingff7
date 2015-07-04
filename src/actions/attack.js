@@ -5,6 +5,8 @@ export default class ActionAttack extends Action {
     constructor(character) {
         super(character);
 
+        this.ref = 'attack';
+        this.rate = 100;
         this.img = 'img/icons/weapons/' + character.data.weapon.type + '.png';
     }
 

@@ -38,8 +38,20 @@ export default class Unit {
         return this.data.def * this.lvl;
     }
 
+    get mgi() {
+        return this.data.mgi * this.lvl;
+    }
+
+    get res() {
+        return this.data.res * this.lvl;
+    }
+
     get dex() {
         return this.data.dex * this.lvl;
+    }
+
+    get lck() {
+        return this.data.lck * this.lvl;
     }
 
     /**

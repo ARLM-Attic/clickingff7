@@ -1,4 +1,5 @@
 import Item from './item';
+import Weapon from './equipment/weapon';
 
 export default class Rewards {
 
@@ -76,7 +77,7 @@ export default class Rewards {
      * @returns {number}
      */
     setDrops() {
-        let res = 0;
+        let res = [];
 
         for (let i of this.battle.enemies) {
             let drop = i.data.drop;
@@ -86,7 +87,7 @@ export default class Rewards {
 
             let rng = _.random(100);
             if (rng <= drop.rate) {
-                //res.push(this.loadDrop(drop.type, drop.ref));
+                res.push(this.loadDrop(drop.type, drop.ref));
             }
         }
 
@@ -116,7 +117,10 @@ export default class Rewards {
 
         switch (type) {
             case 'item':
-                res = Item.get(this.game, ref);
+                res = Item.get(this.game(), ref);
+                break;
+            case 'weapon':
+                res = Weapon.get(this.game(), ref);
                 break;
         }
 
@@ -144,9 +148,9 @@ export default class Rewards {
      */
     giveDrops() {
         // gain drops
-        /*for (let j of this.drops) {
-         //j.store();
-         }*/
+        for (let i of this.drops) {
+            this.game().addWeapon(i);
+        }
     }
 
     /**
@@ -198,7 +202,7 @@ export default class Rewards {
 
         if (this.drops.length > 0) {
             res.drops = [];
-            for (let i in this.drops) {
+            for (let i of this.drops) {
                 res.drops.push(i.save());
             }
         }

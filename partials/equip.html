@@ -1,55 +1,118 @@
-<nav class="actions">
+<nav class="links">
     <div class="block">
         <ul>
-            <li ng-repeat="character in game.characters.getTeam()" ng-click="character.select()"
-                ng-class="{current: character.name === game.characters.selected.name}">
-                {{character.name}}
+            <li ng-repeat="character in ctrl.game.team"
+                ng-class="{selected: character.ref == ctrl.ref}"
+                ng-click="ctrl.selectCharacter(character)"
+                class="link">
+                {{character.ref|translate}}
+            </li>
+        </ul>
+    </div>
+    <div class="block">
+        <ul>
+            <li ng-repeat="character in ctrl.game.backup"
+                ng-class="{selected: character.ref == ctrl.ref}"
+                ng-click="ctrl.selectCharacter(character)"
+                class="link">
+                {{character.ref|translate}}
             </li>
         </ul>
     </div>
 </nav>
 
-<div class="c1">
+<div class="wrapper">
 
-    <img ng-src="{{game.characters.selected.image}}" width="80" alt="current_character" style="float: left"/>
+    <div class="c1">
 
-    <div class="main">
-        <div>{{game.characters.selected.name}} <strong>(LVL{{game.characters.selected.level}})</strong></div>
-        <div ng-if="game.characters.selected.level > 0">
-            <span class="label">hp</span> {{game.characters.selected.getHpMax()}}
-            <span class="label">mp</span> {{game.characters.selected.getMpMax()}}
-            <span class="label">pwr</span> {{game.characters.selected.getHits()}}
+        <!-- team list -->
+        <div id="step1">
+            <div class="avatar avatar-team">
+                <div class="damage"></div>
+                <img ng-src="{{ctrl.character.data.image}}" alt="character" width="80" class="icon"/>
+            </div><!--
+
+            --><div class="main">
+
+            <div class="progress">
+                <div class="progress-bar progress-hp"
+                     ng-style="{width: ctrl.character.progress('hp', 200) + 'px'}"></div>
+                <span class="progress-label">{{ctrl.character.hpMax}} HP</span>
+            </div>
+
+            <div class="progress">
+                <div class="progress-bar progress-mp"
+                     ng-style="{width: ctrl.character.progress('mp', 200) + 'px'}"></div>
+                <span class="progress-label">{{ctrl.character.mpMax}} MP</span>
+            </div>
+
+            <div>{{ctrl.character.ref|translate}} <strong>(LVL{{ctrl.character.lvl}})</strong></div>
+
+            <div>Stats</div>
+            <p>Orifices :</p>
+            <p>Augmentation :</p>
+
+            <div>Stats</div>
+            <dl>
+                <dt>Strengh</dt>
+                <dd>
+                    {{ctrl.character.str}}
+                    <span ng-if="ctrl.selected">
+                        -> {{ctrl.selected.str}}
+                    </span>
+                </dd>
+                <dt>Defense</dt>
+                <dd>{{ctrl.character.def}}</dd>
+                <dt>Magic</dt>
+                <dd>{{ctrl.character.mgi}}</dd>
+                <dt>Resistance</dt>
+                <dd>{{ctrl.character.res}}</dd>
+                <dt>Dexterity</dt>
+                <dd>{{ctrl.character.dex}}</dd>
+                <dt>Luck</dt>
+                <dd>{{ctrl.character.lck}}</dd>
+            </dl>
         </div>
+        </div>
+    </div><!--
 
-        <p>
-            {{"Equipped weapon"|translate}}<br/>
-            <img ng-src="/img/icons/weapons/{{game.characters.selected.weapon().type}}.png" />
-            {{game.characters.selected.weapon().name}}
-            <span class="desc">({{"Power"|translate}} {{game.characters.selected.weapon().hits}})</span>
-        </p>
+    --><div class="c3" id="step5">
+    <div>Equipment</div>
+    <dl>
+        <dt>Weapon</dt>
+        <dd>
+            <span ng-show="ctrl.character.weapon">{{ctrl.character.weapon.ref}}</span>
+            <span ng-show="!ctrl.character.weapon">N/A</span>
+        </dd>
+        <dt>Armor</dt>
+        <dd>
+            <span ng-show="ctrl.character.armor">{{ctrl.character.armor.ref}}</span>
+            <span ng-show="!ctrl.character.armor">N/A</span>
+        </dd>
+        <dt>Accessory</dt>
+        <dd>
+            <span ng-show="ctrl.character.accessory">{{ctrl.character.accessory.ref}}</span>
+            <span ng-show="!ctrl.character.accessory">N/A</span>
+        </dd>
+    </dl>
 
-        <p>
-            {{"Nb materia"|translate}} +{{game.characters.selected.weapon().maxMaterias}}
-        </p>
-    </div>
+    <div>Available</div>
+    <ul ng-show="ctrl.equip == 'weapon'">
+        <li ng-repeat="weapon in ctrl.weapons">
+            {{weapon.ref}}
+        </li>
+    </ul>
+    <ul ng-show="ctrl.equip == 'armor'">
+        <li ng-repeat="armor in ctrl.armors">
+            {{armor.ref}}
+        </li>
+    </ul>
+    <ul ng-show="ctrl.equip == 'accessory'">
+        <li ng-repeat="accessory in ctrl.accessories">
+            {{accessory.ref}}
+        </li>
+    </ul>
+</div>
 
-</div><!--
 
---><div class="c3">
-    <div ng-if="game.characters.selected.getOthersWeapons().length !== 0">
-        <table style="width: 100%">
-            <tr>
-                <th>{{"Name"|translate}}</th>
-                <th></th>
-            </tr>
-            <tr ng-repeat="weapon in game.characters.selected.getOthersWeapons()" class="weapon">
-                <td>{{weapon.name}}</td>
-                <td><span ng-click="weapon.equip()" class="button">{{"Equip"|translate}}</span></td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="no-data" ng-if="game.characters.selected.getOthersWeapons().length === 0">
-        {{"No weapons"|translate}}
-    </div>
 </div>

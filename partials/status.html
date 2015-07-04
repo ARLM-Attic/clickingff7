@@ -47,14 +47,53 @@
                 </div>
 
                 <div>{{ctrl.character.ref|translate}} <strong>(LVL{{ctrl.character.lvl}})</strong></div>
+
+
+                <div>Stats</div>
+                <dl>
+                    <dt>Strengh</dt>
+                    <dd>{{ctrl.character.str}}</dd>
+                    <dt>Defense</dt>
+                    <dd>{{ctrl.character.def}}</dd>
+                    <dt>Magic</dt>
+                    <dd>{{ctrl.character.mgi}}</dd>
+                    <dt>Resistance</dt>
+                    <dd>{{ctrl.character.res}}</dd>
+                    <dt>Dexterity</dt>
+                    <dd>{{ctrl.character.dex}}</dd>
+                    <dt>Luck</dt>
+                    <dd>{{ctrl.character.lck}}</dd>
+                </dl>
             </div>
         </div>
-    </div>
-    <!--
+    </div><!--
 
-        -->
-    <div class="c3" id="step5">
+    --><div class="c3" id="step5">
+        <div>Equipment</div>
+        <dl>
+            <dt>Weapon</dt>
+            <dd>
+                <span ng-show="ctrl.character.weapon">{{ctrl.character.weapon.ref}}</span>
+                <span ng-show="!ctrl.character.weapon">N/A</span>
+            </dd>
+            <dt>Armor</dt>
+            <dd>
+                <span ng-show="ctrl.character.armor">{{ctrl.character.armor.ref}}</span>
+                <span ng-show="!ctrl.character.armor">N/A</span>
+            </dd>
+            <dt>Accessory</dt>
+            <dd>
+                <span ng-show="ctrl.character.accessory">{{ctrl.character.accessory.ref}}</span>
+                <span ng-show="!ctrl.character.accessory">N/A</span>
+            </dd>
+        </dl>
 
+        <div>Actions</div>
+        <ul>
+            <li ng-repeat="action in ctrl.character.actions">
+                [{{action.rate}}%] {{action.ref}}
+            </li>
+        </ul>
     </div>
 
 

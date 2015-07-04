@@ -47,6 +47,10 @@
 
             <div>Redirection: {{ctrl.rewards.count}}..</div>
 
+            <div ng-repeat="drop in ctrl.rewards.drops">
+                {{drop.ref}}
+            </div>
+
         </div>
     </div>
 

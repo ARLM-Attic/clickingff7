@@ -12,9 +12,9 @@
         "lck": 6,
         "xp": 10,
         "drop": {
-            "rate": 10,
-            "type": "item",
-            "ref": "potion"
+            "rate": 100,
+            "type": "weapon",
+            "ref": "assaultGun"
         }
     },
     {

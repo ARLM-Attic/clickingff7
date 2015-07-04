@@ -38,7 +38,23 @@ class IndexController extends Controller {
      */
     goStatus() {
         let character = this.game.selectedCharacter;
-        this.$location.path("/status/" + character.ref);
+        this.$location.path("/" + character.ref + '/status');
+    }
+
+    /**
+     * Go to the equipment section
+     */
+    goEquip() {
+        let character = this.game.selectedCharacter;
+        this.$location.path("/" + character.ref + '/equip');
+    }
+
+    /**
+     * Go to the materia section
+     */
+    goMateria() {
+        let character = this.game.selectedCharacter;
+        this.$location.path("/" + character.ref + '/materia');
     }
 
     /**

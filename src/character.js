@@ -1,5 +1,5 @@
 import Unit from './unit';
-import Weapon from './weapon';
+import Weapon from './equipment/weapon';
 import ActionAttack from './actions/attack';
 import ActionDefense from './actions/defense';
 import ActionLimit from './actions/limit';

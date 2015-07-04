@@ -2,6 +2,7 @@ import Character from './character';
 import Story from './story';
 import Store from './store';
 import Battle from './battle';
+import Weapon from './equipment/weapon';
 
 class Game {
 
@@ -43,6 +44,9 @@ class Game {
         this.stories = [];
         this.story = null; // current story
         this.battle = null; // current battle
+        this.weapons = [];
+        this.armors = [];
+        this.accessories = [];
 
         // general data has been loaded
         this.loaded = false;
@@ -150,6 +154,10 @@ class Game {
                 }
             }
 
+            for (let i of save.weapons) {
+                this.weapons.push(new Weapon(this, i));
+            }
+
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
         }
@@ -162,6 +170,14 @@ class Game {
      */
     addCharacter(position, name) {
         this[position].push(Character.get(this, name));
+    }
+
+    /**
+     *
+     * @param weapon
+     */
+    addWeapon(weapon) {
+        this.weapons.push(weapon);
     }
 
     /**
@@ -223,6 +239,11 @@ class Game {
 
         if (this.battle) {
             save.battle = this.battle.save();
+        }
+
+        save.weapons = [];
+        for (let i of this.weapons) {
+            save.weapons.push(i.save());
         }
 
         localStorage.save = JSON.stringify(save);

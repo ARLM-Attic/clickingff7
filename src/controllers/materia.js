@@ -1,6 +1,6 @@
 import Controller from '../controller';
 
-class StatusController extends Controller {
+class MateriaController extends Controller {
 
     constructor(game, $location, $routeParams) {
         this.$routeParams = $routeParams;
@@ -22,16 +22,8 @@ class StatusController extends Controller {
         }
     }
 
-    /**
-     *
-     * @param character
-     */
-    selectCharacter(character) {
-        this.$location.path('/' + character.ref + '/status');
-    }
-
 }
 
-StatusController.$inject = ['Game', '$location', '$routeParams'];
+MateriaController.$inject = ['Game', '$location', '$routeParams'];
 
-export default StatusController;
+export default MateriaController;

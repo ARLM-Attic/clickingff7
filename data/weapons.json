@@ -10,12 +10,21 @@
     },
     {
         "ref": "gatlingGun",
-        "type": "gun-arm",
+        "type": "gunArm",
         "att": 14,
         "att%": -3,
         "mgi": 0,
         "gils": 0,
         "holes": 1
+    },
+    {
+        "ref": "assaultGun",
+        "type": "gunArm",
+        "att": 17,
+        "att%": -3,
+        "mgi": 0,
+        "gils": 0,
+        "holes": 2
     },
     {
         "ref": "leatherGlove",
