@@ -2,7 +2,7 @@
     {
         "ref": "1stRay",
         "image": "/img/enemies/1st_Ray_FF7.png",
-        "hp": 60,
+        "hp": 6,
         "mp": 9,
         "str": 8,
         "def": 6,
@@ -20,7 +20,7 @@
     {
         "ref": "MonoDrive",
         "image": "/img/enemies/Mono_Drive_FF7.png",
-        "hp": 70,
+        "hp": 7,
         "mp": 10,
         "str": 6,
         "def": 8,
@@ -33,7 +33,7 @@
     {
         "ref": "MP",
         "image": "/img/enemies/MP_FF7.png",
-        "hp": 80,
+        "hp": 8,
         "mp": 9,
         "str": 7,
         "def": 7,
@@ -46,7 +46,7 @@
     {
         "ref": "Sweeper",
         "image": "/img/enemies/Sweeper_FF7.png",
-        "hp": 100,
+        "hp": 10,
         "mp": 9,
         "str": 10,
         "def": 10,
@@ -59,7 +59,7 @@
     {
         "ref": "Grunt",
         "image": "/img/enemies/Grunt_FF7.png",
-        "hp": 90,
+        "hp": 9,
         "mp": 9,
         "str": 9,
         "def": 9,

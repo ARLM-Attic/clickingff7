@@ -2,7 +2,7 @@
     {
         "image": "/img/characters/cloud.jpg",
         "ref": "cloud",
-        "hp": 80,
+        "hp": 8,
         "mp": 9,
         "str": 10,
         "def": 9,
@@ -18,7 +18,7 @@
     {
         "image": "/img/characters/barret.jpg",
         "ref": "barret",
-        "hp": 100,
+        "hp": 10,
         "mp": 7,
         "str": 9,
         "def": 10,
@@ -27,14 +27,14 @@
         "dex": 4,
         "lck": 6,
         "weapon": {
-            "type": "gunArm",
+            "type": "gun-arm",
             "ref": "gatlingGun"
         }
     },
     {
         "image": "/img/characters/tifa.jpg",
         "ref": "tifa",
-        "hp": 50,
+        "hp": 5,
         "mp": 8,
         "str": 9,
         "def": 8,
@@ -50,7 +50,7 @@
     {
         "image": "/img/characters/aerith.jpg",
         "ref": "aerith",
-        "hp": 30,
+        "hp": 3,
         "mp": 10,
         "str": 6,
         "def": 7,
@@ -66,7 +66,7 @@
     {
         "image": "/img/characters/redxiii.jpg",
         "ref": "redxiii",
-        "hp": 90,
+        "hp": 9,
         "mp": 8,
         "str": 8,
         "def": 8,
@@ -82,7 +82,7 @@
     {
         "image": "/img/characters/yuffie.jpg",
         "ref": "yuffie",
-        "hp": 40,
+        "hp": 4,
         "mp": 8,
         "str": 7,
         "def": 8,
@@ -98,7 +98,7 @@
     {
         "image": "/img/characters/caitsith.jpg",
         "ref": "caitsith",
-        "hp": 60,
+        "hp": 6,
         "mp": 9,
         "str": 7,
         "def": 7,
@@ -114,7 +114,7 @@
     {
         "image": "/img/characters/vincent.jpg",
         "ref": "vincent",
-        "hp": 20,
+        "hp": 2,
         "mp": 9,
         "str": 6,
         "def": 7,
@@ -130,7 +130,7 @@
     {
         "image": "/img/characters/cid.jpg",
         "ref": "cid",
-        "hp": 70,
+        "hp": 7,
         "mp": 7,
         "str": 8,
         "def": 9,

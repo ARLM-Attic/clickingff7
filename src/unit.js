@@ -22,38 +22,6 @@ export default class Unit {
         this.atb = 0;
     }
 
-    get hpMax() {
-        return this.data.hp * this.lvl;
-    }
-
-    get mpMax() {
-        return this.data.mp * this.lvl;
-    }
-
-    get str() {
-        return this.data.str * this.lvl;
-    }
-
-    get def() {
-        return this.data.def * this.lvl;
-    }
-
-    get mgi() {
-        return this.data.mgi * this.lvl;
-    }
-
-    get res() {
-        return this.data.res * this.lvl;
-    }
-
-    get dex() {
-        return this.data.dex * this.lvl;
-    }
-
-    get lck() {
-        return this.data.lck * this.lvl;
-    }
-
     /**
      *
      * @param battle

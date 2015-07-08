@@ -25,6 +25,9 @@ class EquipController extends Controller {
         this.initEquipment();
     }
 
+    /**
+     *
+     */
     initEquipment() {
         let type = this.character.data.weapon.type;
         this.weapons = _.where(this.game.weapons, function (e) {
@@ -34,6 +37,10 @@ class EquipController extends Controller {
         this.accessories = this.game.accessories;
     }
 
+    /**
+     *
+     * @param weapon
+     */
     toggleWeapon(weapon) {
         this.selected = (this.selected != weapon) ? weapon : null;
     }

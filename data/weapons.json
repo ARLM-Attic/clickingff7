@@ -2,90 +2,100 @@
     {
         "ref": "busterSword",
         "type": "broadsword",
-        "att": 18,
-        "att%": -4,
-        "mgi": 2,
+        "stats": {
+            "str": 18,
+            "mgi": 2
+        },
         "gils": 0,
         "holes": 1
     },
     {
         "ref": "gatlingGun",
-        "type": "gunArm",
-        "att": 14,
-        "att%": -3,
-        "mgi": 0,
+        "type": "gun-arm",
+        "stats": {
+            "str": 14
+        },
         "gils": 0,
         "holes": 1
     },
     {
         "ref": "assaultGun",
-        "type": "gunArm",
-        "att": 17,
-        "att%": -3,
-        "mgi": 0,
+        "type": "gun-arm",
+        "stats": {
+            "str": 17
+        },
         "gils": 0,
         "holes": 2
     },
     {
         "ref": "leatherGlove",
         "type": "knuckle",
-        "att": 13,
-        "att%": -1,
-        "mgi": 0,
-        "lck": 2,
+        "stats": {
+            "str": 13,
+            "lck": 2
+        },
         "gils": 0,
         "holes": 1
     },
     {
         "ref": "guardStick",
         "type": "stave",
-        "att": 12,
-        "att%": -1,
-        "mgi": 2,
-        "res": 4,
-        "def": 1,
+        "stats": {
+            "str": 12,
+            "def": 1,
+            "mgi": 2,
+            "res": 4
+        },
         "gils": 0,
         "holes": 1
     },
     {
         "ref": "mythrilClip",
         "type": "headdresse",
-        "att": 24,
-        "mgi": 6,
+        "stats": {
+            "str": 24,
+            "mgi": 6
+        },
         "gils": 0,
         "holes": 1
     },
     {
         "ref": "4pShuriken",
         "type": "shuriken",
-        "att": 23,
-        "mgi": 6,
+        "stats": {
+            "str": 23,
+            "mgi": 6
+        },
         "gils": 0,
         "holes": 1
     },
     {
         "ref": "yellowMp",
         "type": "megaphone",
-        "att": 36,
-        "mgi": 8,
+        "stats": {
+            "str": 36,
+            "mgi": 8
+        },
         "gils": 0,
         "holes": 2
     },
     {
         "ref": "quicksilver",
         "type": "gun",
-        "att": 38,
-        "att%": 10,
-        "mgi": 10,
+        "stats": {
+            "str": 38,
+            "mgi": 10
+        },
         "gils": 0,
         "holes": 2
     },
     {
         "ref": "spear",
         "type": "spear",
-        "att": 44,
-        "att%": -3,
-        "mgi": 8,
+        "stats": {
+            "str": 44,
+            "mgi": 8
+        },
         "gils": 0,
         "holes": 2,
         "linked": true

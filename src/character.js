@@ -21,11 +21,14 @@ export default class Character extends Unit {
 
         c.data = game.store.getCharacter(ref);
 
-        // initial weapon
-        c.weapon = Weapon.get(game, c.data.weapon.ref);
-
         // level
         c.lvl = 1;
+
+        // stats according the level
+        c.calcStats();
+
+        // initial weapon
+        c.equip('weapon', Weapon.get(game, c.data.weapon.ref));
 
         // css reference
         c.id = _.uniqueId(ref);
@@ -51,11 +54,14 @@ export default class Character extends Unit {
     load(data) {
         this.data = this.game.store.getCharacter(data.ref);
 
-        // weapon
-        this.weapon = new Weapon(this.game, this.data.weapon);
-
         // level
         this.lvl = data.lvl;
+
+        // stats according the level
+        this.calcStats();
+
+        // weapon
+        this.equip('weapon', new Weapon(this.game, this.data.weapon));
 
         // css reference
         this.id = _.uniqueId(data.ref);
@@ -74,10 +80,42 @@ export default class Character extends Unit {
 
     /**
      *
-     * @returns {number}
      */
-    get xpMax() {
-        return this.lvl * 100;
+    calcStats() {
+        this.hpMax = this._calcStat('hp', 10, 700);
+        this.mpMax = this._calcStat('mp', 1, 70);
+        this.str = this._calcStat('str');
+        this.def = this._calcStat('def');
+        this.mgi = this._calcStat('mgi');
+        this.res = this._calcStat('res');
+        this.dex = this._calcStat('dex');
+        this.lck = this._calcStat('lck');
+        this.xpMax = this._calcStat('lck', 100);
+    }
+
+    /**
+     *
+     * @param stat
+     * @param base
+     * @param prog
+     * @returns {number}
+     * @private
+     */
+    _calcStat(stat, base = 1, prog = 10) {
+        return this.data[stat] * base + Math.floor(this.data[stat] * prog * this.lvl / 100);
+    }
+
+    /**
+     *
+     * @param type weapon|armor|accessory
+     * @param equipment
+     */
+    equip(type, equipment) {
+        this[type] = equipment;
+        let stats = equipment.data.stats;
+        for (let i in stats) {
+            this[i] += stats[i];
+        }
     }
 
     /**
@@ -89,6 +127,9 @@ export default class Character extends Unit {
         while (this.xp >= this.xpMax) {
             this.xp -= this.xpMax;
             this.lvl++;
+
+            // updating stats
+            this.calcStats();
         }
     }
 
