@@ -122,21 +122,24 @@
     </dl>
 
     <div>Available</div>
-    <ul ng-show="ctrl.equip == 'weapon'">
+    <ul ng-show="ctrl.mode == 'weapon'">
         <li ng-repeat="weapon in ctrl.weapons" ng-click="ctrl.toggleSelect(weapon)">
             {{weapon.ref}}
         </li>
     </ul>
-    <ul ng-show="ctrl.equip == 'armor'">
+    <ul ng-show="ctrl.mode == 'armor'">
         <li ng-repeat="armor in ctrl.armors">
             {{armor.ref}}
         </li>
     </ul>
-    <ul ng-show="ctrl.equip == 'accessory'">
+    <ul ng-show="ctrl.mode == 'accessory'">
         <li ng-repeat="accessory in ctrl.accessories">
             {{accessory.ref}}
         </li>
     </ul>
+    <div ng-show="ctrl.selected" ng-click="ctrl.equip()">
+        Equip
+    </div>
 </div>
 
 

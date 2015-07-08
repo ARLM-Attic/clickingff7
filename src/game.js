@@ -181,6 +181,15 @@ class Game {
     }
 
     /**
+     *
+     * @param weapon
+     * @returns {Array}
+     */
+    removeWeapon(weapon) {
+        return _.remove(this.weapons, weapon);
+    }
+
+    /**
      * Add a story
      * @param ref
      * @param selected

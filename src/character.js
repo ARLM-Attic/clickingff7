@@ -61,7 +61,7 @@ export default class Character extends Unit {
         this.calcStats();
 
         // weapon
-        this.equip('weapon', new Weapon(this.game, this.data.weapon));
+        this.equip('weapon', new Weapon(this.game, data.weapon));
 
         // css reference
         this.id = _.uniqueId(data.ref);
@@ -116,6 +116,23 @@ export default class Character extends Unit {
         for (let i in stats) {
             this[i] += stats[i];
         }
+    }
+
+    /**
+     *
+     * @param type
+     */
+    unequip(type) {
+        let equipment = this[type];
+        if (equipment) {
+            this[type] = null;
+
+            let stats = equipment.data.stats;
+            for (let i in stats) {
+                this[i] -= stats[i];
+            }
+        }
+        return equipment;
     }
 
     /**

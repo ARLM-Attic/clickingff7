@@ -21,7 +21,7 @@ class EquipController extends Controller {
             }
         }
 
-        this.equip = 'weapon';
+        this.mode = 'weapon';
         this.initEquipment();
     }
 
@@ -59,7 +59,8 @@ class EquipController extends Controller {
     compareStats() {
         // compare stats
         this.final = {};
-        for (let i in this.selected.data.stats) {
+        let stats = ['hpMax', 'mpMax', 'str', 'def', 'mgi', 'res', 'dex', 'lck'];
+        for (let i of stats) {
 
             // base character stat
             let curr = this.character[i];
@@ -73,7 +74,9 @@ class EquipController extends Controller {
             }
 
             // add the selected stat
-            final += this.selected.data.stats[i];
+            if (this.selected && this.selected.data.stats[i]) {
+                final += this.selected.data.stats[i];
+            }
 
             // curr, chande, color
             this.final[i] = {
@@ -109,6 +112,32 @@ class EquipController extends Controller {
             return s ? s[key] : '';
         }
         return null;
+    }
+
+    /**
+     *
+     */
+    equip() {
+        if (!this.selected) return;
+
+        // remove compare stats
+        this.final = {};
+
+        // remove curr weapon
+        let currWeapon = this.character.unequip('weapon');
+        let newWeapon = this.selected;
+
+        // equip selected weapon
+        this.selected = null;
+        this.character.equip('weapon', newWeapon);
+
+        // remove from inventory
+        this.game.removeWeapon(newWeapon);
+        this.game.addWeapon(currWeapon);
+
+        this.game.save();
+
+        this.initEquipment();
     }
 
 }
