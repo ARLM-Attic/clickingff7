@@ -22,7 +22,8 @@
         "ref": "assaultGun",
         "type": "gun-arm",
         "stats": {
-            "str": 17
+            "str": 17,
+            "mgi": -4
         },
         "gils": 0,
         "holes": 2

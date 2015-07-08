@@ -57,20 +57,45 @@
                 <dt>Strengh</dt>
                 <dd>
                     {{ctrl.character.str}}
-                    <span ng-if="ctrl.selected">
-                        -> {{ctrl.selected.str}}
+                    <span ng-if="ctrl.isChanged('str')" class="{{ctrl.getFinal('str', 'color')}}">
+                        -> {{ctrl.getFinal('str')}}
                     </span>
                 </dd>
                 <dt>Defense</dt>
-                <dd>{{ctrl.character.def}}</dd>
+                <dd>
+                    {{ctrl.character.def}}
+                    <span ng-if="ctrl.isChanged('def')" class="{{ctrl.getFinal('def', 'color')}}">
+                        -> {{ctrl.getFinal('def')}}
+                    </span>
+                </dd>
                 <dt>Magic</dt>
-                <dd>{{ctrl.character.mgi}}</dd>
+                <dd>
+                    {{ctrl.character.mgi}}
+                    <span ng-if="ctrl.isChanged('mgi')" class="{{ctrl.getFinal('mgi', 'color')}}">
+                        -> {{ctrl.getFinal('mgi')}}
+                    </span>
+                </dd>
                 <dt>Resistance</dt>
-                <dd>{{ctrl.character.res}}</dd>
+                <dd>
+                    {{ctrl.character.res}}
+                    <span ng-if="ctrl.isChanged('res')" class="{{ctrl.getFinal('res', 'color')}}">
+                        -> {{ctrl.getFinal('res')}}
+                    </span>
+                </dd>
                 <dt>Dexterity</dt>
-                <dd>{{ctrl.character.dex}}</dd>
+                <dd>
+                    {{ctrl.character.dex}}
+                    <span ng-if="ctrl.isChanged('dex')" class="{{ctrl.getFinal('dex', 'color')}}">
+                        -> {{ctrl.getFinal('dex')}}
+                    </span>
+                </dd>
                 <dt>Luck</dt>
-                <dd>{{ctrl.character.lck}}</dd>
+                <dd>
+                    {{ctrl.character.lck}}
+                    <span ng-if="ctrl.isChanged('lck')" class="{{ctrl.getFinal('lck', 'color')}}">
+                        -> {{ctrl.getFinal('lck')}}
+                    </span>
+                </dd>
             </dl>
         </div>
         </div>
@@ -98,7 +123,7 @@
 
     <div>Available</div>
     <ul ng-show="ctrl.equip == 'weapon'">
-        <li ng-repeat="weapon in ctrl.weapons">
+        <li ng-repeat="weapon in ctrl.weapons" ng-click="ctrl.toggleSelect(weapon)">
             {{weapon.ref}}
         </li>
     </ul>
