@@ -1,31 +1,32 @@
-<div class="c1">
+<div layout="row">
 
-    <div class="story" ng-repeat="story in ctrl.game.stories" ng-click="ctrl.seeStory(story)">
-        <img ng-src="{{story.data.image}}" alt="story" width="30"/>
-        {{'Story '+story.data.number|translate}}
+    <div flex>
+
+        <md-card ng-repeat="story in ctrl.game.stories">
+            <md-card-content>
+                <img ng-src="{{story.data.image}}" class="avatar" alt="zone">
+                <h2>{{'Story '+story.ref|translate}}</h2>
+                <p>Zone#{{story.ref}}</p>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="end center">
+                <md-button class="md-raised" ng-click="ctrl.toggle(story)">more</md-button>
+            </div>
+        </md-card>
+
     </div>
 
-</div><!--
+    <div flex>
 
---><div class="c3">
-
-    <div ng-hide="ctrl.story">
-        SELECT A STORY
-    </div>
-
-    <div ng-show="ctrl.story">
-
-        <img ng-src="{{ctrl.story.data.image}}" alt="story" width="60" style="float: left"/>
-
-        <div class="main">
-            <p>
-                {{'Story '+ctrl.story.ref|translate}} <strong>(#{{ctrl.story.ref}})</strong>
-            </p>
-
-            <p>
-                <button ng-click="ctrl.selectStory()">Select story</button>
-            </p>
-        </div>
+        <md-card ng-show="ctrl.story">
+            <md-card-content>
+                <img ng-src="{{ctrl.story.data.image}}" class="avatar" alt="zone">
+                <h2>{{'Story '+ctrl.story.ref|translate}}</h2>
+                <p>Zone#{{ctrl.story.ref}}</p>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" ng-disabled="ctrl.isCurrent()" ng-click="ctrl.select()">Select</md-button>
+            </div>
+        </md-card>
 
     </div>
 

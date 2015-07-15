@@ -1,5 +1,6 @@
 import Enemy from './enemy';
 import Rewards from './rewards';
+import _ from 'lodash';
 
 export default class Battle {
 

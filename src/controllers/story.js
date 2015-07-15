@@ -8,23 +8,23 @@ class StoryController extends Controller {
 
     /**
      *
-     */
-    init() {
-        this.seeStory(this.game.story);
-    }
-
-    /**
-     *
      * @param story
      */
-    seeStory(story) {
-        this.story = story;
+    toggle(story) {
+        this.story = (this.story == null) ? story: null;
+    }
+
+    /**
+     * Returns true if the story is currently selected
+     */
+    isCurrent() {
+        return (this.story && this.story.ref == this.game.story.ref);
     }
 
     /**
      *
      */
-    selectStory() {
+    select() {
         // select story
         this.game.story = this.story;
 

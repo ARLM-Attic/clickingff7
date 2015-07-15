@@ -1,4 +1,5 @@
 import Controller from '../controller';
+import _ from 'lodash';
 
 class PhsController extends Controller {
 
@@ -7,18 +8,26 @@ class PhsController extends Controller {
     }
 
     joinTeam(character) {
-        if (this.game.team.length < 3) {
-            this.game.joinTeam(character);
+
+        let characters = _.where(this.game.characters, {active: true});
+        if (characters.length < 3) {
+            character.team();
         }
+
+        this.game.buildTeam();
 
         // [saving]
         this.game.save();
     }
 
     leaveTeam(character) {
-        if (this.game.team.length > 1) {
-            this.game.leaveTeam(character);
+
+        let characters = _.where(this.game.characters, {active: true});
+        if (characters.length > 1) {
+            character.backup();
         }
+
+        this.game.buildTeam();
 
         // [saving]
         this.game.save();

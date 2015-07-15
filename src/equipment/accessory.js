@@ -1,12 +1,12 @@
 import Equipment from '../equipment';
 import _ from 'lodash';
 
-export default class Weapon extends Equipment {
+export default class Accessory extends Equipment {
 
     static get(game, ref) {
-        let w = new Weapon(game);
+        let w = new Accessory(game);
 
-        w.data = game.store.getWeapon(ref);
+        w.data = game.store.getAccessory(ref);
 
         w.id = _.uniqueId('i');
 
@@ -18,17 +18,13 @@ export default class Weapon extends Equipment {
     }
 
     load(data) {
-        this.data = this.game.store.getWeapon(data.ref);
+        this.data = this.game.store.getAccessory(data.ref);
 
         this.id = data.id;
 
         this.ref = data.ref;
 
         this.materias = {};
-        for (let i in data.materias) {
-            this.materias[i] = _.find(this.game.materias, {id: data.materias[i]})
-        }
-
     }
 
     /**
@@ -36,7 +32,7 @@ export default class Weapon extends Equipment {
      * @returns {string}
      */
     getType() {
-        return 'weapon';
+        return 'accessory';
     }
 
 }

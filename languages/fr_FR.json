@@ -3,5 +3,36 @@
 
     "Story 1": "Réacteur N°1",
     "Story 1 part 1": "Réacteur N°1, partie 1",
-    "Story 1 part 2": "Réacteur N°1, partie 2"
+    "Story 1 part 2": "Réacteur N°1, partie 2",
+
+    "cloud": "Cloud",
+
+    "hp": "hp",
+    "mp": "mp",
+    "limit": "limite",
+    "str": "for",
+    "def": "def",
+    "mgi": "mag",
+    "res": "rés",
+    "dex": "vit",
+    "lck": "chc",
+
+    "busterSword": "Epée broyeuse",
+    "gatlingGun": "Gatling gun",
+    "assaultGun": "Assault gun",
+
+    "bronzeBangle": "Bijou de bronze",
+
+    "talisman": "Amulette",
+
+    "bolt": "Foudre",
+
+    "weapon": "Arme",
+    "weapons": "Armes disponibles",
+    "armor": "Armure",
+    "accessory": "Accessoire",
+    "empty": "vide",
+
+    "remove": "Retirer",
+    "valid": "Valider"
 }

@@ -1,4 +1,5 @@
 import Unit from './unit';
+import _ from 'lodash';
 
 export default class Enemy extends Unit {
 

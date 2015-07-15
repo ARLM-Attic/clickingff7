@@ -1,69 +1,34 @@
-<div class="wrapper">
+<div layout="row">
 
-    <div class="c1">
+    <div flex>
 
-        <!-- characters list -->
-        <div id="step1">
-            <div ng-repeat="(i, character) in game.team" class="card" id="{{character.id}}">
-                <div class="avatar avatar-team">
-                    <div class="damage"></div>
-                    <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
-                </div><!--
-
-                --><div class="main">
-
-                    <div class="progress">
-                        <div class="progress-bar progress-hp" ng-style="{width: character.progress('hp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.hpMax}} HP</span>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar progress-mp" ng-style="{width: character.progress('mp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.mpMax}} MP</span>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar progress-xp"
-                             ng-style="{width: character.progress('xp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.xpMax - character.xp}} xp</span>
-                    </div>
-
-                    <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
-
-                    <div class="actions">
-                        <img ng-repeat="action in character.actions" ng-src="{{action.img}}" />
-                    </div>
-
-                    <div class="effects">
-
-                    </div>
-                </div>
-
-                <div style="clear: left"></div>
-            </div>
-        </div>
-    </div><!--
-
-    --><div class="c3" id="step5">
-        <div ng-hide="ctrl.game.story" class="no-data">
-            {{"No story"|translate}}
-        </div>
-
-        <img ng-src="{{ctrl.game.story.data.image}}" alt="story" width="60" style="float: left"/>
-
-        <div class="main">
-            <p>
-                {{'Story '+ctrl.game.story.ref|translate}} <strong>(#{{ctrl.game.story.ref}})</strong>
-            </p>
-
-            <p>
-                <button ng-click="ctrl.battle()">Battle</button>
-            </p>
-        </div>
-
+        <md-card ng-repeat="(i, character) in game.team" id="{{character.id}}">
+            <md-card-content>
+                <img ng-src="{{character.data.image}}" class="avatar" alt="character">
+                <h2>{{character.data.ref}}</h2>
+                <p>
+                    LVL{{character.lvl}}<br />
+                    HP{{character.hp}}<br />
+                    MP{{character.mp}}
+                </p>
+            </md-card-content>
+        </md-card>
 
     </div>
 
+    <div flex>
 
+        <md-card>
+            <md-card-content>
+                <img ng-src="{{ctrl.game.story.data.image}}" class="avatar" alt="zone">
+                <h2>{{'Story '+ctrl.game.story.ref|translate}}</h2>
+                <p>Zone#{{ctrl.game.story.ref}}</p>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="end center">
+                <md-button class="md-raised" ng-click="ctrl.battle()">Battle</md-button>
+            </div>
+        </md-card>
+
+    </div>
 
 </div>

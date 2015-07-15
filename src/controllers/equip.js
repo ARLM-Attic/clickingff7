@@ -1,103 +1,244 @@
 import Controller from '../controller';
+import _ from 'lodash';
 
 class EquipController extends Controller {
 
     constructor(game, $location, $routeParams) {
-        this.$routeParams = $routeParams;
         super(game, $location);
+
+        this.reset();
+
     }
 
     /**
      *
      */
-    init() {
-        this.ref = this.$routeParams.character;
-        let characters = _.union(this.game.team, this.game.backup);
-        for (let i of characters) {
-            if (i.ref == this.ref) {
-                this.character = i;
-                this.game.selectedCharacter = i;
-                break;
+    reset() {
+
+        /**
+         * shortcut to global selected character
+         * @type {*|i}
+         */
+        this.character = this.game.selectedCharacter;
+
+        /**
+         * current section to show
+         * @type {null}
+         */
+        this.type = null;
+
+        /**
+         * current (materia) equipment selected to change
+         * @type {null}
+         */
+        this.equipment = null;
+
+        /**
+         * current materia hole
+         * @type {null}
+         */
+        this.hole = null;
+
+        /**
+         * new equipment/materia/'remove'
+         * @type {null}
+         */
+        this.replacement = null;
+
+        // refresh character stats
+        this.refreshStats();
+
+        // refresh equipment/materia list
+        this.refreshLists();
+
+    }
+
+    /**
+     *
+     */
+    refreshLists() {
+
+        this.weapon = this.character.weapon;
+        this.armor = this.character.armor;
+        this.accessory = this.character.accessory;
+
+        let type = this.character.data.weapon.type;
+        let id;
+
+        id = (this.weapon) ? this.weapon.id : null;
+        this.weapons = _.filter(this.game.weapons, (e) => {
+            return (e.data.type == type && e.id != id);
+        });
+
+        id = (this.armor) ? this.armor.id : null;
+        this.armors = _.filter(this.game.armors, (e) => {
+            return (e.id != id);
+        });
+
+        id = (this.accessory) ? this.accessory.id : null;
+        this.accessories = _.filter(this.game.accessories, (e) => {
+            return (e.id != id);
+        });
+
+        let ids = this._getUsedMaterias();
+        this.materias = _.filter(this.game.materias, (e) => {
+            return (ids.indexOf(e.id) == -1);
+        });
+
+    }
+
+    /**
+     *
+     * @returns {Array}
+     * @private
+     */
+    _getUsedMaterias() {
+        let res = [], materia;
+        for (let i of this.game.characters) {
+            if (i.weapon) {
+                for (let j in i.weapon.materias) {
+                    materia = i.weapon.materias[j];
+                    if (!_.isUndefined(materia)) {
+                        res.push(materia.id);
+                    }
+                }
+            }
+            if (i.armor) {
+                for (let j in i.armor.materias) {
+                    materia = i.armor.materias[j];
+                    if (!_.isUndefined(materia)) {
+                        res.push(materia.id);
+                    }
+                }
             }
         }
-
-        this.mode = 'weapon';
-        this.initEquipment();
+        return res;
     }
 
     /**
      *
+     * @param character
      */
-    initEquipment() {
-        let type = this.character.data.weapon.type;
-        this.weapons = _.where(this.game.weapons, function (e) {
-            return e.data.type == type;
-        });
-        this.armor = this.game.armors;
-        this.accessories = this.game.accessories;
+    selectCharacter(character) {
+        this.game.selectedCharacter = character;
+        this.reset();
     }
+
 
     /**
      *
-     * @param newWeapon
+     * @param type {String}
      */
-    toggleSelect(newWeapon) {
-
-        if (this.selected != newWeapon) {
-            this.selected = newWeapon;
-            this.compareStats();
-        } else {
-            this.selected = null;
-            this.final = {};
+    toggleChangeEquipment(type) {
+        if (this.type) {
+            this.reset();
+        } else if (this.equipment != this.character[type] || !this.character[type]) {
+            this.type = type;
+            this.equipment = this.character[type];
         }
-
     }
 
     /**
      *
+     * @param eq
+     * @param hole
      */
-    compareStats() {
-        // compare stats
+    toggleChangeMateria(eq, hole) {
+        if (this.equipment != eq || this.hole != hole) {
+            this.type = 'materia';
+            this.equipment = eq;
+            this.hole = hole;
+        } else {
+            this.reset();
+        }
+    }
+
+    /**
+     *
+     * @param e {Equipment|null}
+     */
+    togglePreviewEquipment(e) {
+        let stats;
+        if (!_.isNull(this.replacement) && this.replacement == e) {
+            this.replacement = null;
+
+        } else {
+            this.replacement = e;
+            stats = (!_.isUndefined(e)) ? e.data.stats : {};
+        }
+        this.refreshStats(stats);
+    }
+
+    /**
+     *
+     * @param e {Materia|null}
+     */
+    togglePreviewMateria(e) {
+        this.replacement = (!_.isNull(this.replacement) && this.replacement == e) ? null : e;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    isEquipment() {
+        return !_.isUndefined(this.equipment);
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    isMateria() {
+        return !_.isUndefined(this.equipment.materias[this.hole]);
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    isSelection() {
+        return !_.isNull(this.replacement);
+    }
+
+    /**
+     *
+     * @param s
+     */
+    refreshStats(s) {
         this.final = {};
         let stats = ['hpMax', 'mpMax', 'str', 'def', 'mgi', 'res', 'dex', 'lck'];
         for (let i of stats) {
 
             // base character stat
-            let curr = this.character[i];
+            let curr = this.character[i], final = curr;
 
-            let final = curr;
+            if (s) {
 
-            // if the character has a weapon and the stat
-            let currWeapon = this.character.weapon;
-            if (currWeapon && currWeapon.data.stats[i]) {
-                final -= currWeapon.data.stats[i];
+                // if the character has a weapon and the stat
+                let currWeapon = this.character.weapon;
+                if (currWeapon && currWeapon.data.stats[i]) {
+                    final -= currWeapon.data.stats[i];
+                }
+
+                // add the selected stat
+                if (s[i]) {
+                    final += s[i];
+                }
+
             }
 
-            // add the selected stat
-            if (this.selected && this.selected.data.stats[i]) {
-                final += this.selected.data.stats[i];
-            }
+            this.final[i] = {};
 
-            // curr, chande, color
-            this.final[i] = {
-                curr  : curr,
-                change: final,
-                color : (final > curr) ? 'green' : 'red'
-            };
-        }
-    }
+            this.final[i].value = final;
 
-    /**
-     *
-     * @param stat
-     * @returns {boolean}
-     */
-    isChanged(stat) {
-        if (this.final) {
-            let s = this.final[stat];
-            return s ? (s.curr != s.change) : false;
+            this.final[i].change = '';
+            if (final > curr)
+                this.final[i].change = 'stat-up';
+            if (final < curr)
+                this.final[i].change = 'stat-down';
+
         }
-        return false;
     }
 
     /**
@@ -106,38 +247,58 @@ class EquipController extends Controller {
      * @param key
      * @returns {*}
      */
-    getFinal(stat, key = 'change') {
-        if (this.final) {
-            let s = this.final[stat];
-            return s ? s[key] : '';
-        }
-        return null;
+    stat(stat, key = 'value') {
+        return this.final[stat][key];
     }
 
     /**
      *
      */
-    equip() {
-        if (!this.selected) return;
+    changeEquipment() {
+        // remove curr equipment if any
+        if (!_.isUndefined(this.equipment)) {
+            this.character.unequip(this.type);
+        }
 
-        // remove compare stats
-        this.final = {};
+        // equip replacement if any
+        if (!_.isUndefined(this.replacement)) {
+            this.character.equip(this.replacement);
+        }
 
-        // remove curr weapon
-        let currWeapon = this.character.unequip('weapon');
-        let newWeapon = this.selected;
+        // refresh stats
+        this.refreshStats();
 
-        // equip selected weapon
-        this.selected = null;
-        this.character.equip('weapon', newWeapon);
+        // reset
+        this.reset();
 
-        // remove from inventory
-        this.game.removeWeapon(newWeapon);
-        this.game.addWeapon(currWeapon);
+        // reload lists
+        this.refreshLists();
 
+        // [saving]
         this.game.save();
 
-        this.initEquipment();
+    }
+
+    /**
+     *
+     */
+    changeMateria() {
+        // remove curr materia if any
+        this.equipment.materias[this.hole] = undefined;
+
+        // equip replacement if any
+        if (!_.isUndefined(this.replacement)) {
+            this.equipment.materias[this.hole] = this.replacement;
+        }
+
+        // reset
+        this.reset();
+
+        // reload lists
+        this.refreshLists();
+
+        // [saving]
+        this.game.save();
     }
 
 }

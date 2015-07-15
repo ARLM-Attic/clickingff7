@@ -3,6 +3,10 @@ import Story from './story';
 import Store from './store';
 import Battle from './battle';
 import Weapon from './equipment/weapon';
+import Armor from './equipment/armor';
+import Accessory from './equipment/accessory';
+import Materia from './materia';
+import _ from 'lodash';
 
 class Game {
 
@@ -39,6 +43,7 @@ class Game {
         // general data (characters, weapons, ..)
         this.store = new Store();
 
+        this.characters = [];
         this.team = [];
         this.backup = [];
         this.stories = [];
@@ -47,13 +52,14 @@ class Game {
         this.weapons = [];
         this.armors = [];
         this.accessories = [];
+        this.materias = [];
 
         // general data has been loaded
         this.loaded = false;
 
         // Do the magic :-)
         //this.preload();
-        this.files = ['characters', 'weapons', 'stories', 'enemies'];
+        this.files = ['characters', 'weapons', 'armors', 'accessories', 'materias', 'stories', 'enemies'];
     }
 
     /**
@@ -106,16 +112,23 @@ class Game {
     newGame() {
         // add all characters
         // note : cloud & barret are in the team
-        this.addCharacter('team', 'cloud');
-        this.addCharacter('team', 'barret');
+        this.addCharacter(Character.get(this, 'cloud'), true);
+        this.addCharacter(Character.get(this, 'barret'), true);
 
-        this.addCharacter('backup', 'tifa');
-        this.addCharacter('backup', 'aerith');
-        this.addCharacter('backup', 'redxiii');
-        this.addCharacter('backup', 'yuffie');
-        this.addCharacter('backup', 'caitsith');
-        this.addCharacter('backup', 'vincent');
-        this.addCharacter('backup', 'cid');
+        this.addCharacter(Character.get(this, 'tifa'));
+        this.addCharacter(Character.get(this, 'aerith'));
+        this.addCharacter(Character.get(this, 'redxiii'));
+        this.addCharacter(Character.get(this, 'yuffie'));
+        this.addCharacter(Character.get(this, 'caitsith'));
+        this.addCharacter(Character.get(this, 'vincent'));
+        this.addCharacter(Character.get(this, 'cid'));
+
+        this.buildTeam();
+
+        this.addWeapon(Weapon.get(this, 'assaultGun'));
+        this.addArmor(Armor.get(this, 'bronzeBangle'));
+        this.addAccessory(Accessory.get(this, 'talisman'));
+        this.addMateria(Materia.get(this, 'bolt'));
 
         this.addStory(1, true);
     }
@@ -127,13 +140,30 @@ class Game {
     loadGame(save) {
         try {
 
-            for (let i of save.team) {
-                this.team.push(new Character(this, i));
+            for (let i of save.weapons) {
+                this.weapons.push(new Weapon(this, i));
             }
 
-            for (let i of save.backup) {
-                this.backup.push(new Character(this, i));
+            for (let i of save.armors) {
+                this.armors.push(new Armor(this, i));
             }
+
+            for (let i of save.accessories) {
+                this.accessories.push(new Accessory(this, i));
+            }
+
+            for (let i of save.materias) {
+                this.materias.push(new Materia(this, i));
+            }
+
+            // team & backup
+            // need weapons/armors/accessories/materias
+
+            for (let i of save.characters) {
+                this.characters.push(new Character(this, i));
+            }
+
+            this.buildTeam();
 
             for (let i of save.stories) {
                 let story = new Story(this, i);
@@ -154,10 +184,6 @@ class Game {
                 }
             }
 
-            for (let i of save.weapons) {
-                this.weapons.push(new Weapon(this, i));
-            }
-
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
         }
@@ -165,11 +191,20 @@ class Game {
 
     /**
      * Add a character
-     * @param position (backup|team)
-     * @param name
+     * @param character
+     * @param active
      */
-    addCharacter(position, name) {
-        this[position].push(Character.get(this, name));
+    addCharacter(character, active=false) {
+        character.active = active;
+        this.characters.push(character);
+    }
+
+    /**
+     *
+     */
+    buildTeam() {
+        this.team = _.where(this.characters, {active: true});
+        this.backup = _.where(this.characters, {active: false});
     }
 
     /**
@@ -182,11 +217,26 @@ class Game {
 
     /**
      *
-     * @param weapon
-     * @returns {Array}
+     * @param armor
      */
-    removeWeapon(weapon) {
-        return _.remove(this.weapons, weapon);
+    addArmor(armor) {
+        this.armors.push(armor);
+    }
+
+    /**
+     *
+     * @param accessory
+     */
+    addAccessory(accessory) {
+        this.accessories.push(accessory);
+    }
+
+    /**
+     * Add a materia
+     * @param materia
+     */
+    addMateria(materia) {
+        this.materias.push(materia);
     }
 
     /**
@@ -200,25 +250,6 @@ class Game {
         if (selected) {
             this.story = story;
         }
-
-    }
-
-    /**
-     * Let the character join the team
-     * @param character
-     */
-    joinTeam(character) {
-        _.remove(this.backup, character);
-        this.team.push(character);
-    }
-
-    /**
-     * Let the character leave the team
-     * @param character
-     */
-    leaveTeam(character) {
-        _.remove(this.team, character);
-        this.backup.push(character);
     }
 
     /**
@@ -227,14 +258,9 @@ class Game {
     save() {
         let save = {};
 
-        save.team = [];
-        for (let i of this.team) {
-            save.team.push(i.save());
-        }
-
-        save.backup = [];
-        for (let i of this.backup) {
-            save.backup.push(i.save());
+        save.characters = [];
+        for (let i of this.characters) {
+            save.characters.push(i.save());
         }
 
         save.stories = [];
@@ -253,6 +279,21 @@ class Game {
         save.weapons = [];
         for (let i of this.weapons) {
             save.weapons.push(i.save());
+        }
+
+        save.armors = [];
+        for (let i of this.armors) {
+            save.armors.push(i.save());
+        }
+
+        save.accessories = [];
+        for (let i of this.accessories) {
+            save.accessories.push(i.save());
+        }
+
+        save.materias = [];
+        for (let i of this.materias) {
+            save.materias.push(i.save());
         }
 
         localStorage.save = JSON.stringify(save);

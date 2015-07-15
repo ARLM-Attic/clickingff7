@@ -1,35 +1,41 @@
-<div class="c1">
+<div layout="row">
 
-    <h3>{{'Team'|translate}}</h3>
+    <div flex>
 
-    <div ng-repeat="character in ctrl.game.team" class="phs_character">
-        <img ng-src="{{character.data.image}}" alt="character" width="80" style="float: left"
-             ng-click="ctrl.leaveTeam(character)"/>
-
-        <div class="main">
-            <div class="progress characters_xp">
-                <div class="xp_progress" ng-style="{width: character.xpProgress(200) + 'px'}"></div>
-                <span class="bar-label">{{character.xp}} / {{character.getXpMax()}} EXP</span>
+        <md-card ng-repeat="character in ctrl.game.team">
+            <md-card-content>
+                <img ng-src="{{character.data.image}}" class="avatar" alt="character">
+                <h2>{{character.data.ref}}</h2>
+                <p>
+                    LVL{{character.lvl}}<br />
+                    HP{{character.hp}}<br />
+                    MP{{character.mp}}
+                </p>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="end center">
+                <md-button class="md-raised" ng-click="ctrl.leaveTeam(character)">Leave</md-button>
             </div>
+        </md-card>
 
-            <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
-            <div>
-                <span class="label">hp</span> {{character.hpMax}}
-                <span class="label">mp</span> {{character.mpMax}}
-            </div>
-        </div>
-        <div style="clear: left"></div>
     </div>
 
-</div><!--
+    <div flex>
 
---><div class="c3">
+        <md-card ng-repeat="character in ctrl.game.backup">
+            <md-card-content>
+                <img ng-src="{{character.data.image}}" class="avatar" alt="character">
+                <h2>{{character.data.ref}}</h2>
+                <p>
+                    LVL{{character.lvl}}<br />
+                    HP{{character.hp}}<br />
+                    MP{{character.mp}}
+                </p>
+            </md-card-content>
+            <div class="md-actions" layout="row" layout-align="end center">
+                <md-button class="md-raised" ng-click="ctrl.joinTeam(character)">Join</md-button>
+            </div>
+        </md-card>
 
-    <h3>{{'Backup'|translate}}</h3>
-
-    <span ng-repeat="character in ctrl.game.backup" class="phs_character">
-        <img ng-src="{{character.data.image}}" alt="character" width="80" style="float: left"
-             ng-click="ctrl.joinTeam(character)"/>
-    </span>
+    </div>
 
 </div>

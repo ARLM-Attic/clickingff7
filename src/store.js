@@ -1,8 +1,13 @@
+import _ from 'lodash';
+
 export default class Store {
 
     constructor() {
         this.characters = [];
         this.weapons = [];
+        this.armors = [];
+        this.accessories = [];
+        this.materias = [];
         this.stories = [];
         this.enemies = [];
     }
@@ -20,6 +25,30 @@ export default class Store {
             return _.find(this.weapons, {ref: ref});
         } catch (err) {
             throw new Error('Weapon not found');
+        }
+    }
+
+    getArmor(ref) {
+        try {
+            return _.find(this.armors, {ref: ref});
+        } catch (err) {
+            throw new Error('Armor not found');
+        }
+    }
+
+    getAccessory(ref) {
+        try {
+            return _.find(this.accessories, {ref: ref});
+        } catch (err) {
+            throw new Error('Accessory not found');
+        }
+    }
+
+    getMateria(ref) {
+        try {
+            return _.find(this.materias, {ref: ref});
+        } catch (err) {
+            throw new Error('Materia not found');
         }
     }
 

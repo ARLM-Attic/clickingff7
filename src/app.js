@@ -4,9 +4,7 @@ import PhsController from './controllers/phs';
 import StoryController from './controllers/story';
 import BattleController from './controllers/battle';
 import RewardsController from './controllers/rewards';
-import StatusController from './controllers/status';
 import EquipController from './controllers/equip';
-import MateriaController from './controllers/materia';
 import Route from './route';
 
 import Game from './game';
@@ -14,7 +12,7 @@ import Game from './game';
 import 'angular-route';
 import 'angular-translate';
 import 'angular-translate-loader-static-files';
-import _ from 'lodash';
+import 'angular-material';
 
 function config($routeProvider, $translateProvider) {
 
@@ -30,9 +28,7 @@ function config($routeProvider, $translateProvider) {
         when('/story', Route.get('story')).
         when('/battle', Route.get('battle')).
         when('/rewards', Route.get('rewards')).
-        when('/:character/status', Route.get('status')).
-        when('/:character/equip', Route.get('equip')).
-        when('/:character/materia', Route.get('materia')).
+        when('/equip', Route.get('equip')).
         when('/phs', Route.get('phs')).
         otherwise({
             redirectTo: '/home'
@@ -41,7 +37,7 @@ function config($routeProvider, $translateProvider) {
 
 config.$inject = ['$routeProvider', '$translateProvider'];
 
-var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
+var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate', 'ngMaterial'])
     .config(config)
     .filter('time', function () {
         return function (elapsed) {
@@ -67,9 +63,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('StoryController', StoryController)
     .controller('BattleController', BattleController)
     .controller('RewardsController', RewardsController)
-    .controller('StatusController', StatusController)
     .controller('EquipController', EquipController)
-    .controller('MateriaController', MateriaController)
     .service('Game', Game);
 
 export default 'clickingff7';

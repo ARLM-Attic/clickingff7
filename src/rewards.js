@@ -1,5 +1,6 @@
 import Item from './item';
 import Weapon from './equipment/weapon';
+import _ from 'lodash';
 
 export default class Rewards {
 

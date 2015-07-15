@@ -1,466 +1,91 @@
-@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
-
-body {
-    margin: 0;
-    padding: 0;
-    color: #444;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: #eee;
-    font-family: 'Quicksand', sans-serif;
+html, body {
+    font-family: 'Roboto', sans-serif;
+    font-size:14px;
+    height:100%;
+    margin: 0px;
+    padding: 0px;
 }
 
-header {
-    text-align: center;
-    font-weight: bold;
-    font-size: 30px;
-    text-transform: uppercase;
-    margin-top: 30px;
+/* Toolbar area */
+
+.menu {
+    background-color: transparent;
+    border: none;
+    height: 38px;
+    margin: 16px;
+    width: 36px;
 }
 
-.page {
-    width: 1000px;
+md-toolbar h1 {
     margin: auto;
-    position: relative;
-    padding: 20px;
-    border: 1px solid #444;
-    background-color: #fff;
-    z-index: 1;
-    min-height: 500px;
 }
 
-footer {
-    text-align: center;
-    color: #999;
-    margin-bottom: 30px;
-}
+/* Sidenav area */
 
-footer a, footer a:visited {
-    text-decoration: none;
-    color: #999;
-    font-weight: bold;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-footer .current:before {
-    content: '[';
-}
-
-footer .current:after {
-    content: ']';
-}
-
-.help {
-    position: absolute;
-    font-weight: normal;
-    font-size: 14px;
-    margin-top: 11px;
-    margin-left: 5px;
-    color: #900;
-}
-
-.help:hover {
-    cursor: pointer;
-}
-
-.links {
-    position: absolute;
-    width: 200px;
-    top: -10px;
-    left: -60px;
-    z-index: 2;
-}
-
-.link {
-    font-weight: normal;
-    font-size: 14px;
-    color: #009;
-}
-
-.link:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.link.selected {
-    font-weight: bold;
-}
-
-/* [style commun] */
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav li {
-    padding: 5px;
-}
-
-nav li.disabled {
-    color: #999;
-}
-
-nav li:not(.disabled):hover {
-    background-color: #eee;
-    cursor: pointer;
-}
-
-nav .current {
-    font-weight: bold;
-}
-
-.menu-action {
-    /* essential */
-    text-overflow: ellipsis;
-    width: 120px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.pull-right {
-    float: right;
-}
-
-.button {
-    padding: 5px;
-    border: 1px solid #bbb;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #eee;
-}
-
-.new {
-    font-size: 10px;
-    font-weight: bold;
-    color: #FFF;
-    margin-top: 2px;
-    background-color: #900;
-    border-radius: 5px;
-    padding: 2px;
-}
-
-.main {
-    margin-left: 90px;
-}
-
-.no-data {
-    margin-top: 100px;
-    text-align: center;
-    font-size: 16px;
-    color: #999;
-    text-transform: uppercase;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-table th {
+md-list .md-button {
+    color: inherit;
+    font-weight: 500;
     text-align: left;
-    text-transform: uppercase;
-    height: 30px;
+    width: 100%;
+}
+md-list .md-button.selected {
+    color: #03a9f4;
 }
 
-table tr:first-child {
-    border-bottom: 1px solid #999;
+md-sidenav  md-list {
+    padding: 0px 0px 8px 0px;
 }
 
-table tr:not(:first-child):not(.nothing):hover {
-    background-color: #eee;
-}
-
-table td {
-    height: 30px;
-}
-
-table tr.materia td {
-    padding-top: 10px;
-}
-
-table tr.item td {
-    padding-top: 10px;
-}
-
-.nothing td {
-    padding-top: 50px;
-    text-align: center;
-    font-size: 16px;
-    color: #999;
-    text-transform: uppercase;
-}
-
-/* description materia et objets */
-.desc {
-    font-size: 12px;
-}
-
-.hover {
-    cursor: pointer;
-}
-
-.total {
-    width: 50px;
-    text-align: center;
-}
-
-.total .b {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-/* style du menu principal */
-
-.game-menu {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    border: 1px solid #444;
-    z-index: 2;
-    padding: 20px;
-    background-color: #fff;
-}
-
-/* style de la zone de lieu */
-
-.game-location {
-    position: absolute;
-    bottom: -10px;
-    right: -10px;
-    border: 1px solid #444;
-    z-index: 2;
-    padding: 20px;
-    background-color: #fff;
-}
-
-.game-infos {
-    position: absolute;
-    width: 140px;
-    bottom: 60px;
-    right: -10px;
-    border: 1px solid #444;
-    z-index: 2;
-    padding: 20px;
-    background-color: #fff;
-}
-
-/* style pour la vue */
-
-.game-view {
-    padding: 0 160px;
-}
-
-/* style de la page /game */
-
-.actions div {
-    display: inline-block;
-}
-
-.block {
-    border: 1px solid #444;
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 10px;
-}
-
-.no-padding {
-    padding: 0;
-}
-
-.c1, .c3 {
-    display: inline-block;
-    width: 334px;
-    vertical-align: top;
-    box-sizing: content-box;
-}
-
-.c1 {
-    margin-right: 5px;
-    border-right: 1px solid #bbb;
-}
-
-.c3 {
-    padding-left: 5px;
-    border-left: 1px solid #bbb;
-}
-
-/* style pour le personnage */
-
-.bars {
-    height: 100px;
-    position: relative;
-}
-
-.card, .card_enemy {
-    margin-bottom: 10px;
-    clear: left;
-}
+/* Home */
 
 .avatar {
-    float: left;
-    margin-right: 5px;
     width: 80px;
-    height: 93px;
+    float: left;
+}
+
+/* Status */
+
+.label {
+    text-transform: uppercase;
+    font-size: 0.7em;
+    font-family: 'Roboto', sans-serif;
+}
+
+.stat {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+.progress-hp .md-bar {
+    background-color: darkgreen;
+}
+
+.progress-mp .md-bar {
+    background-color: darkgreen;
+}
+
+.progress-limit .md-bar {
+    background-color: hotpink;
+}
+
+.icon-weapon {
     position: relative;
+    top: 4px;
 }
 
-.avatar-enemy {
-    border: 1px solid #999;
-}
-
-.part.disabled {
+.empty {
+    font-style: italic;
     color: #999;
 }
 
-/* style pour l'ennemi */
-
-.no-enemies {
-    text-align: center;
-    font-size: 16px;
-    color: #999;
+.stat-up::after {
+    content: "\25B2";
+    color: darkgreen;
+    font-size: 0.8em;
 }
 
-/* SECTION /equip */
-
-.green {
-    color: #090;
-}
-.red {
-    color: #900;
-}
-
-/* SECTION materias */
-
-.materia {
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-/* style pour les barres */
-
-.progress-label {
-    position: absolute;
-    right: 0;
-    color: #000;
-}
-
-.progress {
-    position: relative;
-    text-align: center;
-    font-size: 11px;
-    color: #fff;
-    height: 11px;
-    margin-top: 5px;
-    border-top: 1px solid #999;
-    width: 200px;
-}
-
-.game_load {
-    width: 300px;
-    margin: auto;
-}
-
-.game_load_progress {
-    background-color: #ccc;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
-}
-
-.progress-bar {
-    position: absolute;
-    height: 11px;
-    top: 0;
-    left: 0;
-    width: 200px;
-    -webkit-transition: 0.5s linear all;
-    -moz-transition: 0.5s linear all;
-    -o-transition: 0.5s linear all;
-    transition: 0.5s linear all;
-}
-
-.progress-full {
-    -webkit-transition-duration: 0s;
-    -moz-transition-duration: 0s;
-    -o-transition-duration: 0s;
-    transition-duration: 0s;
-    background-color: orange;
-}
-
-.progress-hp-enemy {
-    background-color: #D49B9B;
-}
-
-.progress-hp {
-    background-color: #BEECBE;
-}
-
-.progress-mp {
-    background-color: #C9DBF8;
-}
-
-.progress-limit {
-    background-color: #F0BE98;
-    height: 9px;
-}
-
-.progress-atb {
-    background-color: yellow;
-    height: 9px;
-}
-
-.progress-xp {
-    background-color: #C6B7D6;
-}
-
-.damage {
-    position: absolute;
-    font-size: 16px;
-    color: #FFF;
-    text-shadow: 0 0 10px #000;
-    font-family: 'Press Start 2P', cursive;
-    z-index: 9999;
-}
-
-.critical {
-    color: yellow;
-}
-
-/* phs section */
-
-.phs_character img {
-    margin-right: 5px;
-    cursor: pointer;
-    border: 1px solid #fff;
-}
-
-.phs_character:hover img {
-    border: 1px solid #000;
-}
-
-/* save section */
-
-.save_character {
-    margin-right: 5px;
-}
-
-#area-export, #area-import {
-    display: none;
-}
-
-.areaExport, .areaImport {
-    width: 280px;
-    height: 280px;
+.stat-down::after {
+    content: "\25BC";
+    color: darkred;
+    font-size: 0.8em;
 }
