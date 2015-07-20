@@ -193,6 +193,14 @@ export default class Character extends Unit {
 
     /**
      *
+     * @returns {number}
+     */
+    get xpRemain() {
+        return this.xpMax - this.xp;
+    }
+
+    /**
+     *
      */
     refreshActions() {
         let res = [];

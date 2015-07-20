@@ -8,7 +8,7 @@
 
                 <md-menu>
                     <md-button ng-click="$mdOpenMenu()" aria-label="Select character">
-                        {{ctrl.character.data.ref}}
+                        {{ctrl.character.data.ref}} Nv. {{ctrl.character.lvl}}
                     </md-button>
                     <md-menu-content>
                         <md-menu-item ng-repeat="character in ctrl.game.characters">
@@ -41,6 +41,19 @@
                                 </span>
                         <md-progress-linear md-mode="determinate" value="30"
                                             class="progress-mp"></md-progress-linear>
+                    </div>
+
+                </div>
+
+                <div layout="row" layout-padding>
+
+                    <div flex="75">
+                        <span class="label">{{'xp'|translate}}</span>
+                                <span class="stat">
+                                    {{ctrl.character.xpRemain}}
+                                </span>
+                        <md-progress-linear md-mode="determinate" value="30"
+                                            class="progress-xp"></md-progress-linear>
                     </div>
 
                     <div flex>
