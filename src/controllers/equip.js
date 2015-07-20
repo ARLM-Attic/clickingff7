@@ -130,11 +130,11 @@ class EquipController extends Controller {
      * @param type {String}
      */
     toggleChangeEquipment(type) {
-        if (this.type) {
-            this.reset();
-        } else if (this.equipment != this.character[type] || !this.character[type]) {
+        if (this.type != type || this.equipment != this.character[type]) {
             this.type = type;
             this.equipment = this.character[type];
+        } else {
+            this.reset();
         }
     }
 
@@ -144,7 +144,7 @@ class EquipController extends Controller {
      * @param hole
      */
     toggleChangeMateria(eq, hole) {
-        if (this.equipment != eq || this.hole != hole) {
+        if (this.type != 'materia' || this.equipment != eq || this.hole != hole) {
             this.type = 'materia';
             this.equipment = eq;
             this.hole = hole;
