@@ -63,24 +63,32 @@ class EquipController extends Controller {
         this.accessory = this.character.accessory;
 
         let type = this.character.data.weapon.type;
-        let id;
+        let id, ids = [];
 
         id = (this.weapon) ? this.weapon.id : null;
         this.weapons = _.filter(this.game.weapons, (e) => {
             return (e.data.type == type && e.id != id);
         });
 
-        id = (this.armor) ? this.armor.id : null;
+        for (let i of this.game.characters) {
+            if (i.armor) {
+                ids.push(i.armor.id);
+            }
+        }
         this.armors = _.filter(this.game.armors, (e) => {
-            return (e.id != id);
+            return (ids.indexOf(e.id) == -1);
         });
 
-        id = (this.accessory) ? this.accessory.id : null;
+        for (let i of this.game.characters) {
+            if (i.accessory) {
+                ids.push(i.accessory.id);
+            }
+        }
         this.accessories = _.filter(this.game.accessories, (e) => {
-            return (e.id != id);
+            return (ids.indexOf(e.id) == -1);
         });
 
-        let ids = this._getUsedMaterias();
+        ids = this._getUsedMaterias();
         this.materias = _.filter(this.game.materias, (e) => {
             return (ids.indexOf(e.id) == -1);
         });
