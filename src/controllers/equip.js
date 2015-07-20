@@ -216,9 +216,8 @@ class EquipController extends Controller {
             if (s) {
 
                 // if the character has a weapon and the stat
-                let currWeapon = this.character.weapon;
-                if (currWeapon && currWeapon.data.stats[i]) {
-                    final -= currWeapon.data.stats[i];
+                if (this.equipment && this.equipment.data.stats[i]) {
+                    final -= this.equipment.data.stats[i];
                 }
 
                 // add the selected stat
