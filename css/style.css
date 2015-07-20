@@ -43,6 +43,10 @@ md-sidenav  md-list {
     float: left;
 }
 
+.avatar30 {
+    width: 50px;
+}
+
 /* Status */
 
 .label {

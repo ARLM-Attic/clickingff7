@@ -1,11 +1,14 @@
 {
     "Stamina": "Endurance",
 
-    "Story 1": "Réacteur N°1",
-    "Story 1 part 1": "Réacteur N°1, partie 1",
-    "Story 1 part 2": "Réacteur N°1, partie 2",
+    "story 1": "Réacteur N°1",
+    "story 1 desc": "Cloud vient de rejoindre Avalanche. Avec Barret, leur chef, ils ont prévu de détruire un réacteur MAKO qui épuise l'énergie de la Planète.",
+
+    "chapter": "Chapitre",
+    "fight": "Combattre",
 
     "cloud": "Cloud",
+    "barret": "Barret",
 
     "hp": "hp",
     "mp": "mp",

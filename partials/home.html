@@ -2,33 +2,47 @@
 
     <div flex>
 
-        <md-card ng-repeat="(i, character) in game.team" id="{{character.id}}">
+        <md-card>
             <md-card-content>
-                <img ng-src="{{character.data.image}}" class="avatar" alt="character">
-                <h2>{{character.data.ref}}</h2>
-                <p>
-                    LVL{{character.lvl}}<br />
-                    HP{{character.hp}}<br />
-                    MP{{character.mp}}
-                </p>
+
+                <div layout="row">
+                    <div flex="33" ng-repeat="(i, character) in game.team">
+
+                        <h2>{{character.data.ref|translate}}</h2>
+                        <img ng-src="{{character.data.image}}" class="avatar30" alt="character">
+
+                    </div>
+                </div>
+
+
             </md-card-content>
         </md-card>
-
-    </div>
-
-    <div flex>
 
         <md-card>
             <md-card-content>
-                <img ng-src="{{ctrl.game.story.data.image}}" class="avatar" alt="zone">
-                <h2>{{'Story '+ctrl.game.story.ref|translate}}</h2>
-                <p>Zone#{{ctrl.game.story.ref}}</p>
+
+                <div layout="row">
+
+                    <div flex>
+                        <img ng-src="{{ctrl.game.story.data.image}}" width="100%" alt="zone">
+                    </div>
+                    <div flex>
+                        <p>{{'chapter'|translate}} {{ctrl.game.story.ref}}</p>
+
+                        <h2>{{'story '+ctrl.game.story.ref|translate}}</h2>
+
+                        <p>{{'story '+ctrl.game.story.ref+' desc'|translate}}</p>
+                        <md-button class="md-raised md-primary" ng-click="ctrl.battle()">{{'fight'|translate}}</md-button>
+                    </div>
+
+                </div>
+
+
             </md-card-content>
-            <div class="md-actions" layout="row" layout-align="end center">
-                <md-button class="md-raised" ng-click="ctrl.battle()">Battle</md-button>
-            </div>
         </md-card>
 
     </div>
+
+    <div flex></div>
 
 </div>
