@@ -255,13 +255,17 @@ class EquipController extends Controller {
      *
      */
     changeEquipment() {
+        let materias = [];
+
         // remove curr equipment if any
         if (!_.isUndefined(this.equipment)) {
+            materias = this.equipment.removeAllMateria();
             this.character.unequip(this.type);
         }
 
         // equip replacement if any
         if (!_.isUndefined(this.replacement)) {
+            this.replacement.loadMaterias(materias);
             this.character.equip(this.replacement);
         }
 

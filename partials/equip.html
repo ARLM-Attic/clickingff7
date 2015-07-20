@@ -47,7 +47,7 @@
 
                         <div class="inset" ng-show="ctrl.character.armor">
                             <img src="/img/icons/armor.png"/>
-                            {{ctrl.character.armor.ref}}
+                            {{ctrl.character.armor.ref|translate}}
                         </div>
 
                         <div class="empty inset" ng-show="!ctrl.character.armor">
@@ -76,7 +76,7 @@
 
                         <div class="inset" ng-show="ctrl.character.accessory">
                             <img src="/img/icons/accessory.png" width="12"/>
-                            {{ctrl.character.accessory.ref}}
+                            {{ctrl.character.accessory.ref|translate}}
                         </div>
 
                         <div class="empty inset" ng-show="!ctrl.character.accessory">
@@ -158,7 +158,7 @@
                 <!-- MATERIA LIST -->
                 <md-list ng-if="ctrl.type == 'materia'">
 
-                    <md-subheader class="md-no-sticky">{{'weapons'|translate}}</md-subheader>
+                    <md-subheader class="md-no-sticky">{{'materias'|translate}}</md-subheader>
 
                     <md-list-item ng-repeat="materia in ctrl.materias" ng-click="ctrl.togglePreviewMateria(materia)">
                         <img ng-src="/img/icons/weapons/{{weapon.data.type}}.png" class="icon-weapon"/>

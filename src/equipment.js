@@ -15,15 +15,36 @@ export default class Equipment {
 
     /**
      *
-     * @param ids
+     * @param ids {Array}
      */
     loadMaterias(ids) {
-        if (!ids) return;
 
+        // check nbHoles
+        ids = _.take(ids, this.data.holes);
+
+        // load materia
         for (let i in ids) {
             let materia = _.find(this.game.materias, {id: ids[i]});
             this.equip(i, materia);
         }
+    }
+
+    /**
+     *
+     * @returns {Array}
+     */
+    removeAllMateria() {
+
+        // get materia ids
+        let res = [];
+        for (let i in this.materias) {
+            res.push(this.materias[i].id);
+        }
+
+        // remove all materia
+        this.materias = {};
+
+        return res;
     }
 
     /**

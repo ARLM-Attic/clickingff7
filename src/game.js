@@ -129,6 +129,7 @@ class Game {
         this.addArmor(Armor.get(this, 'bronzeBangle'));
         this.addAccessory(Accessory.get(this, 'talisman'));
         this.addMateria(Materia.get(this, 'bolt'));
+        this.addMateria(Materia.get(this, 'fire'));
 
         this.addStory(1, true);
     }

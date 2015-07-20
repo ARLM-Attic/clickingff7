@@ -26,11 +26,15 @@
     "talisman": "Amulette",
 
     "bolt": "Foudre",
+    "fire": "Feu",
 
     "weapon": "Arme",
     "weapons": "Armes disponibles",
     "armor": "Armure",
+    "armors": "Armures disponibles",
     "accessory": "Accessoire",
+    "accessories": "Accessoires disponibles",
+    "materias": "Matérias disponibles",
     "empty": "vide",
 
     "remove": "Retirer",

@@ -171,6 +171,8 @@ export default class Character extends Unit {
             for (let i in stats) {
                 this[i] -= stats[i];
             }
+
+            equipment.removeAllMateria();
         }
     }
 

@@ -2,5 +2,9 @@
     {
         "ref": "bolt",
         "color": "green"
+    },
+    {
+        "ref": "fire",
+        "color": "green"
     }
 ]
