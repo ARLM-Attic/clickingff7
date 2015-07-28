@@ -1,84 +1,124 @@
-<nav class="links">
-    <div class="block">
-        <ul>
-            <li ng-click="ctrl.quitBattle()">
-                {{"Quit"|translate}}
-            </li>
-        </ul>
+<div layout="row">
+
+    <div flex>
+
+        <md-card>
+            <md-card-content layout="row">
+
+                <!-- team list -->
+                <div flex>
+                    <div ng-repeat="(i, character) in ctrl.battle.game.team" class="card" id="{{character.id}}">
+                        <div class="avatar avatar-team">
+                            <div class="damage"></div>
+                            <img ng-src="{{character.data.image}}" alt="character" width="50" class="icon"/>
+                        </div>
+                        <div class="main">
+                            <span class="label">{{character.data.ref|translate}}</span>
+                                <span class="stat {{character.hpMax}}">
+                                    {{ctrl.stat('hpMax')}}
+                                </span>
+                            <md-progress-linear md-mode="determinate" value="{{character.progress('hp')}}"
+                                                class="progress-hp"></md-progress-linear>
+
+                            <md-progress-linear md-mode="determinate" value="{{character.progress('limit')}}"
+                                                class="progress-limit"></md-progress-linear>
+                        </div>
+
+                        <div style="clear: left"></div>
+                    </div>
+                </div>
+
+                <div flex layout="column" layout-align="center center">
+                    VS
+                </div>
+
+                <!-- enemies list -->
+                <div flex layout="column" layout-align="center">
+                    <div ng-repeat="enemy in ctrl.battle.enemies" class="card_enemy" id="{{enemy.id}}">
+                        <div class="avatar avatar-enemy">
+                            <div class="damage"></div>
+                            <img ng-src="{{enemy.data.image}}" alt="avatar" height="80"/>
+                        </div>
+                        <div class="main">
+                            <span class="label">{{enemy.data.ref|translate}}</span>
+                                <span class="stat {{enemy.hpMax}}">
+                                    {{ctrl.stat('hpMax')}}
+                                </span>
+                            <md-progress-linear md-mode="determinate" value="{{enemy.progress('hp')}}"
+                                                class="progress-hp"></md-progress-linear>
+                        </div>
+
+                        <div style="clear: left"></div>
+                    </div>
+                </div>
+
+            </md-card-content>
+        </md-card>
+
+        <md-card>
+            <md-subheader>
+                Turns
+                <md-button ng-click="ctrl.quitBattle()">
+                    {{"quit"|translate}}
+                </md-button>
+            </md-subheader>
+            <md-content layout="row">
+                <div flex ng-repeat="turn in ctrl.battle.turns track by $index">
+                    {{turn.ref|translate}}
+                </div>
+            </md-content>
+        </md-card>
+
+        <md-card>
+            <md-subheader>Team</md-subheader>
+            <md-content layout="row">
+
+                <div flex="30" layout="column" layout-align="start center">
+
+                    {{ctrl.battle.character.ref|translate}}
+                    <img ng-src="{{ctrl.battle.character.data.image}}" class="avatar" alt="character">
+
+                </div>
+
+                <div flex>
+
+                    <div layout="row" layout-padding>
+
+                        <div flex="66">
+                            <span class="label">{{'hp'|translate}}</span>
+                                <span class="stat">
+                                    {{ctrl.battle.character.hpMax}}
+                                </span>
+                            <md-progress-linear md-mode="determinate" value="30"
+                                                class="progress-hp"></md-progress-linear>
+                        </div>
+
+                        <div flex="33">
+                            <span class="label">{{'limit'|translate}}</span>
+                            <span class="stat">1</span>
+                            <md-progress-linear md-mode="determinate" value="100"
+                                                class="progress-limit"></md-progress-linear>
+                        </div>
+
+                    </div>
+
+                    <div layout="row" layout-padding>
+
+                        <div ng-repeat="action in ctrl.battle.character.actions">
+                            {{action.ref}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </md-content>
+        </md-card>
+
     </div>
-</nav>
 
-<div class="wrapper">
+    <div flex>
 
-    <div class="c1">
-
-        <!-- team list -->
-        <div id="step1">
-            <div ng-repeat="(i, character) in ctrl.battle.game.team" class="card" id="{{character.id}}">
-                <div class="avatar avatar-team">
-                    <div class="damage"></div>
-                    <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
-                </div><!--
-
-                --><div class="main">
-
-                    <div class="progress">
-                        <div class="progress-bar progress-hp"
-                             ng-style="{width: character.progress('hp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.hpMax}} HP</span>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar progress-mp"
-                             ng-style="{width: character.progress('mp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.mpMax}} MP</span>
-                    </div>
-
-                    <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
-
-                    <div class="actions">
-                        <img ng-repeat="action in character.actions" ng-src="{{action.img}}"/>
-                    </div>
-
-                    <div class="effects">
-
-                    </div>
-                </div>
-
-                <div style="clear: left"></div>
-            </div>
-        </div>
-    </div><!--
-
-    --><div class="c3" id="step5">
-        <div ng-hide="game.battle" class="no-data">
-            {{"No enemies"|translate}}
-        </div>
-
-        <!-- enemies list -->
-        <div ng-repeat="enemy in ctrl.battle.enemies" class="card_enemy" id="{{enemy.id}}">
-            <div class="avatar avatar-enemy">
-                <div class="damage"></div>
-                <img ng-src="{{enemy.data.image}}" alt="avatar" height="80"/>
-            </div><!--
-
-            --><div class="main">
-
-                <div class="progress">
-                    <div class="progress-bar progress-hp-enemy"
-                         ng-style="{width: enemy.progress('hp', 200) + 'px'}"></div>
-                    <span class="progress-label">{{enemy.hp}} HP</span>
-                </div>
-
-                <div>{{enemy.data.ref}} <span ng-if="enemy.boss" class="boss">BOSS</span></div>
-
-                <div class="effects">
-
-                </div>
-            </div>
-
-            <div style="clear: left"></div>
-        </div>
     </div>
 
 

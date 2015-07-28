@@ -28,6 +28,9 @@ export default class Battle {
 
         // Battle rewards
         this.rewards = null;
+
+        // select current character
+        this.character = this.game.team[0];
     }
 
     /**
@@ -98,17 +101,8 @@ export default class Battle {
 
             console.log('begin turn');
 
-            // move all units
-            let units = this.units();
-            for (let u of units) {
-                u.atb += u.dex;
-            }
-
-            // choose the fastest unit
-            let unit = _.max(units, "atb");
-
-            // set its atb to 0
-            unit.atb = 0;
+            this.refreshTours();
+            let unit = this._takeUnit("atb");
 
             // make his move
             console.log('-unit ai', unit.id);
@@ -120,6 +114,51 @@ export default class Battle {
 
             });
         }, 1500);
+    }
+
+    /**
+     * Get the 7 next player turns
+     * @returns {Array}
+     */
+    refreshTours() {
+        let units = this.units();
+
+        this.turns = [];
+
+        // FAKE turns
+        for (let i = 0; i < 7; i++) {
+            let unit = this._takeUnit("atbPrev");
+            this.turns.push(unit);
+        }
+
+        // reset prev
+        for (let i of units) {
+            i.atbPrev = i.atb;
+        }
+    }
+
+    /**
+     *
+     * @param attr
+     * @returns {*|number}
+     * @private
+     */
+    _takeUnit(attr) {
+
+        let units = this.units();
+
+        // move all units
+        for (let j of units) {
+            j[attr] += j.dex;
+        }
+
+        // choose the fastest unit
+        let unit = _.max(units, attr);
+
+        // reset atb
+        unit[attr] = 0;
+
+        return unit;
     }
 
     /**

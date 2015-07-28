@@ -20,6 +20,7 @@ export default class Unit {
         this.hp = this.hpMax;
         this.mp = this.mpMax;
         this.atb = 0;
+        this.atbPrev = 0;
     }
 
     /**
@@ -51,13 +52,12 @@ export default class Unit {
     }
 
     /**
-     * Used by progress bars
+     * 
      * @param stat
-     * @param maxPixels
      * @returns {number}
      */
-    progress(stat, maxPixels) {
-        return Math.floor(this[stat] * maxPixels / this[stat + 'Max']);
+    progress(stat) {
+        return Math.floor(this[stat] * 100 / this[stat + 'Max']);
     }
 
 }
