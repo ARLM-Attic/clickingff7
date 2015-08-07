@@ -1,4 +1,7 @@
 import _ from 'lodash';
+import $ from 'jquery';
+import 'velocity';
+import 'velocity/velocity.ui.min';
 
 // @interface
 export default class Action {
@@ -89,12 +92,12 @@ export default class Action {
         let selector;
 
         // Attacker animation
-        /*selector = '#' + this.character.id + ' .avatar';
+        selector = '#' + this.character.id + ' .avatar';
         let seq = [
             {e: $(selector), p: {translateX: 5}, o: {duration: 400}},
             {e: $(selector), p: {translateX: -1}, o: {duration: 400}}
         ];
-        $.Velocity.RunSequence(seq);*/
+        $.Velocity.RunSequence(seq);
 
         // Damage animation
         selector = '#' + unit.id + ' .damage';
@@ -104,14 +107,14 @@ export default class Action {
             html += '<div class="critical">Critique</div>';
         }
         html +='<div class="hits">' + damage.hits + '</div>';
-        //$(selector).html(html);
+        $(selector).html(html);
 
-        /*$(selector).velocity("transition.slideUpIn", 1000, () => {*/
-            //$(selector).text("");
+        $(selector).velocity("transition.slideUpIn", 1000, () => {
+            $(selector).text("");
             unit.getDamaged(damage);
             this.battle.game.$rootScope.$apply();
             if (fn) fn();
-        /*});*/
+        });
     }
 
 }

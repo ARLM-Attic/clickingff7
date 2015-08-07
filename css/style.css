@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+
 html, body {
     font-family: 'Roboto', sans-serif;
     font-size:14px;
@@ -39,6 +41,7 @@ md-sidenav  md-list {
 /* Home */
 
 .avatar {
+    position: relative;
     width: 80px;
     float: left;
 }
@@ -46,6 +49,16 @@ md-sidenav  md-list {
 .avatar30 {
     width: 50px;
 }
+
+.damage {
+    position: absolute;
+    font-size: 16px;
+    color: #fff;
+    text-shadow: 0px 0px 10px #000;
+    font-family: 'Press Start 2P', cursive;
+    z-index: 9999;
+}
+
 
 /* Status */
 

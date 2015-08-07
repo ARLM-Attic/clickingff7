@@ -19,8 +19,6 @@ export default class Unit {
     recover() {
         this.hp = this.hpMax;
         this.mp = this.mpMax;
-        this.atb = 0;
-        this.atbPrev = 0;
     }
 
     /**
@@ -43,6 +41,20 @@ export default class Unit {
     }
 
     /**
+     * Get Tick Speed
+     * @returns {number}
+     */
+    getTS() {
+        let x = 0;
+        let fx = 0;
+        while (fx < this.dex) {
+            x++;
+            fx += 2 * (x + 1);
+        }
+        return (28 - x / 2);
+    }
+
+    /**
      *
      * @param battle
      * @param fn
@@ -52,7 +64,7 @@ export default class Unit {
     }
 
     /**
-     * 
+     *
      * @param stat
      * @returns {number}
      */

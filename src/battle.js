@@ -61,7 +61,7 @@ export default class Battle {
     }
 
     /**
-     *
+     * Returns alive units
      * @returns {Array|*}
      */
     units() {
@@ -77,8 +77,15 @@ export default class Battle {
      *
      */
     start() {
-        // check actions
-        console.log('[BATTLE BEGINS]');
+        // get TS units
+        for (let i of this.units()) {
+            let ts = i.getTS();
+            i.ts = ts;
+            let base = _.random(3 * ts);
+            i.cts = base;
+            i.fts = base;
+        }
+
         this.run();
     }
 
@@ -86,9 +93,6 @@ export default class Battle {
      * DO THE BATTLE
      */
     run() {
-        console.log('');
-        console.log('waiting 2s..');
-        console.log('');
         this.timer = this.game.$timeout(() => {
 
             // check end
@@ -99,17 +103,14 @@ export default class Battle {
                 return;
             }
 
-            console.log('begin turn');
-
             this.refreshTours();
-            let unit = this._takeUnit("atb");
+
+            let unit = this._takeUnit("cts");
 
             // make his move
-            console.log('-unit ai', unit.id);
             unit.ai(this, () => {
 
                 // when his move over, go next turn
-                console.log('-end turn');
                 this.run();
 
             });
@@ -121,25 +122,23 @@ export default class Battle {
      * @returns {Array}
      */
     refreshTours() {
-        let units = this.units();
-
         this.turns = [];
 
-        // FAKE turns
-        for (let i = 0; i < 7; i++) {
-            let unit = this._takeUnit("atbPrev");
-            this.turns.push(unit);
+        // reset sum ts
+        for (let i of this.units()) {
+            i.sts = 0;
         }
 
-        // reset prev
-        for (let i of units) {
-            i.atbPrev = i.atb;
+        // future ts
+        for (let i = 0; i < 7; i++) {
+            let unit = this._takeUnit('fts');
+            this.turns.push(_.pick(unit, 'ref', 'fts'));
         }
     }
 
     /**
      *
-     * @param attr
+     * @param attr {String}
      * @returns {*|number}
      * @private
      */
@@ -147,16 +146,17 @@ export default class Battle {
 
         let units = this.units();
 
+        // choose the fastest unit
+        let unit = _.min(units, attr);
+
         // move all units
         for (let j of units) {
-            j[attr] += j.dex;
+            j[attr] -= unit[attr];
+            j.sts += unit[attr];
         }
 
-        // choose the fastest unit
-        let unit = _.max(units, attr);
-
-        // reset atb
-        unit[attr] = 0;
+        // reset ctr|fts
+        unit[attr] = 3 * unit.ts;
 
         return unit;
     }
