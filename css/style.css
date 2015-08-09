@@ -106,3 +106,25 @@ md-sidenav  md-list {
     color: darkred;
     font-size: 0.8em;
 }
+
+.sts_wrapper {
+    position: relative;
+}
+.sts {
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.sts_text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+.sts_0 {background-color: #EDB5F7}
+.sts_1 {background-color: #E6A7F0}
+.sts_2 {background-color: #E099E9}
+.sts_3 {background-color: #D98CE2}
+.sts_4 {background-color: #D37EDC}
+.sts_5 {background-color: #CD71D5}
+.sts_6 {background-color: #C663CE}

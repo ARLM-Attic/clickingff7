@@ -51,7 +51,7 @@ export default class Unit {
             x++;
             fx += 2 * (x + 1);
         }
-        return (28 - x / 2);
+        return (28 - Math.floor(x / 2));
     }
 
     /**

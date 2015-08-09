@@ -62,9 +62,10 @@
                     {{"quit"|translate}}
                 </md-button>
             </md-subheader>
-            <md-content layout="row">
-                <div flex ng-repeat="turn in ctrl.battle.turns track by $index">
-                    {{turn.ref|translate}}
+            <md-content layout="row" style="height: 50px;">
+                <div flex ng-repeat="turn in ctrl.battle.turns track by $index" class="sts_wrapper">
+                    <div class="sts {{turn.color}}" style="height:{{turn.height}}px"></div>
+                    <div class="sts_text">{{turn.ref|translate}}</div>
                 </div>
             </md-content>
         </md-card>

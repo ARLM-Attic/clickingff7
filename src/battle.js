@@ -103,7 +103,7 @@ export default class Battle {
                 return;
             }
 
-            this.refreshTours();
+            this.refreshTurns();
 
             let unit = this._takeUnit("cts");
 
@@ -121,41 +121,46 @@ export default class Battle {
      * Get the 7 next player turns
      * @returns {Array}
      */
-    refreshTours() {
+    refreshTurns() {
+        let units = this.units();
+
         this.turns = [];
 
-        // reset sum ts
-        for (let i of this.units()) {
+        // reset sum ts (used for graphics)
+        for (let i of units) {
             i.sts = 0;
         }
 
         // future ts
         for (let i = 0; i < 7; i++) {
             let unit = this._takeUnit('fts');
-            this.turns.push(_.pick(unit, 'ref', 'fts'));
+            let turn = _.pick(unit, 'ref', 'sts');
+            turn.height = Math.min(turn.sts, 40);
+            turn.color = 'sts_' + Math.floor(turn.sts / 40);
+            this.turns.push(turn);
         }
     }
 
     /**
      *
-     * @param attr {String}
+     * @param attr
      * @returns {*|number}
      * @private
      */
     _takeUnit(attr) {
-
         let units = this.units();
 
         // choose the fastest unit
         let unit = _.min(units, attr);
+        let min = unit[attr];
 
         // move all units
         for (let j of units) {
-            j[attr] -= unit[attr];
-            j.sts += unit[attr];
+            j[attr] -= min;
+            j.sts += min;
         }
 
-        // reset ctr|fts
+        // next action
         unit[attr] = 3 * unit.ts;
 
         return unit;
