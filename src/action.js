@@ -6,7 +6,7 @@ import 'velocity/velocity.ui.min';
 // @interface
 export default class Action {
 
-    constructor(character) {
+    constructor(character, data) {
         this.character = character;
 
         // this action can be disabled
@@ -17,6 +17,23 @@ export default class Action {
 
         // power of the action
         this.pwr = 1;
+
+        // action is enabled
+        this.enabled = true;
+
+        if (data) {
+            this.load(data);
+        }
+    }
+
+    /**
+     *
+     * @param data
+     */
+    load(data) {
+        for (let i in data) {
+            this[i] = data[i];
+        }
     }
 
     /**
@@ -115,6 +132,13 @@ export default class Action {
             this.battle.game.$rootScope.$apply();
             if (fn) fn();
         });
+    }
+
+    /**
+     *
+     */
+    save() {
+       return _.pick(this, 'ref', 'enabled');
     }
 
 }

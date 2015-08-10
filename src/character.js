@@ -33,6 +33,9 @@ export default class Character extends Unit {
         game.addWeapon(weapon);
         c.equip(weapon);
 
+        // actions
+        c.refreshActions();
+
         // css reference
         c.id = _.uniqueId('i');
 
@@ -44,8 +47,6 @@ export default class Character extends Unit {
 
         // xp
         c.xp = 0;
-
-        c.refreshActions();
 
         return c;
     }
@@ -81,6 +82,9 @@ export default class Character extends Unit {
             this.equip(accessory, {});
         }
 
+        // actions
+        this.refreshActions(data.actions);
+
         // css reference
         this.id = data.id;
 
@@ -95,8 +99,6 @@ export default class Character extends Unit {
 
         // team or backup
         this.active = data.active;
-
-        this.refreshActions();
     }
 
     /**
@@ -201,12 +203,14 @@ export default class Character extends Unit {
 
     /**
      *
+     * @param data
      */
-    refreshActions() {
-        let res = [];
+    refreshActions(data = []) {
+        let res = [], opt;
 
         // [1]
-        res.push(new ActionAttack(this));
+        opt = _.find(data, {ref: 'attack'});
+        res.push(new ActionAttack(this, opt));
 
         // [1]
         //res.push(new ActionDefense(this));
@@ -234,9 +238,14 @@ export default class Character extends Unit {
      * @returns {*}
      */
     ai(battle, fn) {
-        let action = _.sample(this.actions);
-        action.setBattle(battle);
-        action.execute(fn);
+        let activeActions = _.filter(this.actions, 'enabled');
+        if (activeActions.length > 0) {
+            let action = _.sample(activeActions);
+            action.setBattle(battle);
+            action.execute(fn);
+        } else {
+            fn();
+        }
     }
 
     /**
@@ -276,6 +285,12 @@ export default class Character extends Unit {
 
         if (this.accessory) {
             res.accessory = _.pick(this.accessory, 'id');
+        }
+
+        // save activated actions
+        res.actions = [];
+        for (let i of this.actions) {
+            res.actions.push(i.save());
         }
 
         return res;

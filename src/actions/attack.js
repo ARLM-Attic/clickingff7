@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 export default class ActionAttack extends Action {
 
-    constructor(character) {
-        super(character);
+    constructor(character, data) {
+        super(character, data);
 
         this.ref = 'attack';
         this.rate = 100;

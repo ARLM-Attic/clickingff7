@@ -28,6 +28,13 @@ class BattleController extends Controller {
     /**
      *
      */
+    save() {
+       this.game.save();
+    }
+
+    /**
+     *
+     */
     quitBattle() {
         this.game.battle.quit();
 
