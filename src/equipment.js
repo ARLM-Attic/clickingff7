@@ -20,7 +20,7 @@ export default class Equipment {
     loadMaterias(ids) {
 
         // check nbHoles
-        ids = _.take(ids, this.data.holes);
+        ids = _.zipObject(_.take(_.pairs(ids), this.data.holes));
 
         // load materia
         for (let i in ids) {
