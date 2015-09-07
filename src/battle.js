@@ -111,7 +111,7 @@ export default class Battle {
             unit.ai(this, () => {
 
                 // when his move over, go next turn
-                this.run();
+                //this.run();
 
             });
         }, 1500);
@@ -132,7 +132,7 @@ export default class Battle {
         }
 
         // future ts
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 6; i++) {
             let unit = this._takeUnit('fts');
             let turn = _.pick(unit, 'ref', 'sts');
             turn.height = Math.min(turn.sts, 40);

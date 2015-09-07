@@ -27,7 +27,10 @@
                     </md-list-item>
 
                     <!-- WEAPON MATERIAS -->
-                    <md-list-item ng-repeat="hole in ctrl.weapon.nbHoles()" ng-click="ctrl.toggleChangeMateria(ctrl.character.weapon, hole)">
+                    <div ng-click="ctlr.equipMateria('weapon')">
+                        {{'Equip materia'|translate}}
+                    </div>
+                    <md-list-item ng-repeat="materia in ctrl.weapon.materias">
                         <div class="label inset">
                             &nbsp;
                         </div>

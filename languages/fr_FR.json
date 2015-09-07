@@ -30,8 +30,10 @@
 
     "attack": "Attaque",
     "attack desc": "100% de chance de lancer une attaque physique",
-    "bolt": "Foudre",
+    "bolt": "Eclair",
+    "bolt desc": "[%s%] Attaque magique de foudre",
     "fire": "Feu",
+    "bolt desc": "[%s%] Attaque magique de feu",
 
     "weapon": "Arme",
     "weapons": "Armes disponibles",

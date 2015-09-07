@@ -7,6 +7,9 @@ export default class ActionMateria extends Action {
 
         // attach materia to this action
         this.materia = materia;
+
+        // additive level
+        this.lvl = 1;
     }
 
     isAvailable() {

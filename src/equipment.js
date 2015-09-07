@@ -19,6 +19,11 @@ export default class Equipment {
      */
     loadMaterias(ids) {
 
+        // no materia?
+        if (!ids) {
+            this.materias = [];
+        }
+
         // check nbHoles
         ids = _.zipObject(_.take(_.pairs(ids), this.data.holes));
 

@@ -1,48 +1,39 @@
-<div layout="row">
+<div class="uk-grid">
 
-    <div flex>
+    <div class="uk-width-1-2">
 
-        <md-card>
-            <md-card-content>
+        <div class="uk-panel uk-panel-box">
 
-                <div layout="row">
-                    <div flex="33" ng-repeat="(i, character) in game.team">
+            <div class="uk-panel-title">TEAM</div>
+            <div ng-repeat="(i, character) in game.team">
 
-                        <h2>{{character.data.ref|translate}}</h2>
-                        <img ng-src="{{character.data.image}}" class="avatar30" alt="character">
+                <h2>{{character.data.ref|translate}}</h2>
+                <img ng-src="{{character.data.image}}" class="avatar30" alt="character">
 
-                    </div>
-                </div>
-
-
-            </md-card-content>
-        </md-card>
-
-        <md-card>
-            <md-card-content>
-
-                <div layout="row">
-
-                    <div flex>
-                        <img ng-src="{{ctrl.game.story.data.image}}" width="100%" alt="zone">
-                    </div>
-                    <div flex>
-                        <p>{{'chapter'|translate}} {{ctrl.game.story.ref}}</p>
-
-                        <h2>{{'story '+ctrl.game.story.ref|translate}}</h2>
-
-                        <p>{{'story '+ctrl.game.story.ref+' desc'|translate}}</p>
-                        <md-button class="md-raised md-primary" ng-click="ctrl.battle()">{{'fight'|translate}}</md-button>
-                    </div>
-
-                </div>
-
-
-            </md-card-content>
-        </md-card>
+            </div>
+        </div>
 
     </div>
 
-    <div flex></div>
+    <div class="uk-width-1-2">
+        <div class="uk-panel uk-panel-box">
 
+            <div class="uk-panel-title">ZONE</div>
+
+            <div flex>
+                <img ng-src="{{ctrl.game.story.data.image}}" width="100%" alt="zone">
+            </div>
+            <div flex>
+                <p>{{'chapter'|translate}} {{ctrl.game.story.ref}}</p>
+
+                <h2>{{'story '+ctrl.game.story.ref|translate}}</h2>
+
+                <p>{{'story '+ctrl.game.story.ref+' desc'|translate}}</p>
+                <md-button class="md-raised md-primary" ng-click="ctrl.battle()">{{'fight'|translate}}
+                </md-button>
+            </div>
+
+        </div>
+
+    </div>
 </div>

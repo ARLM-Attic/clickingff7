@@ -1,13 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
-html,
-body {
+
+html, body {
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  height: 100%;
+  font-size:14px;
+  height:100%;
   margin: 0px;
   padding: 0px;
 }
+
 /* Toolbar area */
+
 .menu {
   background-color: transparent;
   border: none;
@@ -15,10 +17,13 @@ body {
   margin: 16px;
   width: 36px;
 }
+
 md-toolbar h1 {
   margin: auto;
 }
+
 /* Sidenav area */
+
 md-list .md-button {
   color: inherit;
   font-weight: 500;
@@ -28,22 +33,28 @@ md-list .md-button {
 md-list .md-button.selected {
   color: #03a9f4;
 }
-md-sidenav md-list {
+
+md-sidenav  md-list {
   padding: 0px 0px 8px 0px;
 }
+
 /* Battle */
+
 .tm-icon-button {
   border: 1px solid #666;
   border-radius: 15px;
   padding: 2px;
 }
+
 .tm-icon-button:hover {
   cursor: pointer;
   border-color: #000;
 }
+
 .tm-icon-button.inactive {
   opacity: 0.3;
 }
+
 .damage {
   position: absolute;
   font-size: 16px;
@@ -52,61 +63,59 @@ md-sidenav md-list {
   font-family: 'Press Start 2P', cursive;
   z-index: 9999;
 }
+
+
 /* Status */
+
 .label {
   text-transform: uppercase;
   font-size: 0.7em;
   font-family: 'Roboto', sans-serif;
 }
+
 .stat {
   font-weight: bold;
   font-size: 1.3em;
 }
+
 .progress-hp .md-bar {
   background-color: darkgreen;
 }
+
 .progress-mp .md-bar {
   background-color: darkgreen;
 }
+
 .progress-limit .md-bar {
   background-color: hotpink;
 }
+
 .icon-weapon {
   position: relative;
   top: 4px;
 }
+
 .empty {
   font-style: italic;
   color: #999;
 }
+
 .stat-up::after {
   content: "\25B2";
   color: darkgreen;
   font-size: 0.8em;
 }
+
 .stat-down::after {
   content: "\25BC";
   color: darkred;
   font-size: 0.8em;
 }
-.sts_0 {
-  background-color: #edb5f7;
-}
-.sts_1 {
-  background-color: #e6a7f0;
-}
-.sts_2 {
-  background-color: #e099e9;
-}
-.sts_3 {
-  background-color: #d98ce2;
-}
-.sts_4 {
-  background-color: #d37edc;
-}
-.sts_5 {
-  background-color: #cd71d5;
-}
-.sts_6 {
-  background-color: #c663ce;
-}
+
+.sts_0 {background-color: #EDB5F7}
+.sts_1 {background-color: #E6A7F0}
+.sts_2 {background-color: #E099E9}
+.sts_3 {background-color: #D98CE2}
+.sts_4 {background-color: #D37EDC}
+.sts_5 {background-color: #CD71D5}
+.sts_6 {background-color: #C663CE}

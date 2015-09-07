@@ -218,17 +218,12 @@ export default class Character extends Unit {
         // [0-1] current limit of character
         //res.push(new ActionLimit(this));
 
-        // [0-2] get actions from materias on weapon
-        /*let a = this.weapon.getActions();
-         for (let i of a) {
-         res.push(i);
-         }*/
-
-        // [0-2] get actions from materias on armor
-        /*let b = this.armor.getActions();
-         for (let i of b) {
-         res.push(i);
-         }*/
+        // [0-4] get actions from materias on weapon
+        let a = this.getActionsFromEquipment();
+        console.log(a);
+        for (let i of a) {
+            res.push(i);
+        }
 
         this.actions = res;
     }
@@ -249,6 +244,42 @@ export default class Character extends Unit {
     }
 
     /**
+     * todo get materia actions from weapon & armor
+     */
+    getActionsFromEquipment() {
+        let materias = [], actions = [];
+
+        // grab "green" materias from weapon & armor
+
+        if (this.weapon) {
+            materias = _.union(materias, _.where(this.weapon.materias, {color: 'green'}));
+        }
+        if (this.armor) {
+            materias = _.union(materias, _.where(this.armor.materias, {color: 'green'}));
+        }
+
+        // sort by materia level
+
+        materias = _.sortByOrder(materias, ['lvl'], ['desc']);
+
+        for (var materia of materias) {
+
+            let action = _.find(actions, (e) => {
+                return (e.materia.name == materia.name);
+            });
+            if (action) {
+                action.lvl += materia.lvl;
+            } else {
+                let a = new ActionMateria(this, materia);
+                a.lvl = materia.lvl;
+                actions.push(a);
+            }
+        }
+
+        return actions;
+    }
+
+    /**
      *
      * @returns {*}
      */
@@ -259,27 +290,15 @@ export default class Character extends Unit {
 
         if (this.weapon) {
             res.weapon = _.pick(this.weapon, 'id');
-            if (_.keys(this.weapon.materias).length > 0) {
-                res.weapon.materias = {};
-                for (let i in this.weapon.materias) {
-                    materia = this.weapon.materias[i];
-                    if (!_.isUndefined(materia)) {
-                        res.weapon.materias[i] = materia.id;
-                    }
-                }
+            if (this.weapon.materias.length > 0) {
+                res.weapon.materias = _.pluck(this.weapon.materias, 'id');
             }
         }
 
         if (this.armor) {
             res.armor = _.pick(this.armor, 'id');
-            if (_.keys(this.armor.materias).length > 0) {
-                res.armor.materias = {};
-                for (let i in this.armor.materias) {
-                    materia = this.armor.materias[i];
-                    if (!_.isUndefined(materia)) {
-                        res.armor.materias[i] = materia.id;
-                    }
-                }
+            if (this.armor.materias.length > 0) {
+                res.armor.materias = _.pluck(this.armor.materias, 'id');
             }
         }
 

@@ -13,6 +13,7 @@ import 'angular-route';
 import 'angular-translate';
 import 'angular-translate-loader-static-files';
 import 'angular-material';
+import 'uikit';
 
 function config($routeProvider, $translateProvider) {
 

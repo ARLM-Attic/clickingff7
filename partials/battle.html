@@ -1,94 +1,99 @@
-<div layout="row">
+<div class="uk-grid uk-grid-margin">
 
-    <div flex>
 
-        <md-card>
-            <md-card-content layout="row">
+    <div class="uk-width-1-2 uk-container-center">
+
+        <div class="uk-panel uk-panel-box">
+            <div class="uk-panel-title">
+                Turns
+                <a class="uk-button uk-button-danger" ng-click="ctrl.quitBattle()">
+                    {{"quit"|translate}}
+                </a>
+            </div>
+            <div class="uk-grid uk-grid-small" style="height:50px">
+                <div ng-repeat="turn in ctrl.battle.turns track by $index" class="uk-width-1-6">
+                    <div class="{{turn.color}}" style="height:{{turn.height}}px"></div>
+                    <div class="">{{turn.ref|translate}}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="uk-width-1-1 uk-margin-top">
+
+        <div class="uk-panel">
+            <div class="uk-grid">
 
                 <!-- team list -->
-                <div flex>
-                    <div ng-repeat="(i, character) in ctrl.battle.game.team" class="card" id="{{character.id}}">
-                        <div class="avatar avatar-team">
-                            <div class="damage"></div>
-                            <img ng-src="{{character.data.image}}" alt="character" width="50" class="icon"/>
-                        </div>
-                        <div class="main">
-                            <span class="label">{{character.data.ref|translate}}</span>
-                                <span class="stat {{character.hpMax}}">
-                                    {{ctrl.stat('hpMax')}}
-                                </span>
-                            <md-progress-linear md-mode="determinate" value="{{character.progress('hp')}}"
-                                                class="progress-hp"></md-progress-linear>
+                <div class="uk-width-2-5">
+                    <div ng-repeat="(i, character) in ctrl.battle.game.team" id="{{character.id}}"
+                         class="uk-panel uk-panel-box uk-panel-header">
 
-                            <md-progress-linear md-mode="determinate" value="{{character.progress('limit')}}"
-                                                class="progress-limit"></md-progress-linear>
+                        <div class="uk-panel-title">{{character.data.ref|translate}}</div>
+
+                        <div class="uk-grid">
+
+                            <div class="uk-width-1-4 avatar avatar-team">
+                                <div class="damage"></div>
+                                <img ng-src="{{character.data.image}}" alt="character" width="50" />
+                            </div>
+                            <div class="uk-width-3-4">
+                                <div class="uk-progress">
+                                    <div class="uk-progress-bar" style="width: {{character.progress('hp')}}%;">
+                                        {{character.hp}}HP
+                                    </div>
+                                </div>
+                                <div class="uk-progress">
+                                    <div class="uk-progress-bar" style="width: {{character.progress('limit')}}%;">
+
+                                    </div>
+                                </div>
+                                <ul class="uk-list">
+                                    <li ng-repeat="action in character.actions">
+                                        <img ng-src="/img/icons/weapons/{{character.data.weapon.type}}.png"
+                                             class="tm-icon-button"/>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
 
-                        <div style="clear: left"></div>
                     </div>
                 </div>
 
-                <div flex layout="column" layout-align="center center">
+                <div class="uk-width-1-5 uk-text-center">
                     VS
                 </div>
 
                 <!-- enemies list -->
-                <div flex layout="column" layout-align="center">
-                    <div ng-repeat="enemy in ctrl.battle.enemies" class="card_enemy" id="{{enemy.id}}">
-                        <div class="avatar avatar-enemy">
-                            <div class="damage"></div>
-                            <img ng-src="{{enemy.data.image}}" alt="avatar" height="80"/>
-                        </div>
-                        <div class="main">
-                            <span class="label">{{enemy.data.ref|translate}}</span>
-                                <span class="stat {{enemy.hpMax}}">
-                                    {{ctrl.stat('hpMax')}}
-                                </span>
-                            <md-progress-linear md-mode="determinate" value="{{enemy.progress('hp')}}"
-                                                class="progress-hp"></md-progress-linear>
+                <div class="uk-width-2-5">
+                    <div ng-repeat="enemy in ctrl.battle.enemies" id="{{enemy.id}}"
+                         class="uk-panel uk-panel-box uk-panel-header">
+
+                        <div class="uk-panel-title">{{enemy.data.ref|translate}}</div>
+
+                        <div class="uk-grid">
+
+                            <div class="uk-width-1-4 avatar avatar-enemy">
+                                <div class="damage"></div>
+                                <img ng-src="{{enemy.data.image}}" alt="" width="50" />
+                            </div>
+                            <div class="uk-width-3-4">
+                                <div class="uk-progress">
+                                    <div class="uk-progress-bar" style="width: {{enemy.progress('hp')}}%;">
+                                        {{enemy.hp}}HP
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div style="clear: left"></div>
                     </div>
                 </div>
 
-            </md-card-content>
-        </md-card>
-
-        <md-card>
-            <md-subheader>
-                Turns
-                <md-button ng-click="ctrl.quitBattle()">
-                    {{"quit"|translate}}
-                </md-button>
-            </md-subheader>
-            <md-content layout="row" style="height: 50px;">
-                <div flex ng-repeat="turn in ctrl.battle.turns track by $index" class="sts_wrapper">
-                    <div class="sts {{turn.color}}" style="height:{{turn.height}}px"></div>
-                    <div class="sts_text">{{turn.ref|translate}}</div>
-                </div>
-            </md-content>
-        </md-card>
-
-    </div>
-
-    <div flex>
-
-        <md-card>
-            <md-subheader>Team</md-subheader>
-            <md-content>
-
-                <md-list ng-repeat="(i, character) in ctrl.battle.game.team">
-                    <md-subheader>{{character.ref|translate}}</md-subheader>
-                    <md-list-item ng-repeat="action in character.actions">
-                        <p>{{action.ref|translate}}<br />{{action.ref+' desc'|translate}}</p>
-                        <md-checkbox class="md-secondary" ng-model="action.enabled" ng-click="ctrl.save()"></md-checkbox>
-                    </md-list-item>
-                </md-list>
-
-            </md-content>
-
-        </md-card>
+            </div>
+        </div>
 
     </div>
 

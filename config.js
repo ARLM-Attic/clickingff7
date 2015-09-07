@@ -19,6 +19,7 @@ System.config({
     "lodash": "npm:lodash@3.10.0",
     "traceur": "github:jmcriffey/bower-traceur@0.0.88",
     "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.88",
+    "uikit": "github:uikit/uikit@2.21.0",
     "velocity": "github:julianshapiro/velocity@1.2.2",
     "github:angular-translate/bower-angular-translate-loader-static-files@2.7.2": {
       "angular-translate": "github:angular-translate/bower-angular-translate@2.7.2"

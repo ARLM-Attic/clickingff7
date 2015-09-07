@@ -264,7 +264,7 @@ class EquipController extends Controller {
     changeEquipment() {
         let materias = [];
 
-        // remove curr equipment if any
+        // remove current equipment if any
         if (!_.isUndefined(this.equipment)) {
             materias = this.equipment.removeAllMateria();
             this.character.unequip(this.type);

@@ -9,41 +9,41 @@
 
     <title>Clicking FF7</title>
 
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel=stylesheet type="text/css" href="jspm_packages/github/uikit/uikit@2.21.0/css/uikit.min.css"/>
+    <link rel=stylesheet type="text/css" href="jspm_packages/github/uikit/uikit@2.21.0/css/components/progress.min.css"/>
+    <link rel=stylesheet type="text/css" href="css/style.css"/>
 </head>
 
-<body layout="row" ng-controller="IndexController as g">
+<body ng-controller="IndexController as g">
 
-<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+<nav class="uk-navbar">
 
-    <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">clicking ff7</h1>
-    </md-toolbar>
+    <div class="uk-navbar-brand">clicking ff7</div>
 
-    <md-list>
-        <md-list-item>
-            <md-button ng-class="{'selected' : g.isActive('/home')}" ng-click="g.goGame()">
+    <ul class="uk-navbar-nav">
+        <li ng-class="{'uk-active' : g.isActive('/home')}">
+            <a ng-click="g.goGame()">
                 Home
-            </md-button>
-        </md-list-item>
-        <md-list-item>
-            <md-button ng-class="{'selected' : g.isActive('/story')}" ng-click="g.goStory()">
+            </a>
+        </li>
+        <li ng-class="{'uk-active' : g.isActive('/story')}">
+            <a ng-click="g.goStory()">
                 Story
-            </md-button>
-        </md-list-item>
-        <md-list-item>
-            <md-button ng-class="{'selected' : g.isActive('/equip')}" ng-click="g.goEquip()">
+            </a>
+        </li>
+        <li ng-class="{'uk-active' : g.isActive('/equip')}">
+            <a ng-click="g.goEquip()">
                 Equip
-            </md-button>
-        </md-list-item>
-        <md-list-item>
-            <md-button ng-class="{'selected' : g.isActive('/phs')}" ng-click="g.goPHS()">
+            </a>
+        </li>
+        <li ng-class="{'uk-active' : g.isActive('/phs')}">
+            <a ng-click="g.goPHS()">
                 PHS
-            </md-button>
-        </md-list-item>
-    </md-list>
+            </a>
+        </li>
+    </ul>
 
-</md-sidenav>
+</nav>
 
     <!--md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools">clicking ff7</h1>
@@ -65,11 +65,7 @@
     </md-content>
 </md-sidenav-->
 
-<div flex layout="column" tabIndex="-1" role="main" class="md-whiteframe-z2">
-    <md-content flex id="content" ng-view>
-
-    </md-content>
-</div>
+<div class="uk-container uk-container-center" ng-view></div>
 
 <!--footer>
     <div class="wrapper">

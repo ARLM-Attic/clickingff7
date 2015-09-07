@@ -12,7 +12,7 @@ export default class Weapon extends Equipment {
 
         w.ref = w.data.ref;
 
-        w.materias = {};
+        w.materias = [];
 
         return w;
     }
@@ -24,9 +24,16 @@ export default class Weapon extends Equipment {
 
         this.ref = data.ref;
 
-        this.materias = {};
-        for (let i in data.materias) {
-            this.materias[i] = _.find(this.game.materias, {id: data.materias[i]})
+        if (data.materias) {
+
+            this.materias = [];
+
+            for (let id of data.materias) {
+                this.materias.push(
+                    _.find(this.game.materias, {id: id})
+                );
+            }
+
         }
 
     }
