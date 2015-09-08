@@ -1,113 +1,111 @@
-<md-card>
-    <md-card-content>
+<div class="uk-panel">
 
-        <div layout="row">
+    <div class="grid">
 
-            <div flex="30" layout="column" layout-align="start center">
+        <div flex="30" layout="column" layout-align="start center">
 
 
-                <md-menu>
-                    <md-button ng-click="$mdOpenMenu()" aria-label="Select character">
-                        {{ctrl.character.data.ref}} Nv. {{ctrl.character.lvl}}
-                    </md-button>
-                    <md-menu-content>
-                        <md-menu-item ng-repeat="character in ctrl.game.characters">
-                            <md-button ng-click="ctrl.selectCharacter(character)">{{character.ref}}</md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+            <md-menu>
+                <md-button ng-click="$mdOpenMenu()" aria-label="Select character">
+                    {{ctrl.character.data.ref}} Nv. {{ctrl.character.lvl}}
+                </md-button>
+                <md-menu-content>
+                    <md-menu-item ng-repeat="character in ctrl.game.characters">
+                        <md-button ng-click="ctrl.selectCharacter(character)">{{character.ref}}</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
 
-                <img ng-src="{{ctrl.character.data.image}}" class="avatar" alt="character">
+            <img ng-src="{{ctrl.character.data.image}}" class="avatar" alt="character">
 
-            </div>
+        </div>
 
-            <div flex>
+        <div flex>
 
-                <div layout="row" layout-padding>
+            <div layout="row" layout-padding>
 
-                    <div flex>
-                        <span class="label">{{'hp'|translate}}</span>
+                <div flex>
+                    <span class="label">{{'hp'|translate}}</span>
                                 <span class="stat {{ctrl.stat('hpMax', 'change')}}">
                                     {{ctrl.stat('hpMax')}}
                                 </span>
-                        <md-progress-linear md-mode="determinate" value="30"
-                                            class="progress-hp"></md-progress-linear>
-                    </div>
+                    <md-progress-linear md-mode="determinate" value="30"
+                                        class="progress-hp"></md-progress-linear>
+                </div>
 
-                    <div flex>
-                        <span class="label">{{'mp'|translate}}</span>
+                <div flex>
+                    <span class="label">{{'mp'|translate}}</span>
                                 <span class="stat {{ctrl.stat('mpMax', 'change')}}">
                                     {{ctrl.stat('mpMax')}}
                                 </span>
-                        <md-progress-linear md-mode="determinate" value="30"
-                                            class="progress-mp"></md-progress-linear>
-                    </div>
-
+                    <md-progress-linear md-mode="determinate" value="30"
+                                        class="progress-mp"></md-progress-linear>
                 </div>
 
-                <div layout="row" layout-padding>
+            </div>
 
-                    <div flex="75">
-                        <span class="label">{{'xp'|translate}}</span>
+            <div layout="row" layout-padding>
+
+                <div flex="75">
+                    <span class="label">{{'xp'|translate}}</span>
                                 <span class="stat">
                                     {{ctrl.character.xpRemain}}
                                 </span>
-                        <md-progress-linear md-mode="determinate" value="30"
-                                            class="progress-xp"></md-progress-linear>
-                    </div>
-
-                    <div flex>
-                        <span class="label">{{'limit'|translate}}</span>
-                        <span class="stat">1</span>
-                        <md-progress-linear md-mode="determinate" value="100"
-                                            class="progress-limit"></md-progress-linear>
-                    </div>
-
+                    <md-progress-linear md-mode="determinate" value="30"
+                                        class="progress-xp"></md-progress-linear>
                 </div>
 
-                <div layout="row" layout-padding>
+                <div flex>
+                    <span class="label">{{'limit'|translate}}</span>
+                    <span class="stat">1</span>
+                    <md-progress-linear md-mode="determinate" value="100"
+                                        class="progress-limit"></md-progress-linear>
+                </div>
 
-                    <div flex>
-                        <span class="label">{{'str'|translate}}</span>
+            </div>
+
+            <div layout="row" layout-padding>
+
+                <div flex>
+                    <span class="label">{{'str'|translate}}</span>
                                 <span class="stat {{ctrl.stat('str', 'change')}}">
                                     {{ctrl.stat('str')}}
                                 </span>
-                        <br/>
-                        <span class="label">{{'def'|translate}}</span>
+                    <br/>
+                    <span class="label">{{'def'|translate}}</span>
                                 <span class="stat {{ctrl.stat('def', 'change')}}">
                                     {{ctrl.stat('def')}}
                                 </span>
-                    </div>
+                </div>
 
-                    <div flex>
-                        <span class="label">{{'mgi'|translate}}</span>
+                <div flex>
+                    <span class="label">{{'mgi'|translate}}</span>
                                 <span class="stat {{ctrl.stat('mgi', 'change')}}">
                                     {{ctrl.stat('mgi')}}
                                 </span>
-                        <br/>
-                        <span class="label">{{'res'|translate}}</span>
+                    <br/>
+                    <span class="label">{{'res'|translate}}</span>
                                 <span class="stat {{ctrl.stat('res', 'change')}}">
                                     {{ctrl.stat('res')}}
                                 </span>
-                    </div>
+                </div>
 
-                    <div flex>
-                        <span class="label">{{'dex'|translate}}</span>
+                <div flex>
+                    <span class="label">{{'dex'|translate}}</span>
                                 <span class="stat {{ctrl.stat('dex', 'change')}}">
                                     {{ctrl.stat('dex')}}
                                 </span>
-                        <br/>
-                        <span class="label">{{'lck'|translate}}</span>
+                    <br/>
+                    <span class="label">{{'lck'|translate}}</span>
                                 <span class="stat {{ctrl.stat('lck', 'change')}}">
                                     {{ctrl.stat('lck')}}
                                 </span>
-                    </div>
-
                 </div>
 
             </div>
 
         </div>
 
-    </md-card-content>
-</md-card>
+    </div>
+
+</div>
