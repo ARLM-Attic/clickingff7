@@ -1,15 +1,13 @@
 System.config({
-  "baseURL": "/",
-  "transpiler": "traceur",
-  "paths": {
-    "*": "*.js",
-    "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js"
-  }
-});
+  baseURL: "/",
+  defaultJSExtensions: true,
+  transpiler: "traceur",
+  paths: {
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*"
+  },
 
-System.config({
-  "map": {
+  map: {
     "angular": "github:angular/bower-angular@1.4.3",
     "angular-material": "github:angular/bower-material@0.10.0",
     "angular-route": "github:angular/bower-angular-route@1.4.3",
@@ -50,4 +48,3 @@ System.config({
     }
   }
 });
-

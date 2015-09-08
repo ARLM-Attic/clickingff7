@@ -104,18 +104,16 @@ class EquipController extends Controller {
         let res = [], materia;
         for (let i of this.game.characters) {
             if (i.weapon) {
-                for (let j in i.weapon.materias) {
-                    materia = i.weapon.materias[j];
-                    if (!_.isUndefined(materia)) {
-                        res.push(materia.id);
+                for (let j of i.weapon.materias) {
+                    if (!_.isUndefined(j)) {
+                        res.push(j.id);
                     }
                 }
             }
             if (i.armor) {
-                for (let j in i.armor.materias) {
-                    materia = i.armor.materias[j];
-                    if (!_.isUndefined(materia)) {
-                        res.push(materia.id);
+                for (let k of i.armor.materias) {
+                    if (!_.isUndefined(k)) {
+                        res.push(k.id);
                     }
                 }
             }
