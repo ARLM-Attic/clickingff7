@@ -258,8 +258,9 @@ class EquipController extends Controller {
 
     /**
      *
+     * @param equipment
      */
-    changeEquipment() {
+    changeEquipment(newE) {
         let materias = [];
 
         // remove current equipment if any

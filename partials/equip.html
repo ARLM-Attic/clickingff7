@@ -1,185 +1,159 @@
-<div class="uk-grid">
+<div class="uk-grid uk-grid-margin">
 
     <div class="uk-width-1-2">
 
         <ng-include src="'partials/includes/card-character.html'"></ng-include>
 
-        <md-card>
-            <md-card-content>
+        <div class="uk-panel uk-panel-box uk-panel-header uk-margin-top"
+             ng-class="{'uk-panel-box-primary': ctrl.type == 'weapon'}">
+            <div class="uk-panel-title">
+                {{'weapon'|translate}}
+                <a href="" class="uk-float-right uk-button-small"
+                   ng-click="ctrl.toggleChangeEquipment('weapon')">{{'change'|translate}}</a>
+            </div>
+            <div>
 
-                <md-list>
-
-                    <!-- WEAPON -->
-                    <md-list-item ng-click="ctrl.toggleChangeEquipment('weapon')">
-                        <div class="label inset">
-                            {{'weapon'|translate}}
-                        </div>
-
-                        <div class="inset" ng-show="ctrl.character.weapon">
-                            <img ng-src="/img/icons/weapons/{{ctrl.character.data.weapon.type}}.png"
-                                 class="icon-weapon"/>
+                <dl class="uk-description-list-horizontal">
+                    <dt>
+                        <img ng-src="/img/icons/weapons/{{ctrl.character.data.weapon.type}}.png"/>
+                        <span ng-if="ctrl.character.weapon">
                             {{ctrl.character.weapon.ref|translate}}
-                        </div>
-
-                        <div class="empty inset" ng-show="!ctrl.character.weapon">
-                            {{'empty'|translate}}
-                        </div>
-                    </md-list-item>
-
-                    <!-- WEAPON MATERIAS -->
-                    <div ng-click="ctlr.equipMateria('weapon')">
-                        {{'Equip materia'|translate}}
-                    </div>
-                    <md-list-item ng-repeat="materia in ctrl.weapon.materias">
-                        <div class="label inset">
-                            &nbsp;
-                        </div>
-                        <div class="inset" ng-show="ctrl.weapon.materias[hole]">
-                            {{ctrl.weapon.materias[hole].ref|translate}}
-                        </div>
-                        <span class="empty inset" ng-show="!ctrl.weapon.materias[hole]">
+                            <br/>
+                            <small>{{ctrl.character.weapon.data.holes}} slots</small>
+                        </span>
+                        <span ng-if="!ctrl.character.weapon">
                             {{'empty'|translate}}
                         </span>
-                    </md-list-item>
+                    </dt>
+                    <dd>
+                        {{ctrl.character.weapon.data.stats}}
+                    </dd>
 
-                    <!-- ARMOR -->
-                    <md-list-item ng-click="ctrl.toggleChangeEquipment('armor')">
-                        <div class="label inset">
-                            {{'armor'|translate}}
-                        </div>
+                </dl>
 
-                        <div class="inset" ng-show="ctrl.character.armor">
-                            <img src="/img/icons/armor.png"/>
+            </div>
+        </div>
+
+        <div class="uk-panel uk-panel-box uk-panel-header uk-margin-top"
+             ng-class="{'uk-panel-box-primary': ctrl.type == 'armor'}">
+            <div class="uk-panel-title">
+                {{'armor'|translate}}
+                <a href="" class="uk-float-right uk-button-small"
+                   ng-click="ctrl.toggleChangeEquipment('armor')">{{'change'|translate}}</a>
+            </div>
+            <div>
+
+                <dl class="uk-description-list-horizontal">
+                    <dt>
+                        <img ng-src="/img/icons/armor.png"/>
+                        <span ng-if="ctrl.character.armor">
                             {{ctrl.character.armor.ref|translate}}
-                        </div>
-
-                        <div class="empty inset" ng-show="!ctrl.character.armor">
-                            {{'empty'|translate}}
-                        </div>
-                    </md-list-item>
-
-                    <!-- ARMOR MATERIAS -->
-                    <md-list-item ng-repeat="hole in ctrl.armor.nbHoles()" ng-click="ctrl.toggleChangeMateria(ctrl.character.armor, hole)">
-                        <div class="label inset">
-                            &nbsp;
-                        </div>
-                        <div class="inset" ng-show="ctrl.armor.materias[hole]">
-                            {{ctrl.armor.materias[hole].ref|translate}}
-                        </div>
-                        <span class="empty inset" ng-show="!ctrl.armor.materias[hole]">
+                            <br/>
+                            <small>{{ctrl.character.armor.data.holes}} slots</small>
+                        </span>
+                        <span ng-if="!ctrl.character.armor">
                             {{'empty'|translate}}
                         </span>
-                    </md-list-item>
+                    </dt>
+                    <dd>
+                        {{ctrl.character.armor.data.stats}}
+                    </dd>
 
-                    <!-- ACCESSORY -->
-                    <md-list-item ng-click="ctrl.toggleChangeEquipment('accessory')">
-                        <div class="label inset">
-                            {{'accessory'|translate}}
-                        </div>
+                </dl>
 
-                        <div class="inset" ng-show="ctrl.character.accessory">
-                            <img src="/img/icons/accessory.png" width="12"/>
-                            {{ctrl.character.accessory.ref|translate}}
-                        </div>
+            </div>
+        </div>
 
-                        <div class="empty inset" ng-show="!ctrl.character.accessory">
-                            {{'empty'|translate}}
-                        </div>
-                    </md-list-item>
-                </md-list>
+        <div class="uk-panel uk-panel-box uk-panel-header uk-margin-top"
+             ng-class="{'uk-panel-box-primary': ctrl.type == 'accessory'}">
+            <div class="uk-panel-title">
+                {{'accessory'|translate}}
+                <a href="" class="uk-float-right uk-button-small"
+                   ng-click="ctrl.toggleChangeEquipment('accessory')">{{'change'|translate}}</a>
+            </div>
+            <div>
 
-            </md-card-content>
-        </md-card>
+                <dl class="uk-description-list-horizontal">
+                    <dt>
+                        <img ng-src="/img/icons/accessory.png"/>
+                        <span ng-if="ctrl.character.accessory">{{ctrl.character.accessory.ref|translate}}</span>
+                        <span ng-if="!ctrl.character.accessory">{{'empty'|translate}}</span>
+                    </dt>
+                    <dd>
+                        {{ctrl.character.accessory.data.stats}}
+                    </dd>
+
+                </dl>
+
+            </div>
+        </div>
 
     </div>
 
     <div class="uk-width-1-2">
 
-        <md-card ng-show="ctrl.type">
-            <md-card-content>
+        <!-- Weapons -->
+        <div class="uk-panel uk-panel-header" ng-if="ctrl.type == 'weapon'">
 
-                <!-- WEAPON LIST -->
-                <md-list ng-if="ctrl.type == 'weapon'">
+            <div class="uk-panel-title">{{'weapons'|translate}}</div>
 
-                    <md-subheader class="md-no-sticky">{{'weapons'|translate}}</md-subheader>
+            <ul class="uk-list">
 
-                    <md-list-item ng-repeat="weapon in ctrl.weapons" ng-click="ctrl.togglePreviewEquipment(weapon)">
-                        <img ng-src="/img/icons/weapons/{{weapon.data.type}}.png" class="icon-weapon"/>
-                        {{weapon.ref|translate}}
-                    </md-list-item>
+                <li ng-repeat="weapon in ctrl.weapons">
 
-                    <md-list-item ng-show="ctrl.isEquipment()" ng-click="ctrl.togglePreviewEquipment()" class="md-warn">
-                        {{'remove'|translate}}
-                    </md-list-item>
+                    <img ng-src="/img/icons/weapons/{{weapon.data.type}}.png"/>
+                    {{weapon.ref|translate}}
 
-                    <md-list-item ng-show="ctrl.isSelection()" ng-click="ctrl.changeEquipment()" class="md-raised">
-                        {{'valid'|translate}}
-                    </md-list-item>
+                    <a href="" ng-click="ctrl.changeEquipment(weapon)">
+                        {{'change'|translate}}
+                    </a>
 
-                </md-list>
+                </li>
 
-                <!-- ARMOR LIST -->
-                <md-list ng-if="ctrl.type == 'armor'">
+            </ul>
+        </div>
 
-                    <md-subheader class="md-no-sticky">{{'armors'|translate}}</md-subheader>
+        <!-- Armors -->
+        <div class="uk-panel uk-panel-header" ng-if="ctrl.type == 'armor'">
 
-                    <md-list-item ng-repeat="armor in ctrl.armors" ng-click="ctrl.togglePreviewEquipment(armor)">
-                        <img ng-src="/img/icons/armor.png" class="icon-armor"/>
-                        {{armor.ref|translate}}
-                    </md-list-item>
+            <div class="uk-panel-title">{{'armors'|translate}}</div>
 
-                    <md-list-item ng-show="ctrl.isEquipment()" ng-click="ctrl.togglePreviewEquipment()" class="md-warn">
-                        {{'remove'|translate}}
-                    </md-list-item>
+            <ul class="uk-list">
 
-                    <md-list-item ng-show="ctrl.isSelection()" ng-click="ctrl.changeEquipment()" class="md-raised">
-                        {{'valid'|translate}}
-                    </md-list-item>
+                <li ng-repeat="armor in ctrl.armors">
 
-                </md-list>
+                    <img ng-src="/img/icons/armor.png"/>
+                    {{armor.ref|translate}}
 
-                <!-- ACCESSORY LIST -->
-                <md-list ng-if="ctrl.type == 'accessory'">
+                    <a href="" ng-click="ctrl.togglePreviewEquipment(armor)">
+                        {{'change'|translate}}
+                    </a>
 
-                    <md-subheader class="md-no-sticky">{{'accessories'|translate}}</md-subheader>
+                </li>
 
-                    <md-list-item ng-repeat="accessory in ctrl.accessories" ng-click="ctrl.togglePreviewEquipment(accessory)">
-                        <img ng-src="/img/icons/accessory.png" class="icon-accessory"/>
-                        {{accessory.ref|translate}}
-                    </md-list-item>
+            </ul>
+        </div>
 
-                    <md-list-item ng-show="ctrl.isEquipment()" ng-click="ctrl.togglePreviewEquipment()" class="md-warn">
-                        {{'remove'|translate}}
-                    </md-list-item>
+        <!-- Accessories -->
+        <div class="uk-panel uk-panel-header" ng-if="ctrl.type == 'accessory'">
 
-                    <md-list-item ng-show="ctrl.isSelection()" ng-click="ctrl.changeEquipment()" class="md-raised">
-                        {{'valid'|translate}}
-                    </md-list-item>
+            <div class="uk-panel-title">{{'accessories'|translate}}</div>
 
-                </md-list>
+            <ul class="uk-list">
 
-                <!-- MATERIA LIST -->
-                <md-list ng-if="ctrl.type == 'materia'">
+                <li ng-repeat="accessory in ctrl.accessories">
 
-                    <md-subheader class="md-no-sticky">{{'materias'|translate}}</md-subheader>
+                    <img ng-src="/img/icons/accessory.png"/>
+                    {{accessory.ref|translate}}
 
-                    <md-list-item ng-repeat="materia in ctrl.materias" ng-click="ctrl.togglePreviewMateria(materia)">
-                        <img ng-src="/img/icons/weapons/{{weapon.data.type}}.png" class="icon-weapon"/>
-                        {{materia.ref|translate}}
-                    </md-list-item>
+                    <a href="" ng-click="ctrl.togglePreviewEquipment(accessory)">
+                        {{'change'|translate}}
+                    </a>
 
-                    <md-list-item ng-show="ctrl.isMateria()" ng-click="ctrl.togglePreviewMateria()" class="md-warn">
-                        {{'remove'|translate}}
-                    </md-list-item>
+                </li>
 
-                    <md-list-item ng-show="ctrl.isSelection()" ng-click="ctrl.changeMateria()" class="md-raised">
-                        {{'valid'|translate}}
-                    </md-list-item>
-
-                </md-list>
-
-            </md-card-content>
-        </md-card>
+            </ul>
+        </div>
 
     </div>
 
