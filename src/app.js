@@ -12,7 +12,6 @@ import Game from './game';
 import 'angular-route';
 import 'angular-translate';
 import 'angular-translate-loader-static-files';
-import 'angular-material';
 import 'uikit';
 
 function config($routeProvider, $translateProvider) {
@@ -38,7 +37,7 @@ function config($routeProvider, $translateProvider) {
 
 config.$inject = ['$routeProvider', '$translateProvider'];
 
-var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate', 'ngMaterial'])
+var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .config(config)
     .filter('time', function () {
         return function (elapsed) {
