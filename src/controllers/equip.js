@@ -87,10 +87,10 @@ class EquipController extends Controller {
 
     /**
      *
-     * @param character
+     * @param c
      */
-    selectCharacter(character) {
-        this.game.selectedCharacter = character;
+    changeCharacter(c) {
+        this.game.selectedCharacter = c;
         this.reset();
     }
 
