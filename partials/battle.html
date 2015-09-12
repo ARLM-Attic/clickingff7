@@ -6,12 +6,12 @@
         <div class="uk-panel uk-panel-box">
             <div class="uk-panel-title">
                 Turns
-                <a class="uk-button uk-button-danger" ng-click="ctrl.quitBattle()">
+                <a class="uk-button uk-button-danger" ng-click="g.quitBattle()">
                     {{"quit"|translate}}
                 </a>
             </div>
             <div class="uk-grid uk-grid-small" style="height:50px">
-                <div ng-repeat="turn in ctrl.battle.turns track by $index" class="uk-width-1-6">
+                <div ng-repeat="turn in g.battle.turns track by $index" class="uk-width-1-6">
                     <div class="{{turn.color}}" style="height:{{turn.height}}px"></div>
                     <div class="">{{turn.ref|translate}}</div>
                 </div>
@@ -27,7 +27,7 @@
 
                 <!-- team list -->
                 <div class="uk-width-2-5">
-                    <div ng-repeat="(i, character) in ctrl.battle.game.team" id="{{character.id}}"
+                    <div ng-repeat="(i, character) in g.battle.game.team" id="{{character.id}}"
                          class="uk-panel uk-panel-box uk-panel-header">
 
                         <div class="uk-panel-title">{{character.data.ref|translate}}</div>
@@ -68,7 +68,7 @@
 
                 <!-- enemies list -->
                 <div class="uk-width-2-5">
-                    <div ng-repeat="enemy in ctrl.battle.enemies" id="{{enemy.id}}"
+                    <div ng-repeat="enemy in g.battle.enemies" id="{{enemy.id}}"
                          class="uk-panel uk-panel-box uk-panel-header">
 
                         <div class="uk-panel-title">{{enemy.data.ref|translate}}</div>

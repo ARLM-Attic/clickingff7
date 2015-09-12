@@ -3,7 +3,7 @@ export default class Route {
     static get(section) {
         return {
             templateUrl: 'partials/' + section + '.html',
-            controller : section.charAt(0).toUpperCase() + section.slice(1) + 'Controller as ctrl',
+            controller : section.charAt(0).toUpperCase() + section.slice(1) + 'Controller as g',
             resolve    : {
                 SomeData: function ($q, Game) {
                     if (!Game.loaded) {

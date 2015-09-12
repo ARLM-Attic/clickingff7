@@ -4,7 +4,7 @@
 
         <!-- characters list -->
         <div id="step1">
-            <div ng-repeat="(i, character) in ctrl.battle.game.team" class="card" id="{{character.id}}">
+            <div ng-repeat="(i, character) in g.battle.game.team" class="card" id="{{character.id}}">
                 <div class="avatar avatar-team">
                     <div class="damage"></div>
                     <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
@@ -43,11 +43,11 @@
         <!-- enemies list -->
         <div class="results">
 
-            <div>XP: {{ctrl.rewards.xp}}</div>
+            <div>XP: {{g.rewards.xp}}</div>
 
-            <div>Redirection: {{ctrl.rewards.count}}..</div>
+            <div>Redirection: {{g.rewards.count}}..</div>
 
-            <div ng-repeat="drop in ctrl.rewards.drops">
+            <div ng-repeat="drop in g.rewards.drops">
                 {{drop.ref}}
             </div>
 

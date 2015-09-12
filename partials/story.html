@@ -2,14 +2,14 @@
 
     <div flex>
 
-        <md-card ng-repeat="story in ctrl.game.stories">
+        <md-card ng-repeat="story in g.game.stories">
             <md-card-content>
                 <img ng-src="{{story.data.image}}" class="avatar" alt="zone">
                 <h2>{{'Story '+story.ref|translate}}</h2>
                 <p>Zone#{{story.ref}}</p>
             </md-card-content>
             <div class="md-actions" layout="row" layout-align="end center">
-                <md-button class="md-raised" ng-click="ctrl.toggle(story)">more</md-button>
+                <md-button class="md-raised" ng-click="g.toggle(story)">more</md-button>
             </div>
         </md-card>
 
@@ -17,14 +17,14 @@
 
     <div flex>
 
-        <md-card ng-show="ctrl.story">
+        <md-card ng-show="g.story">
             <md-card-content>
-                <img ng-src="{{ctrl.story.data.image}}" class="avatar" alt="zone">
-                <h2>{{'Story '+ctrl.story.ref|translate}}</h2>
-                <p>Zone#{{ctrl.story.ref}}</p>
+                <img ng-src="{{g.story.data.image}}" class="avatar" alt="zone">
+                <h2>{{'Story '+g.story.ref|translate}}</h2>
+                <p>Zone#{{g.story.ref}}</p>
             </md-card-content>
             <div class="md-actions" layout="row" layout-align="end center">
-                <md-button class="md-raised md-primary" ng-disabled="ctrl.isCurrent()" ng-click="ctrl.select()">Select</md-button>
+                <md-button class="md-raised md-primary" ng-disabled="g.isCurrent()" ng-click="g.select()">Select</md-button>
             </div>
         </md-card>
 

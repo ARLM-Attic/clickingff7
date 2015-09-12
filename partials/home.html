@@ -21,15 +21,15 @@
             <div class="uk-panel-title">ZONE</div>
 
             <div flex>
-                <img ng-src="{{ctrl.game.story.data.image}}" width="100%" alt="zone">
+                <img ng-src="{{g.game.story.data.image}}" width="100%" alt="zone">
             </div>
             <div flex>
-                <p>{{'chapter'|translate}} {{ctrl.game.story.ref}}</p>
+                <p>{{'chapter'|translate}} {{g.game.story.ref}}</p>
 
-                <h2>{{'story '+ctrl.game.story.ref|translate}}</h2>
+                <h2>{{'story '+g.game.story.ref|translate}}</h2>
 
-                <p>{{'story '+ctrl.game.story.ref+' desc'|translate}}</p>
-                <md-button class="md-raised md-primary" ng-click="ctrl.battle()">{{'fight'|translate}}
+                <p>{{'story '+g.game.story.ref+' desc'|translate}}</p>
+                <md-button class="md-raised md-primary" ng-click="g.battle()">{{'fight'|translate}}
                 </md-button>
             </div>
 

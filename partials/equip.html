@@ -4,157 +4,93 @@
 
         <ng-include src="'partials/includes/card-character.html'"></ng-include>
 
-        <div class="uk-panel uk-panel-box uk-panel-header uk-margin-top"
-             ng-class="{'uk-panel-box-primary': ctrl.type == 'weapon'}">
+    </div>
+
+    <div class="uk-width-1-2">
+
+        <div class="uk-panel uk-panel-box uk-panel-header">
             <div class="uk-panel-title">
-                {{'weapon'|translate}}
-                <a href="" class="uk-float-right uk-button-small"
-                   ng-click="ctrl.toggleChangeEquipment('weapon')">{{'change'|translate}}</a>
+                {{'equipment'|translate}}
             </div>
             <div>
 
-                <dl class="uk-description-list-horizontal">
-                    <dt>
-                        <img ng-src="/img/icons/weapons/{{ctrl.character.data.weapon.type}}.png"/>
-                        <span ng-if="ctrl.character.weapon">
-                            {{ctrl.character.weapon.ref|translate}}
-                            <br/>
-                            <small>{{ctrl.character.weapon.data.holes}} slots</small>
-                        </span>
-                        <span ng-if="!ctrl.character.weapon">
-                            {{'empty'|translate}}
-                        </span>
-                    </dt>
-                    <dd>
-                        {{ctrl.character.weapon.data.stats}}
-                    </dd>
+                <ul class="uk-list">
+                    <li>
+                        <img ng-src="/img/icons/weapons/{{g.character.data.weapon.type}}.png"/>
+                        <a href="" ng-click="g.show('weapon')">
+                            <span ng-if="g.character.weapon">
+                                {{g.character.weapon.ref|translate}}
+                            </span>
+                            <span ng-if="!g.character.weapon">
+                                {{'empty'|translate}}
+                            </span>
+                        </a>
+                    </li>
 
-                </dl>
-
-            </div>
-        </div>
-
-        <div class="uk-panel uk-panel-box uk-panel-header uk-margin-top"
-             ng-class="{'uk-panel-box-primary': ctrl.type == 'armor'}">
-            <div class="uk-panel-title">
-                {{'armor'|translate}}
-                <a href="" class="uk-float-right uk-button-small"
-                   ng-click="ctrl.toggleChangeEquipment('armor')">{{'change'|translate}}</a>
-            </div>
-            <div>
-
-                <dl class="uk-description-list-horizontal">
-                    <dt>
+                    <li>
                         <img ng-src="/img/icons/armor.png"/>
-                        <span ng-if="ctrl.character.armor">
-                            {{ctrl.character.armor.ref|translate}}
-                            <br/>
-                            <small>{{ctrl.character.armor.data.holes}} slots</small>
-                        </span>
-                        <span ng-if="!ctrl.character.armor">
-                            {{'empty'|translate}}
-                        </span>
-                    </dt>
-                    <dd>
-                        {{ctrl.character.armor.data.stats}}
-                    </dd>
+                        <a href="" ng-click="g.show('armor')">
+                            <span ng-if="g.character.armor">
+                                {{g.character.armor.ref|translate}}
+                            </span>
+                            <span ng-if="!g.character.armor">
+                                {{'empty'|translate}}
+                            </span>
+                        </a>
+                    </li>
 
-                </dl>
-
-            </div>
-        </div>
-
-        <div class="uk-panel uk-panel-box uk-panel-header uk-margin-top"
-             ng-class="{'uk-panel-box-primary': ctrl.type == 'accessory'}">
-            <div class="uk-panel-title">
-                {{'accessory'|translate}}
-                <a href="" class="uk-float-right uk-button-small"
-                   ng-click="ctrl.toggleChangeEquipment('accessory')">{{'change'|translate}}</a>
-            </div>
-            <div>
-
-                <dl class="uk-description-list-horizontal">
-                    <dt>
+                    <li>
                         <img ng-src="/img/icons/accessory.png"/>
-                        <span ng-if="ctrl.character.accessory">{{ctrl.character.accessory.ref|translate}}</span>
-                        <span ng-if="!ctrl.character.accessory">{{'empty'|translate}}</span>
-                    </dt>
-                    <dd>
-                        {{ctrl.character.accessory.data.stats}}
-                    </dd>
+                        <a href="" ng-click="g.show('accessory')">
+                            <span ng-if="g.character.accessory">
+                                {{g.character.accessory.ref|translate}}
+                            </span>
+                            <span ng-if="!g.character.accessory">
+                                {{'empty'|translate}}
+                            </span>
+                        </a>
+                    </li>
 
-                </dl>
+                </ul>
 
             </div>
         </div>
 
     </div>
 
+</div>
+
+<div class="uk-grid uk-grid-margin" ng-show="g.showList">
+
     <div class="uk-width-1-2">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">
+                Equipment information
+                <a href="" ng-click="g.remove()" ng-if="g.type != 'weapon'">remove</a>
+            </div>
 
-        <!-- Weapons -->
-        <div class="uk-panel uk-panel-header" ng-if="ctrl.type == 'weapon'">
-
-            <div class="uk-panel-title">{{'weapons'|translate}}</div>
-
-            <ul class="uk-list">
-
-                <li ng-repeat="weapon in ctrl.weapons">
-
-                    <img ng-src="/img/icons/weapons/{{weapon.data.type}}.png"/>
-                    {{weapon.ref|translate}}
-
-                    <a href="" ng-click="ctrl.changeEquipment(weapon)">
-                        {{'change'|translate}}
-                    </a>
-
-                </li>
-
-            </ul>
-        </div>
-
-        <!-- Armors -->
-        <div class="uk-panel uk-panel-header" ng-if="ctrl.type == 'armor'">
-
-            <div class="uk-panel-title">{{'armors'|translate}}</div>
+            {{g.equipment.ref|translate}}<br />
 
             <ul class="uk-list">
-
-                <li ng-repeat="armor in ctrl.armors">
-
-                    <img ng-src="/img/icons/armor.png"/>
-                    {{armor.ref|translate}}
-
-                    <a href="" ng-click="ctrl.togglePreviewEquipment(armor)">
-                        {{'change'|translate}}
-                    </a>
-
+                <li ng-repeat="(key, stat) in g.equipment.data.stats">
+                    {{key}}: {{stat}}
                 </li>
-
             </ul>
         </div>
+    </div>
 
-        <!-- Accessories -->
-        <div class="uk-panel uk-panel-header" ng-if="ctrl.type == 'accessory'">
-
-            <div class="uk-panel-title">{{'accessories'|translate}}</div>
+    <div class="uk-width-1-2">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Available</div>
 
             <ul class="uk-list">
-
-                <li ng-repeat="accessory in ctrl.accessories">
-
-                    <img ng-src="/img/icons/accessory.png"/>
-                    {{accessory.ref|translate}}
-
-                    <a href="" ng-click="ctrl.togglePreviewEquipment(accessory)">
-                        {{'change'|translate}}
+                <li ng-repeat="e in g.list">
+                    <a href="" ng-click="g.change(e)">
+                        {{e.ref|translate}}
                     </a>
-
                 </li>
-
             </ul>
         </div>
-
     </div>
 
 </div>

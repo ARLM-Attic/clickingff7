@@ -2,7 +2,7 @@
 
     <div flex>
 
-        <md-card ng-repeat="character in ctrl.game.team">
+        <md-card ng-repeat="character in g.game.team">
             <md-card-content>
                 <img ng-src="{{character.data.image}}" class="avatar" alt="character">
                 <h2>{{character.data.ref}}</h2>
@@ -13,7 +13,7 @@
                 </p>
             </md-card-content>
             <div class="md-actions" layout="row" layout-align="end center">
-                <md-button class="md-raised" ng-click="ctrl.leaveTeam(character)">Leave</md-button>
+                <md-button class="md-raised" ng-click="g.leaveTeam(character)">Leave</md-button>
             </div>
         </md-card>
 
@@ -21,7 +21,7 @@
 
     <div flex>
 
-        <md-card ng-repeat="character in ctrl.game.backup">
+        <md-card ng-repeat="character in g.game.backup">
             <md-card-content>
                 <img ng-src="{{character.data.image}}" class="avatar" alt="character">
                 <h2>{{character.data.ref}}</h2>
@@ -32,7 +32,7 @@
                 </p>
             </md-card-content>
             <div class="md-actions" layout="row" layout-align="end center">
-                <md-button class="md-raised" ng-click="ctrl.joinTeam(character)">Join</md-button>
+                <md-button class="md-raised" ng-click="g.joinTeam(character)">Join</md-button>
             </div>
         </md-card>
 
