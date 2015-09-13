@@ -41,6 +41,13 @@ class IndexController extends Controller {
     }
 
     /**
+     * Go to the equipment section
+     */
+    goMateria() {
+        this.$location.path("/materia");
+    }
+
+    /**
      * Go to the PHS
      */
     goPHS() {

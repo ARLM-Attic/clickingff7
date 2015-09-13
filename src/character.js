@@ -9,6 +9,11 @@ import _ from 'lodash';
 export default class Character extends Unit {
 
     constructor(game, data) {
+
+        this.weapon = null;
+        this.armor = null;
+        this.accessory = null;
+
         super(game, data);
     }
 
@@ -220,7 +225,6 @@ export default class Character extends Unit {
 
         // [0-4] get actions from materias on weapon
         let a = this.getActionsFromEquipment();
-        console.log(a);
         for (let i of a) {
             res.push(i);
         }
@@ -284,21 +288,23 @@ export default class Character extends Unit {
      * @returns {*}
      */
     save() {
-        let materia;
+        let materias;
 
         var res = _.pick(this, 'id', 'lvl', 'xp', 'ref', 'active');
 
         if (this.weapon) {
             res.weapon = _.pick(this.weapon, 'id');
-            if (this.weapon.materias.length > 0) {
-                res.weapon.materias = _.pluck(this.weapon.materias, 'id');
+            materias = this.weapon.getMateriaIds();
+            if (!_.isEmpty(materias)) {
+                res.weapon.materias = materias;
             }
         }
 
         if (this.armor) {
             res.armor = _.pick(this.armor, 'id');
-            if (this.armor.materias.length > 0) {
-                res.armor.materias = _.pluck(this.armor.materias, 'id');
+            materias = this.armor.getMateriaIds();
+            if (!_.isEmpty(materias)) {
+                res.armor.materias = materias;
             }
         }
 

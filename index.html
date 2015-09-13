@@ -36,6 +36,11 @@
                 Equip
             </a>
         </li>
+        <li ng-class="{'uk-active' : g.isActive('/materia')}">
+            <a ng-click="g.goMateria()">
+                Materia
+            </a>
+        </li>
         <li ng-class="{'uk-active' : g.isActive('/phs')}">
             <a ng-click="g.goPHS()">
                 PHS

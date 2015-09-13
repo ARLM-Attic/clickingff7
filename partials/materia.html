@@ -41,40 +41,40 @@
             <div>
 
                 <ul class="uk-list">
-                    <li>
+                    <li ng-show="g.character.weapon">
                         <img ng-src="/img/icons/weapons/{{g.character.data.weapon.type}}.png"/>
-                        <a href="" ng-click="g.show('weapon')">
-                            <span ng-if="g.character.weapon">
-                                {{g.character.weapon.ref|translate}}
-                            </span>
-                            <span ng-if="!g.character.weapon">
-                                {{'empty'|translate}}
-                            </span>
-                        </a>
+                        {{g.character.weapon.ref|translate}}
+                         ({{g.character.weapon.data.holes}} slots)<br />
+                        <ul class="uk-list">
+                            <li ng-repeat="m in g.character.weapon.materias track by $index">
+                                <a href="" ng-click="g.show('weapon', $index)">
+                                    <span ng-if="m">
+                                        {{m.ref|translate}}
+                                    </span>
+                                    <span ng-if="!m">
+                                        {{'empty'|translate}}
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
-                    <li>
+                    <li ng-show="g.character.armor">
                         <img ng-src="/img/icons/armor.png"/>
-                        <a href="" ng-click="g.show('armor')">
-                            <span ng-if="g.character.armor">
-                                {{g.character.armor.ref|translate}}
-                            </span>
-                            <span ng-if="!g.character.armor">
-                                {{'empty'|translate}}
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <img ng-src="/img/icons/accessory.png"/>
-                        <a href="" ng-click="g.show('accessory')">
-                            <span ng-if="g.character.accessory">
-                                {{g.character.accessory.ref|translate}}
-                            </span>
-                            <span ng-if="!g.character.accessory">
-                                {{'empty'|translate}}
-                            </span>
-                        </a>
+                        {{g.character.armor.ref|translate}}
+                         ({{g.character.armor.data.holes}} slots)<br />
+                        <ul class="uk-list">
+                            <li ng-repeat="m in g.character.armor.materias track by $index">
+                                <a href="" ng-click="g.show('armor', $index)">
+                                    <span ng-if="m">
+                                        {{m.ref|translate}}
+                                    </span>
+                                    <span ng-if="!m">
+                                        {{'empty'|translate}}
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                 </ul>
@@ -91,20 +91,13 @@
     <div class="uk-width-1-2">
         <div class="uk-panel uk-panel-box uk-panel-header">
             <div class="uk-panel-title">
-                Equipment information
-                <a href="" ng-click="g.remove()" ng-if="g.type != 'weapon' && g.equipment">remove</a>
+                Materia information
+                <a href="" ng-click="g.remove()" ng-if="g.materia">remove</a>
             </div>
 
-            <div ng-if="g.equipment">
-                {{g.equipment.ref|translate}} ({{g.equipment.data.holes}} slots)<br />
-
-                <ul class="uk-list">
-                    <li ng-repeat="(key, stat) in g.equipment.data.stats">
-                        {{key}}: {{stat}}
-                    </li>
-                </ul>
+            <div ng-if="g.materia">
+                {{g.materia.ref|translate}}<br />
             </div>
-
         </div>
     </div>
 
@@ -113,9 +106,9 @@
             <div class="uk-panel-title">Available</div>
 
             <ul class="uk-list">
-                <li ng-repeat="e in g.list">
-                    <a href="" ng-click="g.change(e)">
-                        {{e.ref|translate}}
+                <li ng-repeat="m in g.list">
+                    <a href="" ng-click="g.change(m)">
+                        {{m.ref|translate}}
                     </a>
                 </li>
             </ul>

@@ -15,39 +15,52 @@ export default class Equipment {
 
     /**
      *
-     * @param ids {Array}
+     * @param ids
      */
     loadMaterias(ids) {
 
         // no materia?
-        if (!ids) {
-            this.materias = [];
+        if (_.isEmpty(ids)) {
+            return;
         }
-
-        // check nbHoles
-        ids = _.zipObject(_.take(_.pairs(ids), this.data.holes));
 
         // load materia
         for (let i in ids) {
             let materia = _.find(this.game.materias, {id: ids[i]});
-            this.equip(i, materia);
+            if (i < this.data.holes) {
+                this.equip(i, materia);
+            }
         }
     }
 
     /**
      *
-     * @returns {Array}
+     * @returns {{}}
      */
     removeAllMateria() {
 
         // get materia ids
-        let res = [];
-        for (let i in this.materias) {
-            res.push(this.materias[i].id);
-        }
+        let res = this.getMateriaIds();
 
         // remove all materia
-        this.materias = {};
+        this.materias = _.fill(new Array(this.data.holes), null);
+
+        return res;
+    }
+
+    /**
+     *
+     * @returns {{}}
+     */
+    getMateriaIds() {
+        let res = {};
+
+        for (let i in this.materias) {
+            let materia = this.materias[i];
+            if (materia) {
+                res[i] = materia.id;
+            }
+        }
 
         return res;
     }
@@ -55,6 +68,7 @@ export default class Equipment {
     /**
      *
      * @returns {Array}
+     * @deprecated
      */
     nbHoles() {
         return _.range(this.data.holes);
