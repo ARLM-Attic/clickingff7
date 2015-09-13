@@ -263,8 +263,6 @@ export default class Character extends Unit {
             materias = _.union(materias, _.where(this.armor.materias, {color: 'green'}));
         }
 
-        console.log(this.data.ref, materias);
-
         // sort by materia level
 
         for (let m of materias) {

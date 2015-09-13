@@ -1,5 +1,6 @@
-import Unit from './unit';
 import _ from 'lodash';
+import Unit from './unit';
+import ActionEnemy from './actions/enemy'
 
 export default class Enemy extends Unit {
 
@@ -76,6 +77,28 @@ export default class Enemy extends Unit {
      */
     _calcStat(stat, base = 1, prog = 5) {
         return this.data[stat] * base + Math.floor(this.data[stat] * prog * this.lvl / 100);
+    }
+
+    /**
+     *
+     * @param battle
+     * @param fn
+     */
+    ai(battle, fn) {
+        let rand = _.random(1, 100);
+        let actions = this.data.actions;
+        let sum = 0;
+        let i = 0;
+        let a;
+        do {
+            a = actions[i];
+            sum += a.rate;
+            i++;
+        } while (rand > sum && i < actions.length);
+
+        let action = new ActionEnemy(this, a);
+        action.setBattle(battle);
+        action.execute(fn);
     }
 
     /**

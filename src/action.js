@@ -14,12 +14,6 @@ export default class Action {
         // associated battle
         this.battle = null;
 
-        // power of the action
-        this.pwr = 1;
-
-        // action is enabled
-        this.enabled = true;
-
         if (data) {
             this.load(data);
         }
@@ -68,6 +62,10 @@ export default class Action {
         switch (type) {
             case 'enemy:1':
                 return _.sample(_.filter(this.battle.enemies, (u) => {
+                    return u.hp > 0;
+                }));
+            case 'ally:1':
+                return _.sample(_.filter(this.battle.game.team, (u) => {
                     return u.hp > 0;
                 }));
         }

@@ -111,7 +111,7 @@ export default class Battle {
             unit.ai(this, () => {
 
                 // when his move over, go next turn
-                //this.run();
+                this.run();
 
             });
         }, 1500);
