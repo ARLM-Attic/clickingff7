@@ -237,7 +237,7 @@ export default class Character extends Unit {
      * @returns {*}
      */
     ai(battle, fn) {
-        let activeActions = _.filter(this.actions, 'enabled');
+        let activeActions = _.filter(this.actions, 'active');
         if (activeActions.length > 0) {
             let action = _.sample(activeActions);
             action.setBattle(battle);

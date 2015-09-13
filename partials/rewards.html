@@ -1,54 +1,43 @@
-<div class="wrapper">
+<div class="uk-grid uk-grid-margin uk-panel-space">
 
-    <div class="c1">
+    <div class="uk-width-1-2">
 
         <!-- characters list -->
-        <div id="step1">
-            <div ng-repeat="(i, character) in g.battle.game.team" class="card" id="{{character.id}}">
-                <div class="avatar avatar-team">
+
+        <div ng-repeat="(i, character) in g.battle.game.team" id="{{character.id}}"
+             class="uk-panel uk-panel-box uk-panel-header">
+
+            <div class="uk-panel-title">{{character.data.ref|translate}}</div>
+
+            <div class="uk-grid">
+
+                <div class="uk-width-1-4 avatar avatar-team">
                     <div class="damage"></div>
-                    <img ng-src="{{character.data.image}}" alt="character" width="80" class="icon"/>
-                </div><!--
-
-                --><div class="main">
-
-                    <div class="progress">
-                        <div class="progress-bar progress-hp"
-                             ng-style="{width: character.progress('hp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.hpMax}} HP</span>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar progress-mp"
-                             ng-style="{width: character.progress('mp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.mpMax}} MP</span>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-bar progress-xp"
-                             ng-style="{width: character.progress('xp', 200) + 'px'}"></div>
-                        <span class="progress-label">{{character.xpMax - character.xp}} xp</span>
-                    </div>
-
-                    <div>{{character.data.ref}} <strong>(LVL{{character.lvl}})</strong></div>
+                    <img ng-src="{{character.data.image}}" alt="character" width="50" />
                 </div>
-
-                <div style="clear: left"></div>
+                <div class="uk-width-3-4">
+                    <div class="uk-progress">
+                        <div class="uk-progress-bar" style="width: {{character.progress('xp')}}%;">
+                            {{character.xp}}xp
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div><!--
 
-    --><div class="c3" id="step5">
+    </div>
+
+    <div class="uk-width-1-2">
 
         <!-- enemies list -->
-        <div class="results">
+        <div class="uk-panel uk-panel-box uk-panel-box-primary">
 
             <div>XP: {{g.rewards.xp}}</div>
 
             <div>Redirection: {{g.rewards.count}}..</div>
 
             <div ng-repeat="drop in g.rewards.drops">
-                {{drop.ref}}
+                <img src="/img/icons/item.png" /> {{drop.ref}}
             </div>
 
         </div>

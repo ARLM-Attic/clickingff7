@@ -44,11 +44,6 @@
                                         {{character.hp}}HP
                                     </div>
                                 </div>
-                                <div class="uk-progress">
-                                    <div class="uk-progress-bar" style="width: {{character.progress('limit')}}%;">
-
-                                    </div>
-                                </div>
                                 <ul class="uk-list uk-subnav">
                                     <li ng-repeat="a in character.actions">
                                         <img ng-src="{{a.img}}" class="tm-icon-button"
