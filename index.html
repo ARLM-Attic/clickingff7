@@ -10,65 +10,70 @@
     <title>Clicking FF7</title>
 
     <link rel=stylesheet type="text/css" href="jspm_packages/github/uikit/uikit@2.22.0/css/uikit.min.css"/>
-    <link rel=stylesheet type="text/css" href="jspm_packages/github/uikit/uikit@2.22.0/css/components/progress.min.css"/>
+    <link rel=stylesheet type="text/css"
+          href="jspm_packages/github/uikit/uikit@2.22.0/css/components/progress.min.css"/>
     <link rel=stylesheet type="text/css" href="jspm_packages/github/uikit/uikit@2.22.0/css/components/tooltip.min.css"/>
     <link rel=stylesheet type="text/css" href="css/style.css"/>
 </head>
 
 <body ng-controller="IndexController as g">
 
-<nav class="uk-navbar">
+<nav class="uk-navbar tm-navbar">
 
-    <div class="uk-navbar-brand">clicking ff7</div>
+    <div class="uk-container uk-container-center">
 
-    <ul class="uk-navbar-nav">
-        <li ng-class="{'uk-active' : g.isActive('/home')}">
-            <a ng-click="g.goGame()">
-                Home
-            </a>
-        </li>
-        <li ng-class="{'uk-active' : g.isActive('/story')}">
-            <a ng-click="g.goStory()">
-                Story
-            </a>
-        </li>
-        <li ng-class="{'uk-active' : g.isActive('/equip')}">
-            <a ng-click="g.goEquip()">
-                Equip
-            </a>
-        </li>
-        <li ng-class="{'uk-active' : g.isActive('/materia')}">
-            <a ng-click="g.goMateria()">
-                Materia
-            </a>
-        </li>
-        <li ng-class="{'uk-active' : g.isActive('/phs')}">
-            <a ng-click="g.goPHS()">
-                PHS
-            </a>
-        </li>
-    </ul>
+        <div class="uk-navbar-brand">clicking ff7</div>
+
+        <ul class="uk-navbar-nav uk-float-right">
+            <li ng-class="{'uk-active' : g.isActive('/home')}">
+                <a ng-click="g.goGame()">
+                    Home
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/story')}">
+                <a ng-click="g.goStory()">
+                    Story
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/equip')}">
+                <a ng-click="g.goEquip()">
+                    Equip
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/materia')}">
+                <a ng-click="g.goMateria()">
+                    Materia
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/phs')}">
+                <a ng-click="g.goPHS()">
+                    PHS
+                </a>
+            </li>
+        </ul>
+
+    </div>
 
 </nav>
 
-    <!--md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">clicking ff7</h1>
-    </md-toolbar>
-    <md-content>
+<!--md-toolbar class="md-theme-indigo">
+    <h1 class="md-toolbar-tools">clicking ff7</h1>
+</md-toolbar>
+<md-content>
 
-        <md-button ng-click="g.goStatus()" ng-class="{ 'md-primary': g.isActive('/status')}">
-            {{"Status"|translate}}
-        </md-button>
-        <md-button ng-click="g.goEquip()" ng-class="{ 'md-primary': g.isActive('/equip')}">
-            {{"Equip"|translate}}
-        </md-button>
-        <md-button ng-click="g.goMateria()" ng-class="{ 'md-primary': g.isActive('/materia')}">
-            {{"Materia"|translate}}
-        </md-button>
-        <md-button ng-click="g.goPHS()" ng-class="{ 'md-primary': g.isActive('/phs')}">
-            {{"PHS"|translate}}
-        </md-button>
-    </md-content>
+    <md-button ng-click="g.goStatus()" ng-class="{ 'md-primary': g.isActive('/status')}">
+        {{"Status"|translate}}
+    </md-button>
+    <md-button ng-click="g.goEquip()" ng-class="{ 'md-primary': g.isActive('/equip')}">
+        {{"Equip"|translate}}
+    </md-button>
+    <md-button ng-click="g.goMateria()" ng-class="{ 'md-primary': g.isActive('/materia')}">
+        {{"Materia"|translate}}
+    </md-button>
+    <md-button ng-click="g.goPHS()" ng-class="{ 'md-primary': g.isActive('/phs')}">
+        {{"PHS"|translate}}
+    </md-button>
+</md-content>
 </md-sidenav-->
 
 <div class="uk-container uk-container-center" ng-view></div>
