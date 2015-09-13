@@ -49,10 +49,10 @@
 
                                     </div>
                                 </div>
-                                <ul class="uk-list">
-                                    <li ng-repeat="action in character.actions">
-                                        <img ng-src="/img/icons/weapons/{{character.data.weapon.type}}.png"
-                                             class="tm-icon-button"/>
+                                <ul class="uk-list uk-subnav">
+                                    <li ng-repeat="a in character.actions">
+                                        <img ng-src="{{a.img}}" class="tm-icon-button"
+                                             data-uk-tooltip="{pos:'bottom', cls:'help'}" title="{{a.ref|translate}}{{a.lvl}}"/>
                                     </li>
                                 </ul>
                             </div>

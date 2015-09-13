@@ -1,10 +1,16 @@
 [
     {
         "ref": "bolt",
-        "color": "green"
+        "color": "green",
+        "type": "mag",
+        "pwr": 1.5,
+        "targets": "enemy:1"
     },
     {
         "ref": "fire",
-        "color": "green"
+        "color": "green",
+        "type": "mag",
+        "pwr": 1.5,
+        "targets": "enemy:1"
     }
 ]

@@ -27,6 +27,8 @@ export default class Materia {
 
         m.ref = m.data.ref;
 
+        m.color = m.data.color;
+
         m.lvl = 1;
 
         m.ap = 0;
@@ -44,6 +46,8 @@ export default class Materia {
         this.id = data.id;
 
         this.ref = data.ref;
+
+        this.color = this.data.color;
 
         this.lvl = data.lvl;
 

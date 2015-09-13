@@ -13,7 +13,6 @@ import Game from './game';
 import 'angular-route';
 import 'angular-translate';
 import 'angular-translate-loader-static-files';
-import 'uikit';
 
 function config($routeProvider, $translateProvider) {
 

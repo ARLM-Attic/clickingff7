@@ -12,13 +12,13 @@ export default class ActionAttack extends Action {
     }
 
     execute(fn) {
-        let alive = _.filter(this.battle.enemies, (u) => {
-            return u.hp > 0;
-        });
-        let unit = _.sample(alive);
-        let damage = this.getHits(this.character, unit);
-        this.animAttack(unit, damage, fn);
-        console.log(this.character.data.ref, 'attacked!');
+        let targets = this.getTargets('enemy:1');
+
+        let damages = this.getDamages('phy', 1, targets);
+
+        this.animAttack(targets, damages, fn);
+
+        console.log(this.character.ref, 'attack');
     }
 
 }

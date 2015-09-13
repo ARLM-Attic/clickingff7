@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import $ from 'jquery';
 import 'velocity';
 import 'velocity/velocity.ui.min';
 
@@ -62,18 +61,50 @@ export default class Action {
 
     /**
      *
-     * @param attacker
-     * @param defender
+     * @param type
+     * @returns {*}
+     */
+    getTargets(type) {
+        switch (type) {
+            case 'enemy:1':
+                return _.sample(_.filter(this.battle.enemies, (u) => {
+                    return u.hp > 0;
+                }));
+        }
+    }
+
+    /**
+     *
+     * @param type
+     * @param pwr
+     * @param targets
      * @returns {{}}
      */
-    getHits(attacker, defender) {
+    getDamages(type, pwr, targets) {
+        switch (type) {
+            case 'phy':
+                return this.getPHYhits(pwr, targets);
+            case 'mag':
+                return this.getMAGHits(pwr, targets);
+            //case 'cure':
+                //return this.getCUREhits(targets);
+        }
+    }
+
+    /**
+     *
+     * @param pwr
+     * @param targets
+     * @returns {{}}
+     */
+    getPHYhits(pwr, targets) {
         let res = {}, rng;
 
         // base attack
-        let base = Math.floor(Math.pow(attacker.str, 1.8) / Math.pow(defender.def, 0.5));
+        let base = Math.floor(Math.pow(this.character.str, 1.8) / Math.pow(targets.def, 0.5));
 
         // ability power
-        base = 5 + base * this.pwr;
+        base = 5 + base * pwr;
 
         // element resistance
 
@@ -85,6 +116,40 @@ export default class Action {
             base = Math.floor(base * 1.5);
             res.critical = true;
         }
+
+        // back row
+
+        // element enhance
+
+        // random variance
+        rng = _.random(3);
+        base = Math.floor(base * (1 + rng / 100));
+
+        res.hits = base;
+
+        return res;
+    }
+
+    /**
+     *
+     * @param pwr
+     * @param targets
+     * @returns {{}}
+     */
+    getMAGHits(pwr, targets) {
+        let res = {}, rng;
+
+        // base attack
+        let base = Math.floor(Math.pow(this.character.mgi, 1.65) / Math.pow(targets.res, 0.5));
+
+        // ability power
+        base = 5 + base * pwr;
+
+        // element resistance
+
+        // defending
+
+        // critical attack
 
         // back row
 

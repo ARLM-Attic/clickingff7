@@ -248,7 +248,8 @@ export default class Character extends Unit {
     }
 
     /**
-     * todo get materia actions from weapon & armor
+     *
+     * @returns {Array}
      */
     getActionsFromEquipment() {
         let materias = [], actions = [];
@@ -262,20 +263,20 @@ export default class Character extends Unit {
             materias = _.union(materias, _.where(this.armor.materias, {color: 'green'}));
         }
 
+        console.log(this.data.ref, materias);
+
         // sort by materia level
 
-        materias = _.sortByOrder(materias, ['lvl'], ['desc']);
-
-        for (var materia of materias) {
+        for (let m of materias) {
 
             let action = _.find(actions, (e) => {
-                return (e.materia.name == materia.name);
+                return (e.materia.ref == m.ref);
             });
             if (action) {
-                action.lvl += materia.lvl;
+                action.lvl += m.lvl;
             } else {
-                let a = new ActionMateria(this, materia);
-                a.lvl = materia.lvl;
+                let a = new ActionMateria(this, m);
+                a.lvl = m.lvl;
                 actions.push(a);
             }
         }

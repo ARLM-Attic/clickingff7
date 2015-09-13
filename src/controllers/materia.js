@@ -110,6 +110,9 @@ class MateriaController extends Controller {
         this.equipment.materias[this.hole] = null;
         this.materia = null;
 
+        // refresh character actions
+        this.character.refreshActions();
+
         // reload lists
         this.refreshList();
 
@@ -125,6 +128,9 @@ class MateriaController extends Controller {
 
         this.equipment.materias[this.hole] = replacement;
         this.materia = replacement;
+
+        // refresh character actions
+        this.character.refreshActions();
 
         // reload lists
         this.refreshList();
