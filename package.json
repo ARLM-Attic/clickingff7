@@ -1,4 +1,8 @@
 {
+  "dependencies": {
+    "gulp": "^3.8.11",
+    "gulp-traceur": "^0.14.1"
+  },
   "jspm": {
     "directories": {},
     "dependencies": {

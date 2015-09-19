@@ -179,7 +179,9 @@ class Game {
 
             if (save.battle) {
                 this.battle = new Battle(this, save.battle);
-                if (save.battle.rewards) {
+                if (save.battle.lost) {
+                    this.$location.path('/lost');
+                } else if (save.battle.rewards) {
                     this.$location.path('/rewards');
                 } else {
                     this.$location.path('/battle');

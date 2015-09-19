@@ -7,13 +7,26 @@ class HomeController extends Controller {
         super(game, $location);
     }
 
-    battle() {
+    fight() {
         this.game.battle = new Battle(this.game);
 
         // [saving]
         this.game.save();
 
         this.$location.path('/battle');
+    }
+
+    recover() {
+
+        for (let i of this.game.team) {
+            i.recover();
+        }
+
+        this.game.story.chain= 0;
+
+        // [saving]
+        this.game.save();
+
     }
 
 }

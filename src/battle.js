@@ -26,8 +26,11 @@ export default class Battle {
         // Enemy[]
         this.enemies = [];
 
-        // Battle rewards
+        // if battle is win
         this.rewards = null;
+
+        // if battle is lost
+        this.lost = 0;
 
         // select current character
         this.character = this.game.team[0];
@@ -40,6 +43,10 @@ export default class Battle {
     load(data) {
         for (let i of data.enemies) {
             this.enemies.push(Enemy.get(this, i));
+        }
+
+        if (data.lost) {
+            this.lost = data.lost;
         }
 
         if (data.rewards) {
@@ -99,7 +106,7 @@ export default class Battle {
             let health = this.getHealth();
             if (health.team == 0 || health.enemies == 0) {
                 this.game.$timeout.cancel(this.timer);
-                this.end();
+                this.end((health.team > 0));
                 return;
             }
 
@@ -194,15 +201,38 @@ export default class Battle {
 
     /**
      *
+     * @param victory
      */
-    end() {
+    end(victory) {
         console.log('[BATTLE ENDS]');
-        this.rewards = new Rewards(this);
 
-        // [saving]
-        this.game.save();
+        if (victory) {
+            this.rewards = new Rewards(this);
 
-        this.game.$location.path('/rewards');
+            // chain
+            this.game.story.chain++;
+
+            // [saving]
+            this.game.save();
+
+            this.game.$location.path('/rewards');
+
+        } else {
+            this.lost++;
+
+            // chain break
+            this.game.story.chain = 0;
+
+            // team recover hp&mp
+            for (let i of this.game.team) {
+                i.recover();
+            }
+
+            // [saving]
+            this.game.save();
+
+            this.game.$location.path('/lost');
+        }
     }
 
     /**
@@ -223,6 +253,10 @@ export default class Battle {
         save.enemies = [];
         for (let i of this.enemies) {
             save.enemies.push(i.ref);
+        }
+
+        if (this.lost > 0) {
+            save.lost = this.lost;
         }
 
         if (this.rewards) {

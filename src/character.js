@@ -96,8 +96,8 @@ export default class Character extends Unit {
         // ref
         this.ref = data.ref;
 
-        // fill hp & mp
-        this.recover();
+        // hp
+        this.hp = data.hp;
 
         // xp
         this.xp = data.xp;
@@ -289,7 +289,7 @@ export default class Character extends Unit {
     save() {
         let materias;
 
-        var res = _.pick(this, 'id', 'lvl', 'xp', 'ref', 'active');
+        var res = _.pick(this, 'id', 'lvl', 'hp', 'xp', 'ref', 'active');
 
         if (this.weapon) {
             res.weapon = _.pick(this.weapon, 'id');

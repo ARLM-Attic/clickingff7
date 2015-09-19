@@ -182,15 +182,30 @@ export default class Rewards {
      */
     run() {
         this.timer = this.game().$timeout(() => {
-            // new battle
-            this.battle.init();
-            this.battle.chooseEnemies();
+            if (false) {
 
-            // [saving]
-            this.game().save();
+                // new battle
+                this.battle.init();
+                this.battle.chooseEnemies();
 
-            // redirection
-            this.location().path('/battle');
+                // [saving]
+                this.game().save();
+
+                // redirection
+                this.location().path('/battle');
+
+            } else {
+
+                // clean battle
+                this.battle.quit();
+
+                // [saving]
+                this.game().save();
+
+                // go home
+                this.location().path('/home');
+
+            }
         }, 2000);
     }
 

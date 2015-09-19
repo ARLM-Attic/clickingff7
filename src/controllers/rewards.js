@@ -19,10 +19,10 @@ class RewardsController extends Controller {
      *
      */
     redirect() {
-        if (!this.game.battle && !this.game.battle.rewards) {
-            this.$location.path('/home');
-        } else {
+        if (this.game.battle && this.game.battle.rewards) {
             this.init();
+        } else {
+            this.$location.path('/home');
         }
     }
 

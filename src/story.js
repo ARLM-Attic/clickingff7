@@ -11,6 +11,9 @@ export default class Story {
         // completed once at least
         this.completed = false;
 
+        // chain
+        this.chain = 0;
+
         // load story data
         if (data) {
             this.load(data);
@@ -31,6 +34,7 @@ export default class Story {
         this.data = this.game.store.getStory(data.ref);
         this.ref = this.data.ref;
         this.completed = (typeof data.completed === 'undefined');
+        this.chain = data.chain;
     }
 
     complete() {
@@ -45,7 +49,7 @@ export default class Story {
     }
 
     save() {
-        let save = _.pick(this, 'ref');
+        let save = _.pick(this, 'ref', 'chain');
         if (!this.completed) {
             save.completed = false;
         }
