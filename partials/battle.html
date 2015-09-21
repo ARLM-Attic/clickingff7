@@ -42,9 +42,28 @@
                                     </div>
                                 </div>
                                 <ul class="uk-list uk-subnav">
-                                    <li ng-repeat="a in character.actions">
-                                        <img ng-src="{{a.img}}" class="tm-icon-button"
-                                             data-uk-tooltip="{pos:'bottom', cls:'help'}" title="{{a.ref|translate}}{{a.lvl}}"/>
+                                    <li>
+                                        <img ng-src="img/icons/weapons/{{character.data.weapon.type}}.png"
+                                             class="tm-icon-button"
+                                             ng-class="{'active': character.status == 'attack'}"
+                                             data-uk-tooltip="{pos:'bottom', cls:'help'}"
+                                             title="attack mode"
+                                             ng-click="g.toggle(character, 'attack')"/>
+                                    </li>
+                                    <li>
+                                        <img ng-src="img/icons/armor.png"
+                                             class="tm-icon-button"
+                                             ng-class="{'active': character.status == 'defense'}"
+                                             data-uk-tooltip="{pos:'bottom', cls:'help'}"
+                                             title="defense mode"
+                                             ng-click="g.toggle(character, 'defense')"/>
+                                    </li>
+                                    <li>
+                                        <img ng-src="img/icons/limit.png"
+                                             class="tm-icon-button"
+                                             ng-class="{'active': character.status == 'limit'}"
+                                             data-uk-tooltip="{pos:'bottom', cls:'help'}"
+                                             title="limit mode"/>
                                     </li>
                                 </ul>
                             </div>

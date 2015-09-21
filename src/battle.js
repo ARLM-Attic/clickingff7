@@ -209,7 +209,7 @@ export default class Battle {
         if (victory) {
             this.rewards = new Rewards(this);
 
-            // chain
+            // chain up
             this.game.story.chain++;
 
             // [saving]
@@ -222,11 +222,6 @@ export default class Battle {
 
             // chain break
             this.game.story.chain = 0;
-
-            // team recover hp&mp
-            for (let i of this.game.team) {
-                i.recover();
-            }
 
             // [saving]
             this.game.save();

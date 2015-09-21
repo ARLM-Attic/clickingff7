@@ -13,7 +13,6 @@ export default class ActionMateria extends Action {
         this.lvl = 1;
 
         this.ref = materia.ref;
-        this.rate = 20;
         this.img = 'img/icons/materias/' + materia.color + '.png';
     }
 

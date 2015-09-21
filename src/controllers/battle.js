@@ -18,30 +18,20 @@ class BattleController extends Controller {
      *
      */
     redirect() {
-        if (!this.game.battle) {
-            this.$location.path('/home');
-        } else {
+        if (this.game.battle) {
             this.init();
+        } else {
+            this.$location.path('/home');
         }
     }
 
     /**
      *
+     * @param character
+     * @param status
      */
-    save() {
-       this.game.save();
-    }
-
-    /**
-     *
-     */
-    quitBattle() {
-        this.game.battle.quit();
-
-        // [saving]
-        this.game.save();
-
-        this.$location.path('/home');
+    toggle(character, status) {
+        character.status = status;
     }
 
 }

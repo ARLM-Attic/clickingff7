@@ -17,6 +17,17 @@ class LostController extends Controller {
      *
      */
     goHome() {
+
+        // team recover hp&mp
+        for (let i of this.game.team) {
+            i.recover();
+        }
+
+        this.game.battle = null;
+
+        // [saving]
+        this.game.save();
+
         this.$location.path('/home');
     }
 
@@ -24,7 +35,9 @@ class LostController extends Controller {
      *
      */
     redirect() {
-        if (!this.game.battle && !this.game.battle.lost) {
+        if (this.game.battle && this.game.battle.lost) {
+            this.init();
+        } else {
             this.$location.path('/home');
         }
     }

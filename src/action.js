@@ -6,13 +6,20 @@ import 'velocity/velocity.ui.min';
 export default class Action {
 
     constructor(character, data) {
+        // associated character
         this.character = character;
-
-        // this action can be disabled
-        this.active = true;
 
         // associated battle
         this.battle = null;
+
+        // action reference
+        this.ref = null;
+
+        // rate
+        this.rate = null;
+
+        // image
+        this.image = null;
 
         if (data) {
             this.load(data);
@@ -85,7 +92,7 @@ export default class Action {
             case 'mag':
                 return this.getMAGHits(pwr, targets);
             //case 'cure':
-                //return this.getCUREhits(targets);
+            //return this.getCUREhits(targets);
         }
     }
 
@@ -110,12 +117,18 @@ export default class Action {
 
         // critical attack
         rng = _.random(100);
-        if (rng <= 3) {
+        if (rng <= 3 && !targets.defense) {
             base = Math.floor(base * 1.5);
-            res.critical = true;
+            res.msg = 'critical';
         }
 
         // back row
+
+        // defense
+        if (targets.defense) {
+            base = Math.floor(base * 0.5);
+            res.msg = 'defense';
+        }
 
         // element enhance
 
@@ -183,10 +196,10 @@ export default class Action {
         selector = '#' + unit.id + ' .damage';
 
         let html = '';
-        if (damage.critical) {
-            html += '<div class="critical">Critique</div>';
+        if (damage.msg) {
+            html += '<div class="' + damage.msg + '">' + damage.msg + '</div>';
         }
-        html +='<div class="hits">' + damage.hits + '</div>';
+        html += '<div class="hits">' + damage.hits + '</div>';
         $(selector).html(html);
 
         $(selector).velocity("transition.slideUpIn", 1000, () => {
@@ -201,7 +214,11 @@ export default class Action {
      *
      */
     save() {
-       return _.pick(this, 'ref', 'enabled');
+        let res = _.pick(this, 'ref', 'active');
+        if (!res.active) {
+            res.active = false;
+        }
+        return res;
     }
 
 }

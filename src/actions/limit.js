@@ -4,6 +4,10 @@ export default class ActionLimit extends Action {
 
     constructor(character) {
         super(character);
+
+        this.ref = 'limit';
+
+        this.img = 'img/icons/limit.png';
     }
 
     isAvailable() {

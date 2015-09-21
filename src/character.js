@@ -11,10 +11,15 @@ export default class Character extends Unit {
     constructor(game, data) {
 
         super(game, data);
-        
+
         if (!this.weapon) this.weapon = null;
         if (!this.armor) this.armor = null;
         if (!this.accessory) this.accessory = null;
+
+        // defense mode
+        if (!this.status) {
+            this.status = 'attack';
+        }
     }
 
     /**
@@ -101,6 +106,9 @@ export default class Character extends Unit {
 
         // xp
         this.xp = data.xp;
+
+        // status
+        this.status = data.status;
 
         // team or backup
         this.active = data.active;
@@ -212,19 +220,14 @@ export default class Character extends Unit {
      */
     refreshActions(data = []) {
         let res = [], opt;
-
-        // [1]
-        opt = _.find(data, {ref: 'attack'});
-        res.push(new ActionAttack(this, opt));
-
-        // [1]
-        //res.push(new ActionDefense(this));
-
-        // [0-1] current limit of character
-        //res.push(new ActionLimit(this));
-
-        // [0-4] get actions from materias on weapon
         let a = this.getActionsFromEquipment();
+
+        // attack
+        let attack = new ActionAttack(this);
+        attack.rate = 100 - _.sum(a, 'rate');
+        res.push(attack);
+
+        // materia actions
         for (let i of a) {
             res.push(i);
         }
@@ -237,14 +240,46 @@ export default class Character extends Unit {
      * @returns {*}
      */
     ai(battle, fn) {
-        let activeActions = _.filter(this.actions, 'active');
-        if (activeActions.length > 0) {
-            let action = _.sample(activeActions);
-            action.setBattle(battle);
-            action.execute(fn);
-        } else {
-            fn();
+
+        let action;
+
+        switch (this.status) {
+            case 'attack':
+                action = this.getRandomAction();
+                break;
+            case 'defense':
+                action = new ActionDefense(this);
+                break;
+            case 'limit':
+                action = new ActionLimit(this);
+                break;
         }
+
+        action.setBattle(battle);
+        action.execute(fn);
+    }
+
+    /**
+     * Get random from actions
+     * SUM(actions.rate)=100
+     * @returns {*}
+     */
+    getRandomAction() {
+
+        // get sorted actions
+        let actions = _.sortByOrder(this.actions, ['rate'], ['desc']);
+
+        let rand = _.random(1, 100);
+        let sum = 0;
+        let i = 0;
+        let a;
+        do {
+            a = actions[i];
+            sum += a.rate;
+            i++;
+        } while (rand > sum && i < actions.length);
+
+        return a;
     }
 
     /**
@@ -270,12 +305,16 @@ export default class Character extends Unit {
             let action = _.find(actions, (e) => {
                 return (e.materia.ref == m.ref);
             });
-            if (action) {
-                action.lvl += m.lvl;
-            } else {
-                let a = new ActionMateria(this, m);
-                a.lvl = m.lvl;
-                actions.push(a);
+
+            if (!action) {
+                action = new ActionMateria(this, m);
+                action.rate = 0;
+                action.lvl = 0;
+                actions.push(action);
+            }
+
+            if (action.active) {
+                action.rate += 20;
             }
         }
 
@@ -289,7 +328,11 @@ export default class Character extends Unit {
     save() {
         let materias;
 
-        var res = _.pick(this, 'id', 'lvl', 'hp', 'xp', 'ref', 'active');
+        var res = _.pick(this, 'id', 'lvl', 'hp', 'xp', 'ref', 'status', 'active');
+
+        if (this.defense) {
+            res.defense = true;
+        }
 
         if (this.weapon) {
             res.weapon = _.pick(this.weapon, 'id');

@@ -7,7 +7,7 @@ export default class ActionAttack extends Action {
         super(character, data);
 
         this.ref = 'attack';
-        this.rate = 100;
+
         this.img = 'img/icons/weapons/' + character.data.weapon.type + '.png';
     }
 
