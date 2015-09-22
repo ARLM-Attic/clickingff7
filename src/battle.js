@@ -9,12 +9,6 @@ export default class Battle {
         this.story = game.story;
 
         this.init();
-
-        if (data) {
-            this.load(data);
-        } else {
-            this.chooseEnemies();
-        }
     }
 
     init() {
@@ -31,6 +25,9 @@ export default class Battle {
 
         // if battle is lost
         this.lost = 0;
+
+        // boss battle?
+        this.boss = false;
 
         // select current character
         this.character = this.game.team[0];
@@ -63,6 +60,19 @@ export default class Battle {
         let choose = _.sample(enemies, nbr);
 
         for (let e of choose) {
+            this.enemies.push(Enemy.get(this, e));
+        }
+    }
+
+    /**
+     *
+     */
+    chooseBoss() {
+        let boss = this.story.data.boss;
+
+        this.boss = true;
+
+        for (let e of boss) {
             this.enemies.push(Enemy.get(this, e));
         }
     }
@@ -212,6 +222,11 @@ export default class Battle {
             // chain up
             this.game.story.chain++;
 
+            // complete story if boss battle
+            if (this.boss){
+                this.game.story.complete();
+            }
+
             // [saving]
             this.game.save();
 
@@ -244,6 +259,10 @@ export default class Battle {
      */
     save() {
         var save = {};
+
+        if (this.boss) {
+            save.boss = true;
+        }
 
         save.enemies = [];
         for (let i of this.enemies) {

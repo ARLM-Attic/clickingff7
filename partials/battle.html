@@ -82,7 +82,10 @@
                     <div ng-repeat="enemy in g.battle.enemies" id="{{enemy.id}}"
                          class="uk-panel uk-panel-box uk-panel-header">
 
-                        <div class="uk-panel-title">{{enemy.data.ref|translate}}</div>
+                        <div class="uk-panel-title">
+                            <span ng-if="enemy.data.boss">BOSS</span>
+                            {{enemy.data.ref|translate}}
+                        </div>
 
                         <div class="uk-grid">
 

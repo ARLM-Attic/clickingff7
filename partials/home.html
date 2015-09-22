@@ -41,6 +41,13 @@
 
                     <a href="" class="uk-button uk-button-primary" ng-click="g.fight()">{{'fight'|translate}}</a>
 
+                    <a href=""
+                       class="uk-button uk-button-primary"
+                       ng-click="g.fightBoss()"
+                       ng-if="g.game.story.isBossAvalaible()">
+                        {{'fight boss'|translate}}
+                    </a>
+
                 </div>
             </div>
 

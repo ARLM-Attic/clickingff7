@@ -6,8 +6,8 @@
             "1stRay", "Grunt",
             "Sweeper"
         ],
-        "boss": [["GuardScorpion"]],
-        "nbBattles": 10,
+        "boss": ["GuardScorpion"],
+        "nbBattles": 1,
         "level": 1,
         "characters": ["cloud", "barret"],
         "ref": 1

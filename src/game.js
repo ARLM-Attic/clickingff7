@@ -178,7 +178,10 @@ class Game {
             }
 
             if (save.battle) {
-                this.battle = new Battle(this, save.battle);
+
+                this.battle = new Battle(this);
+                this.battle.load(save.battle);
+
                 if (save.battle.lost) {
                     this.$location.path('/lost');
                 } else if (save.battle.rewards) {

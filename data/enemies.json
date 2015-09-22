@@ -141,5 +141,35 @@
                 "targets": "ally:1"
             }
         ]
+    },
+    {
+        "ref": "GuardScorpion",
+        "image": "/img/enemies/Guard_Scorpion_FF7.png",
+        "boss": true,
+        "hp": 10,
+        "mp": 10,
+        "str": 10,
+        "def": 10,
+        "mgi": 10,
+        "res": 10,
+        "dex": 20,
+        "lck": 10,
+        "xp": 250,
+        "actions": [
+            {
+                "rate": 50,
+                "ref": "attack1",
+                "type": "phy",
+                "pwr": 1.8,
+                "targets": "ally:1"
+            },
+            {
+                "rate": 40,
+                "ref": "attack2",
+                "type": "mag",
+                "pwr": 3.2,
+                "targets": "ally:1"
+            }
+        ]
     }
 ]

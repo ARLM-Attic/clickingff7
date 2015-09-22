@@ -9,6 +9,17 @@ class HomeController extends Controller {
 
     fight() {
         this.game.battle = new Battle(this.game);
+        this.game.battle.chooseEnemies();
+
+        // [saving]
+        this.game.save();
+
+        this.$location.path('/battle');
+    }
+
+    fightBoss() {
+        this.game.battle = new Battle(this.game);
+        this.game.battle.chooseBoss();
 
         // [saving]
         this.game.save();

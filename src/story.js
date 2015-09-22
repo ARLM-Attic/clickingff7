@@ -20,6 +20,11 @@ export default class Story {
         }
     }
 
+    /**
+     *
+     * @param game
+     * @param ref
+     */
     static get(game, ref) {
         let s = new Story(game);
 
@@ -30,6 +35,10 @@ export default class Story {
         return s;
     }
 
+    /**
+     *
+     * @param data
+     */
     load(data) {
         this.data = this.game.store.getStory(data.ref);
         this.ref = this.data.ref;
@@ -37,17 +46,31 @@ export default class Story {
         this.chain = data.chain;
     }
 
+    /**
+     *
+     */
+    isBossAvalaible() {
+        return (this.chain >= this.data.nbBattles && !this.completed);
+    }
+
+    /**
+     *
+     */
     complete() {
         this.completed = true;
 
         // search for next story
-        let next = this.data.ref + 1;
-        let story = _.find(this.game.stories, {ref: next});
-        if (!story) {
-            this.game.story(Story.get(next));
-        }
+        //let next = this.data.ref + 1;
+        //let story = _.find(this.game.stories, {ref: next});
+        //if (!story) {
+        //    this.game.story(Story.get(next));
+        //}
     }
 
+    /**
+     *
+     * @returns {*}
+     */
     save() {
         let save = _.pick(this, 'ref', 'chain');
         if (!this.completed) {

@@ -36,6 +36,9 @@
 
                     <p>{{'story '+g.story.ref+' desc'|translate}}</p>
 
+                    <span ng-if="g.story.completed">
+                        {{'completed'|translate}}
+                    </span>
                     <span ng-if="g.isCurrent()">
                         {{'selected'|translate}}
                     </span>
