@@ -12,4 +12,17 @@
         "characters": ["cloud", "barret"],
         "ref": 1
     }
+    ,{
+        "image": "/img/stories/2.png",
+        "enemies": [
+            "MP", "MonoDrive",
+            "1stRay", "Grunt",
+            "Sweeper"
+        ],
+        "boss": ["GuardScorpion"],
+        "nbBattles": 1,
+        "level": 2,
+        "characters": ["cloud", "barret", "tifa"],
+        "ref": 2
+    }
 ]

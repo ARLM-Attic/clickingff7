@@ -69,6 +69,16 @@ export default class Story {
 
     /**
      *
+     * @returns {boolean}
+     */
+    isNext() {
+        let next = this.data.ref + 1;
+        let story = _.find(this.game.stories, {ref: next});
+        return (this.completed &&!_.isNull(story));
+    }
+
+    /**
+     *
      * @returns {*}
      */
     save() {
