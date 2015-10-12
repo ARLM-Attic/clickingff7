@@ -12,9 +12,6 @@ export default class Battle {
     }
 
     init() {
-        // list of actions to execute
-        // Action[]
-        this.actionsPanel = [];
 
         // list of enemies to fight
         // Enemy[]
@@ -28,9 +25,12 @@ export default class Battle {
 
         // boss battle?
         this.boss = false;
+        
+        // no of enemies wave
+        this.wave = 1;
 
-        // select current character
-        this.character = this.game.team[0];
+        // selected target: unit
+        this.target = null;
     }
 
     /**
@@ -103,6 +103,13 @@ export default class Battle {
 
         // checking status
         this.checking = false;
+    }
+    
+    /**
+     * 
+     */
+    pause() {
+        
     }
 
     /**

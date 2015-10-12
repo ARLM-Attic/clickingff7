@@ -1,3 +1,5 @@
+import ActionAttack from './actions/attack';
+
 export default class Unit {
 
     constructor(game, data) {
@@ -5,7 +7,7 @@ export default class Unit {
         this.game = game;
 
         // battle initiative
-        this.sum = 0;
+        this.cts = 0;
 
         // load unit data
         if (data) {
@@ -27,6 +29,41 @@ export default class Unit {
      */
     setBattle(battle) {
         this.battle = battle;
+    }
+    
+    /**
+     * RUN while still alive
+     */
+    run() {
+        
+        this.timer = this.game.$timeout(() => {
+        
+            // limit depending on dex stat
+            let limit = 4500 − this.dex ⁄ 150;
+            
+            this.cts += 100;
+            
+            if (this.cts >= limit) {
+            
+                let action = new ActionAttack(this);
+                
+                this.battle.addAction(action);
+                
+                this.cts = 0;
+            
+            }            
+            
+            // recursive
+            this.run();
+            
+        }, 100);
+    }
+    
+    /**
+     * ATB stop if character die
+     */
+    stop() {
+        this.game.$timeout.cancel(this.timer);
     }
 
     /**
