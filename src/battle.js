@@ -94,101 +94,53 @@ export default class Battle {
      *
      */
     start() {
-        // get TS units
         for (let i of this.units()) {
-            let ts = i.getTS();
-            i.ts = ts;
-            let base = _.random(3 * ts);
-            i.cts = base;
-            i.fts = base;
+            i.run();
         }
 
-        this.run();
+        // list of actions
+        this.actions = [];
+
+        // checking status
+        this.checking = false;
     }
 
     /**
-     * DO THE BATTLE
+     * Check for actions (todo: or events)
      */
-    run() {
-        this.timer = this.game.$timeout(() => {
+    check() {
 
-            // check end
+        // if no actions
+        if (this.actions.length > 0 || this.checking) return;
+
+        // checking status
+        this.checking = true;
+
+        /// action ends when animation ends
+        this.actions.shift().run(() => {
+
+            // end battle
             let health = this.getHealth();
             if (health.team == 0 || health.enemies == 0) {
-                this.game.$timeout.cancel(this.timer);
                 this.end((health.team > 0));
                 return;
             }
 
-            this.refreshTurns();
+            // checking status
+            this.checking = false;
 
-            let unit = this._takeUnit("cts");
+            // recursive until actions is empty
+            this.check();
 
-            // make his move
-            unit.ai(this, () => {
-
-                // when his move over, go next turn
-                this.run();
-
-            });
-        }, 1500);
+        });
     }
 
     /**
-     * Get the 7 next player turns
-     * @returns {Array}
-     */
-    refreshTurns() {
-        let units = this.units();
-
-        this.turns = [];
-
-        // reset sum ts (used for graphics)
-        for (let i of units) {
-            i.sts = 0;
-        }
-
-        // future ts
-        for (let i = 0; i < 6; i++) {
-            let unit = this._takeUnit('fts');
-            let turn = _.pick(unit, 'ref', 'sts');
-            turn.height = Math.min(turn.sts, 40);
-            turn.color = 'sts_' + Math.floor(turn.sts / 40);
-            this.turns.push(turn);
-        }
-    }
-
-    /**
-     *
-     * @param attr
-     * @returns {*|number}
-     * @private
-     */
-    _takeUnit(attr) {
-        let units = this.units();
-
-        // choose the fastest unit
-        let unit = _.min(units, attr);
-        let min = unit[attr];
-
-        // move all units
-        for (let j of units) {
-            j[attr] -= min;
-            j.sts += min;
-        }
-
-        // next action
-        unit[attr] = 3 * unit.ts;
-
-        return unit;
-    }
-
-    /**
-     *
+     * Add an action for future checking
      * @param action
      */
     addAction(action) {
-        this.actionsPanel.push(action);
+        this.actions.push(action);
     }
 
     /**
@@ -223,7 +175,7 @@ export default class Battle {
             this.game.story.chain++;
 
             // complete story if boss battle
-            if (this.boss){
+            if (this.boss) {
                 this.game.story.complete();
             }
 
