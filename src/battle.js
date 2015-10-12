@@ -27,10 +27,19 @@ export default class Battle {
         this.boss = false;
         
         // no of enemies wave
-        this.wave = 1;
+        this.wave = 0;
 
         // selected target: unit
         this.target = null;
+
+        // list of actions
+        this.actions = [];
+
+        // todo list of events
+        this.events = [];
+
+        // checking status
+        this.checking = false;
     }
 
     /**
@@ -42,23 +51,21 @@ export default class Battle {
             this.enemies.push(Enemy.get(this, i));
         }
 
-        if (data.lost) {
-            this.lost = data.lost;
-        }
-
-        if (data.rewards) {
-            this.rewards = new Rewards(this, data.rewards);
+        if (data.boss) {
+            this.boss = data.boss;
         }
     }
 
     /**
-     *
+     * Choose randomly enemies & update wave number
      */
     chooseEnemies() {
         let enemies = this.story.data.enemies;
         let nbr = 1;//_.random(1, 3);
         let choose = _.sample(enemies, nbr);
 
+        this.wave++;
+        this.enemies = [];
         for (let e of choose) {
             this.enemies.push(Enemy.get(this, e));
         }
@@ -91,25 +98,28 @@ export default class Battle {
     }
 
     /**
-     *
+     * Units begin to fight
      */
     start() {
         for (let i of this.units()) {
             i.run();
         }
-
-        // list of actions
-        this.actions = [];
-
-        // checking status
-        this.checking = false;
     }
     
     /**
-     * 
+     * todo
      */
     pause() {
         
+    }
+
+    /**
+     * todo
+     */
+    quit() {
+        for (let i of this.units()) {
+            i.stop();
+        }
     }
 
     /**
@@ -126,11 +136,38 @@ export default class Battle {
         /// action ends when animation ends
         this.actions.shift().run(() => {
 
-            // end battle
+            // checking health
             let health = this.getHealth();
-            if (health.team == 0 || health.enemies == 0) {
-                this.end((health.team > 0));
+            
+            if (health.team == 0) {
+                
+                // chain fail
+                this.game.story.chain = 0;
+                
+                // redirect
+                this.game.$location.path('/home');
                 return;
+            }
+            
+            if (health.enemies == 0) {
+                
+                // complete story if boss battle
+                if (this.boss) {
+                    
+                    // story complete
+                    this.game.story.complete();
+                    
+                    // redirect
+                    this.game.$location.path('/story');
+                    return;
+                }
+                
+                // chain success
+                this.game.story.chain++;
+                
+                // new enemies wave
+                this.chooseEnemies();
+                this.start();
             }
 
             // checking status
@@ -143,11 +180,12 @@ export default class Battle {
     }
 
     /**
-     * Add an action for future checking
+     * Add an action & check
      * @param action
      */
     addAction(action) {
         this.actions.push(action);
+        this.check();
     }
 
     /**
@@ -170,70 +208,18 @@ export default class Battle {
 
     /**
      *
-     * @param victory
-     */
-    end(victory) {
-        console.log('[BATTLE ENDS]');
-
-        if (victory) {
-            this.rewards = new Rewards(this);
-
-            // chain up
-            this.game.story.chain++;
-
-            // complete story if boss battle
-            if (this.boss) {
-                this.game.story.complete();
-            }
-
-            // [saving]
-            this.game.save();
-
-            this.game.$location.path('/rewards');
-
-        } else {
-            this.lost++;
-
-            // chain break
-            this.game.story.chain = 0;
-
-            // [saving]
-            this.game.save();
-
-            this.game.$location.path('/lost');
-        }
-    }
-
-    /**
-     *
-     */
-    quit() {
-        this.game.$timeout.cancel(this.timer);
-        this.game.battle = null;
-    }
-
-    /**
-     *
      * @returns {{}}
      */
     save() {
         var save = {};
-
-        if (this.boss) {
-            save.boss = true;
-        }
 
         save.enemies = [];
         for (let i of this.enemies) {
             save.enemies.push(i.ref);
         }
 
-        if (this.lost > 0) {
-            save.lost = this.lost;
-        }
-
-        if (this.rewards) {
-            save.rewards = this.rewards.save();
+        if (this.boss) {
+            save.boss = true;
         }
 
         return save;

@@ -39,11 +39,11 @@ export default class Unit {
         this.timer = this.game.$timeout(() => {
         
             // limit depending on dex stat
-            let limit = 4500 − this.dex ⁄ 150;
+            let ctsMax = 4500 - this.dex / 150;
             
             this.cts += 100;
             
-            if (this.cts >= limit) {
+            if (this.cts >= ctsMax) {
             
                 let action = new ActionAttack(this);
                 

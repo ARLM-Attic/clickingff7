@@ -26,12 +26,18 @@ class BattleController extends Controller {
     }
 
     /**
-     *
-     * @param character
-     * @param status
+     * todo
      */
-    toggle(character, status) {
-        character.status = status;
+    fightBoss() {
+        
+    }
+    
+    /**
+     * 
+     */
+    quit() {
+        this.game.battle.quit();
+        this.$location.path('/home');
     }
 
 }
