@@ -18,7 +18,7 @@ export default class ActionAttack extends Action {
 
         this.animAttack(targets, damages, fn);
 
-        console.log(this.unit.ref, 'attack');
+        this.battle.history.add('battle', this.unit.ref + ' attacks and deals ' + damages.hits + ' damages');
     }
 
 }

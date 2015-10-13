@@ -20,7 +20,7 @@
             <div class="uk-grid">
 
                 <!-- team list -->
-                <div class="uk-width-2-5">
+                <div class="uk-width-2-6">
                     <div ng-repeat="(i, character) in g.battle.game.team" id="{{character.id}}"
                          class="uk-panel uk-panel-box uk-panel-header">
 
@@ -75,12 +75,12 @@
                     </div>
                 </div>
 
-                <div class="uk-width-1-5 uk-text-center">
+                <div class="uk-width-1-6 uk-text-center">
                     VS
                 </div>
 
                 <!-- enemies list -->
-                <div class="uk-width-2-5">
+                <div class="uk-width-2-6">
                     <div ng-repeat="enemy in g.battle.enemies" id="{{enemy.id}}"
                          class="uk-panel uk-panel-box uk-panel-header">
 
@@ -110,6 +110,13 @@
 
                         </div>
 
+                    </div>
+                </div>
+                
+                <div class="uk-width-1-6">
+                    History (battle)
+                    <div ng-repeat="info in g.battle.history.battle">
+                        {{info}}
                     </div>
                 </div>
 

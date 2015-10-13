@@ -1,5 +1,5 @@
 import Enemy from './enemy';
-import Rewards from './rewards';
+import History from './history';
 import _ from 'lodash';
 
 export default class Battle {
@@ -31,6 +31,9 @@ export default class Battle {
 
         // selected target: unit
         this.target = null;
+        
+        // history logs
+        this.history = new History();
     }
 
     /**
@@ -92,7 +95,7 @@ export default class Battle {
      * Units begin to fight
      */
     start() {
-        console.log('[new wave]', this.wave);
+        this.history.add('battle', 'New wave #' + this.wave);
 
         // list of actions
         this.actions = [];
@@ -100,16 +103,18 @@ export default class Battle {
         // todo list of events
         this.events = [];
 
-        // checking status
-        this.checking = false;
-
         for (let i of this.units()) {
             if (!i.battle) {
                 i.setBattle(this);
             }
             i.cts = 0;
         }
+        
+        // todo check events before the battle begins
+        // this.check();
 
+        // pause off
+        this.checking = false;
         this.setPause(false);
     }
 
@@ -126,10 +131,12 @@ export default class Battle {
     }
 
     /**
-     * todo
+     * Units move
      */
     run() {
         this.timer = this.game.$timeout(() => {
+            
+            let checking = false;
 
             // move all units
             for (let i of this.units()) {
@@ -137,17 +144,25 @@ export default class Battle {
                     i.cts += 100;
                 }
                 if (i.cts >= i.ctsMax) {
+                    checking = true;
                     this.addAction(i.ai(this));
                 }
             }
-
+            
+            // pause off if checking
+            if (checking) {
+                this.checking = false;
+                this.setPause(false);
+            }
+            
+            // recursive
             this.run();
 
         }, 100);
     }
 
     /**
-     *
+     * Units stop
      */
     stop() {
         this.game.$timeout.cancel(this.timer);
@@ -160,8 +175,6 @@ export default class Battle {
 
         // no checking
         if (this.actions.length == 0 || this.checking) {
-            //this.checking = false;
-            //this.setPause(false);
             return;
         }
 
@@ -205,6 +218,11 @@ export default class Battle {
 
                 // new enemies wave
                 this.chooseEnemies();
+                
+                // [saving]
+                this.game.save();
+                
+                // battle begin
                 this.start();
                 return;
             }
