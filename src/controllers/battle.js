@@ -26,6 +26,13 @@ class BattleController extends Controller {
     }
 
     /**
+     *
+     */
+    togglePause() {
+        this.game.battle.togglePause();
+    }
+
+    /**
      * todo
      */
     fightBoss() {
@@ -37,6 +44,11 @@ class BattleController extends Controller {
      */
     quit() {
         this.game.battle.setPause(true);
+        this.game.battle = null;
+
+        // [saving]
+        this.game.save();
+
         this.$location.path('/home');
     }
 

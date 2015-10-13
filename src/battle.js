@@ -114,7 +114,6 @@ export default class Battle {
         // this.check();
 
         // pause off
-        this.checking = false;
         this.setPause(false);
     }
 
@@ -131,32 +130,31 @@ export default class Battle {
     }
 
     /**
+     * Toggle
+     */
+    togglePause() {
+        this.setPause(!this.pause);
+    }
+
+    /**
      * Units move
      */
     run() {
         this.timer = this.game.$timeout(() => {
             
-            let checking = false;
-
             // move all units
             for (let i of this.units()) {
                 if (i.cts < i.ctsMax) {
                     i.cts += 100;
                 }
                 if (i.cts >= i.ctsMax) {
-                    checking = true;
                     this.addAction(i.ai(this));
                 }
             }
-            
-            // pause off if checking
-            if (checking) {
-                this.checking = false;
-                this.setPause(false);
-            }
-            
-            // recursive
-            this.run();
+
+            this.check(() => {
+                this.run();
+            });
 
         }, 100);
     }
@@ -169,18 +167,20 @@ export default class Battle {
     }
 
     /**
+     *
      * Check for actions (todo: or events)
+     * @param fn
      */
-    check() {
-
-        // no checking
-        if (this.actions.length == 0 || this.checking) {
-            return;
-        }
+    check(fn) {
 
         // start checking
-        this.checking = true;
         this.setPause(true);
+
+        // no checking
+        if (this.actions.length == 0) {
+            this.setPause(false);
+            return fn();
+        }
 
         // checking the oldest action
         let action = this.actions.shift();
@@ -231,7 +231,7 @@ export default class Battle {
             action.unit.cts = 0;
 
             // recursive until actions is empty
-            this.check();
+            this.check(fn);
 
         });
     }
@@ -242,7 +242,6 @@ export default class Battle {
      */
     addAction(action) {
         this.actions.push(action);
-        this.check();
     }
 
     /**

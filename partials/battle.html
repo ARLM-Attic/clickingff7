@@ -8,7 +8,7 @@
                 Actions
             </div>
             <a href="" class="uk-button" ng-click="g.quit()">Escape</a>
-            <a href="" class="uk-button">Pause on/off</a>
+            <a href="" class="uk-button" ng-click="g.togglePause()">Pause on/off</a>
             <a href="" class="uk-button">Fight boss</a>
         </div>
 
@@ -115,7 +115,7 @@
                 
                 <div class="uk-width-1-6">
                     History (battle)
-                    <div ng-repeat="info in g.battle.history.battle">
+                    <div ng-repeat="info in g.battle.history.categories.battle">
                         {{info}}
                     </div>
                 </div>
