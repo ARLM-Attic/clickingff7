@@ -8,7 +8,12 @@
                 Actions
             </div>
             <a href="" class="uk-button" ng-click="g.quit()">Escape</a>
-            <a href="" class="uk-button" ng-click="g.togglePause()">Pause on/off</a>
+            <a href="" class="uk-button" ng-click="g.togglePause()" ng-if="g.battle.pause">
+                Pause: on
+            </a>
+            <a href="" class="uk-button" ng-click="g.togglePause()" ng-if="!g.battle.pause">
+                Pause: off
+            </a>
             <a href="" class="uk-button" ng-click="g.fightBoss()" ng-if="g.battle.canFightBoss()">Fight boss</a>
         </div>
 
@@ -36,6 +41,11 @@
                                 <div class="uk-progress">
                                     <div class="uk-progress-bar" style="width: {{character.progress('hp')}}%;">
                                         {{character.hp}}HP
+                                    </div>
+                                </div>
+                                <div class="uk-progress">
+                                    <div class="uk-progress-bar" style="width: {{character.progress('xp')}}%;">
+                                        {{character.xp}}p
                                     </div>
                                 </div>
                                 <div class="uk-progress">
@@ -115,7 +125,7 @@
                 
                 <div class="uk-width-1-6">
                     History (battle)
-                    <div ng-repeat="info in g.battle.history.categories.battle">
+                    <div ng-repeat="info in g.battle.history.categories.battle track by $index">
                         {{info}}
                     </div>
                 </div>

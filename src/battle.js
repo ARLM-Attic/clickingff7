@@ -132,11 +132,12 @@ export default class Battle {
      * Internal pause is priority
      */
     setInternalPause(state) {
-        if (state) {
-            this.stop();
-        }
-        if (!state && !this.pause) {
-            this.run();
+        if (!this.pause) {
+            if (state) {
+                this.stop();
+            } else {
+                this.run();
+            }
         }
         this.internalPause = state;
     }
@@ -145,11 +146,12 @@ export default class Battle {
      * Pause (by player)
      */
     setPause(state) {
-        if (state) {
-            this.stop();
-        }
-        if (!state && !this.internalPause) {
-            this.run();
+        if (!this.internalPause) {
+            if (state) {
+                this.stop();
+            } else {
+                this.run();
+            }
         }
         this.pause = state;
     }
@@ -177,9 +179,7 @@ export default class Battle {
                 }
             }
 
-            this.check(() => {
-                this.run();
-            });
+            this.check();
 
         }, 100);
     }
@@ -194,6 +194,7 @@ export default class Battle {
     /**
      *
      * Check for actions (todo: or events)
+     * Check function ends with calling to run()
      * @param fn
      */
     check(fn) {
@@ -204,7 +205,8 @@ export default class Battle {
         // no checking
         if (this.actions.length == 0) {
             this.setInternalPause(false);
-            return fn();
+            if (!this.pause) this.run();
+            return;
         }
 
         // checking the oldest action
@@ -256,7 +258,7 @@ export default class Battle {
             action.unit.cts = 0;
 
             // recursive until actions is empty
-            this.check(fn);
+            this.check();
 
         });
     }

@@ -59,6 +59,14 @@ class BattleController extends Controller {
         this.game.battle.setPause(true);
         this.game.battle = null;
 
+        // chain break
+        this.game.story.chain = 0;
+
+        // team recover
+        for (let i of this.game.team) {
+            i.recover();
+        }
+
         // [saving]
         this.game.save();
 

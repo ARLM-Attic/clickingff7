@@ -35,25 +35,7 @@
 
                     <p>{{'story '+g.game.story.ref+' desc'|translate}}</p>
 
-                    <p>CHAIN <b>x{{g.game.story.chain}}</b></p>
-
-                    <a href="" class="uk-button uk-button-danger" ng-click="g.recover()">{{'recover'|translate}}</a>
-
                     <a href="" class="uk-button uk-button-primary" ng-click="g.fight()">{{'fight'|translate}}</a>
-
-                    <a href=""
-                       class="uk-button uk-button-primary"
-                       ng-click="g.fightBoss()"
-                       ng-if="g.game.story.isBossAvalaible()">
-                        {{'fight boss'|translate}}
-                    </a>
-
-                    <a href=""
-                       class="uk-button uk-button-primary"
-                       ng-click="g.nextStory()"
-                       ng-if="g.game.story.isNext()">
-                        {{'next story'|translate}}
-                    </a>
 
                 </div>
             </div>
