@@ -16,6 +16,14 @@ export default class Unit {
     }
 
     /**
+     *
+     * @returns {number}
+     */
+    get ctsMax() {
+        return 4500 - this.dex / 150;
+    }
+
+    /**
      * Recover HP & MP
      */
     recover() {
@@ -29,41 +37,6 @@ export default class Unit {
      */
     setBattle(battle) {
         this.battle = battle;
-    }
-    
-    /**
-     * RUN while still alive
-     */
-    run() {
-        
-        this.timer = this.game.$timeout(() => {
-        
-            // limit depending on dex stat
-            let ctsMax = 4500 - this.dex / 150;
-            
-            this.cts += 100;
-            
-            if (this.cts >= ctsMax) {
-            
-                let action = new ActionAttack(this);
-                
-                this.battle.addAction(action);
-                
-                this.cts = 0;
-            
-            }            
-            
-            // recursive
-            this.run();
-            
-        }, 100);
-    }
-    
-    /**
-     * ATB stop if character die
-     */
-    stop() {
-        this.game.$timeout.cancel(this.timer);
     }
 
     /**

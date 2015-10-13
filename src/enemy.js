@@ -96,9 +96,7 @@ export default class Enemy extends Unit {
             i++;
         } while (rand > sum && i < actions.length);
 
-        let action = new ActionEnemy(this, a);
-        action.setBattle(battle);
-        action.execute(fn);
+        return new ActionEnemy(this, a);
     }
 
     /**

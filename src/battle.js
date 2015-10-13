@@ -25,21 +25,12 @@ export default class Battle {
 
         // boss battle?
         this.boss = false;
-        
+
         // no of enemies wave
         this.wave = 0;
 
         // selected target: unit
         this.target = null;
-
-        // list of actions
-        this.actions = [];
-
-        // todo list of events
-        this.events = [];
-
-        // checking status
-        this.checking = false;
     }
 
     /**
@@ -101,25 +92,65 @@ export default class Battle {
      * Units begin to fight
      */
     start() {
+        console.log('[new wave]', this.wave);
+
+        // list of actions
+        this.actions = [];
+
+        // todo list of events
+        this.events = [];
+
+        // checking status
+        this.checking = false;
+
         for (let i of this.units()) {
-            i.run();
+            if (!i.battle) {
+                i.setBattle(this);
+            }
+            i.cts = 0;
         }
+
+        this.setPause(false);
     }
-    
+
     /**
-     * todo
+     * Pause ON/OFF
      */
-    pause() {
-        
+    setPause(state) {
+        if (state) {
+            this.stop();
+        } else {
+            this.run();
+        }
+        this.pause = state;
     }
 
     /**
      * todo
      */
-    quit() {
-        for (let i of this.units()) {
-            i.stop();
-        }
+    run() {
+        this.timer = this.game.$timeout(() => {
+
+            // move all units
+            for (let i of this.units()) {
+                if (i.cts < i.ctsMax) {
+                    i.cts += 100;
+                }
+                if (i.cts >= i.ctsMax) {
+                    this.addAction(i.ai(this));
+                }
+            }
+
+            this.run();
+
+        }, 100);
+    }
+
+    /**
+     *
+     */
+    stop() {
+        this.game.$timeout.cancel(this.timer);
     }
 
     /**
@@ -127,51 +158,59 @@ export default class Battle {
      */
     check() {
 
-        // if no actions
-        if (this.actions.length > 0 || this.checking) return;
+        // no checking
+        if (this.actions.length == 0 || this.checking) {
+            //this.checking = false;
+            //this.setPause(false);
+            return;
+        }
 
-        // checking status
+        // start checking
         this.checking = true;
+        this.setPause(true);
 
-        /// action ends when animation ends
-        this.actions.shift().run(() => {
+        // checking the oldest action
+        let action = this.actions.shift();
+        action.setBattle(this);
+        action.execute(() => {
 
             // checking health
             let health = this.getHealth();
-            
+
             if (health.team == 0) {
-                
+
                 // chain fail
                 this.game.story.chain = 0;
-                
+
                 // redirect
                 this.game.$location.path('/home');
                 return;
             }
-            
+
             if (health.enemies == 0) {
-                
+
                 // complete story if boss battle
                 if (this.boss) {
-                    
+
                     // story complete
                     this.game.story.complete();
-                    
+
                     // redirect
                     this.game.$location.path('/story');
                     return;
                 }
-                
+
                 // chain success
                 this.game.story.chain++;
-                
+
                 // new enemies wave
                 this.chooseEnemies();
                 this.start();
+                return;
             }
 
-            // checking status
-            this.checking = false;
+            // resuming unit cts
+            action.unit.cts = 0;
 
             // recursive until actions is empty
             this.check();

@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 export default class ActionEnemy extends Action {
 
-    constructor(character, action) {
-        super(character);
+    constructor(unit, action) {
+        super(unit);
 
         this.action = action;
     }
@@ -16,7 +16,7 @@ export default class ActionEnemy extends Action {
 
         this.animAttack(targets, damages, fn);
 
-        console.log(this.character.ref, this.action.ref);
+        console.log(this.unit.ref, this.action.ref);
     }
 
 }

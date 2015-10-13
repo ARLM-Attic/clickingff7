@@ -3,12 +3,12 @@ import _ from 'lodash';
 
 export default class ActionAttack extends Action {
 
-    constructor(character, data) {
-        super(character, data);
+    constructor(unit, data) {
+        super(unit, data);
 
         this.ref = 'attack';
 
-        this.img = 'img/icons/weapons/' + character.data.weapon.type + '.png';
+        this.img = 'img/icons/weapons/' + unit.data.weapon.type + '.png';
     }
 
     execute(fn) {
@@ -18,7 +18,7 @@ export default class ActionAttack extends Action {
 
         this.animAttack(targets, damages, fn);
 
-        console.log(this.character.ref, 'attack');
+        console.log(this.unit.ref, 'attack');
     }
 
 }

@@ -1,9 +1,6 @@
 import Unit from './unit';
 import Weapon from './equipment/weapon';
 import ActionAttack from './actions/attack';
-import ActionDefense from './actions/defense';
-import ActionLimit from './actions/limit';
-import ActionMateria from './actions/materia';
 import _ from 'lodash';
 
 export default class Character extends Unit {
@@ -240,46 +237,7 @@ export default class Character extends Unit {
      * @returns {*}
      */
     ai(battle, fn) {
-
-        let action;
-
-        switch (this.status) {
-            case 'attack':
-                action = this.getRandomAction();
-                break;
-            case 'defense':
-                action = new ActionDefense(this);
-                break;
-            case 'limit':
-                action = new ActionLimit(this);
-                break;
-        }
-
-        action.setBattle(battle);
-        action.execute(fn);
-    }
-
-    /**
-     * Get random from actions
-     * SUM(actions.rate)=100
-     * @returns {*}
-     */
-    getRandomAction() {
-
-        // get sorted actions
-        let actions = _.sortByOrder(this.actions, ['rate'], ['desc']);
-
-        let rand = _.random(1, 100);
-        let sum = 0;
-        let i = 0;
-        let a;
-        do {
-            a = actions[i];
-            sum += a.rate;
-            i++;
-        } while (rand > sum && i < actions.length);
-
-        return a;
+        return new ActionAttack(this);
     }
 
     /**

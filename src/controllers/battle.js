@@ -36,7 +36,7 @@ class BattleController extends Controller {
      * 
      */
     quit() {
-        this.game.battle.quit();
+        this.game.battle.setPause(true);
         this.$location.path('/home');
     }
 

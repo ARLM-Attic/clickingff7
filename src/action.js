@@ -5,9 +5,9 @@ import 'velocity/velocity.ui.min';
 // @interface
 export default class Action {
 
-    constructor(character, data) {
-        // associated character
-        this.character = character;
+    constructor(unit, data) {
+        // associated unit
+        this.unit = unit;
 
         // associated battle
         this.battle = null;
@@ -106,7 +106,7 @@ export default class Action {
         let res = {}, rng;
 
         // base attack
-        let base = Math.floor(Math.pow(this.character.str, 1.8) / Math.pow(targets.def, 0.5));
+        let base = Math.floor(Math.pow(this.unit.str, 1.8) / Math.pow(targets.def, 0.5));
 
         // ability power
         base = 5 + base * pwr;
@@ -135,6 +135,7 @@ export default class Action {
         // random variance
         rng = _.random(3);
         base = Math.floor(base * (1 + rng / 100));
+        base = 10;
 
         res.hits = base;
 
@@ -151,7 +152,7 @@ export default class Action {
         let res = {}, rng;
 
         // base attack
-        let base = Math.floor(Math.pow(this.character.mgi, 1.65) / Math.pow(targets.res, 0.5));
+        let base = Math.floor(Math.pow(this.unit.mgi, 1.65) / Math.pow(targets.res, 0.5));
 
         // ability power
         base = 5 + base * pwr;
@@ -185,7 +186,7 @@ export default class Action {
         let selector;
 
         // Attacker animation
-        selector = '#' + this.character.id + ' .avatar';
+        selector = '#' + this.unit.id + ' .avatar';
         let seq = [
             {e: $(selector), p: {translateX: 5}, o: {duration: 400}},
             {e: $(selector), p: {translateX: -1}, o: {duration: 400}}
