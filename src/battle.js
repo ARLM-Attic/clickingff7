@@ -29,6 +29,9 @@ export default class Battle {
         // no of enemies wave
         this.wave = 0;
 
+        // battle pause
+        this.pause = false;
+
         // selected target: unit
         this.target = null;
         
@@ -48,6 +51,8 @@ export default class Battle {
         if (data.boss) {
             this.boss = data.boss;
         }
+        
+        this.wave = data.wave;
     }
 
     /**
@@ -73,9 +78,17 @@ export default class Battle {
 
         this.boss = true;
 
+        this.enemies = [];
         for (let e of boss) {
             this.enemies.push(Enemy.get(this, e));
         }
+    }
+    
+    /**
+     * 
+     */
+    canFightBoss() {
+        return (this.wave > 10);
     }
 
     /**
@@ -110,27 +123,39 @@ export default class Battle {
             i.cts = 0;
         }
         
-        // todo check events before the battle begins
-        // this.check();
-
-        // pause off
-        this.setPause(false);
+        // check events before the battle begins
+        this.check();
     }
 
     /**
-     * Pause ON/OFF
+     * Internal pause (by system)
+     * Internal pause is priority
+     */
+    setInternalPause(state) {
+        if (state) {
+            this.stop();
+        }
+        if (!state && !this.pause) {
+            this.run();
+        }
+        this.internalPause = state;
+    }
+
+    /**
+     * Pause (by player)
      */
     setPause(state) {
         if (state) {
             this.stop();
-        } else {
+        }
+        if (!state && !this.internalPause) {
             this.run();
         }
         this.pause = state;
     }
 
     /**
-     * Toggle
+     * Toggle pause (by player)
      */
     togglePause() {
         this.setPause(!this.pause);
@@ -174,11 +199,11 @@ export default class Battle {
     check(fn) {
 
         // start checking
-        this.setPause(true);
+        this.setInternalPause(true);
 
         // no checking
         if (this.actions.length == 0) {
-            this.setPause(false);
+            this.setInternalPause(false);
             return fn();
         }
 
@@ -249,7 +274,7 @@ export default class Battle {
      * @returns {{}}
      */
     getHealth() {
-        var res = {};
+        let res = {};
 
         res.team = _.reduce(this.game.team, function (sum, ally) {
             return sum + ally.hp;
@@ -267,7 +292,7 @@ export default class Battle {
      * @returns {{}}
      */
     save() {
-        var save = {};
+        let save = _.pick(this, 'wave');
 
         save.enemies = [];
         for (let i of this.enemies) {

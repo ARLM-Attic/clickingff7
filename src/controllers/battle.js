@@ -33,9 +33,22 @@ class BattleController extends Controller {
     }
 
     /**
-     * todo
+     * 
      */
     fightBoss() {
+        
+        if (!this.game.battle.canFightBoss) {
+            return;
+        }
+        
+        this.game.battle.setPause(true);
+        
+        this.game.battle.chooseBoss();
+        
+        // [saving]
+        this.game.save();
+        
+        this.game.battle.start();
         
     }
     
