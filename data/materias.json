@@ -4,13 +4,15 @@
         "color": "green",
         "type": "mag",
         "pwr": 1.5,
-        "targets": "enemy:1"
+        "targets": "enemy:1",
+        "cost": 4
     },
     {
         "ref": "fire",
         "color": "green",
         "type": "mag",
         "pwr": 1.5,
-        "targets": "enemy:1"
+        "targets": "enemy:1",
+        "cost": 4
     }
 ]

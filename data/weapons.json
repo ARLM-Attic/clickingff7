@@ -3,7 +3,7 @@
         "ref": "busterSword",
         "type": "broadsword",
         "stats": {
-            "str": 18,
+            "str": 1,
             "mgi": 2
         },
         "gils": 0,
@@ -13,7 +13,7 @@
         "ref": "gatlingGun",
         "type": "gun-arm",
         "stats": {
-            "str": 14
+            "str": 1
         },
         "gils": 0,
         "holes": 1
@@ -22,7 +22,7 @@
         "ref": "assaultGun",
         "type": "gun-arm",
         "stats": {
-            "str": 17,
+            "str": 2,
             "mgi": -4
         },
         "gils": 0,
@@ -32,7 +32,7 @@
         "ref": "leatherGlove",
         "type": "knuckle",
         "stats": {
-            "str": 13,
+            "str": 1,
             "lck": 2
         },
         "gils": 0,
@@ -42,7 +42,7 @@
         "ref": "guardStick",
         "type": "stave",
         "stats": {
-            "str": 12,
+            "str": 1,
             "def": 1,
             "mgi": 2,
             "res": 4
@@ -54,7 +54,7 @@
         "ref": "mythrilClip",
         "type": "headdresse",
         "stats": {
-            "str": 24,
+            "str": 1,
             "mgi": 6
         },
         "gils": 0,
@@ -64,7 +64,7 @@
         "ref": "4pShuriken",
         "type": "shuriken",
         "stats": {
-            "str": 23,
+            "str": 1,
             "mgi": 6
         },
         "gils": 0,
@@ -74,7 +74,7 @@
         "ref": "yellowMp",
         "type": "megaphone",
         "stats": {
-            "str": 36,
+            "str": 1,
             "mgi": 8
         },
         "gils": 0,
@@ -84,7 +84,7 @@
         "ref": "quicksilver",
         "type": "gun",
         "stats": {
-            "str": 38,
+            "str": 1,
             "mgi": 10
         },
         "gils": 0,
@@ -94,7 +94,7 @@
         "ref": "spear",
         "type": "spear",
         "stats": {
-            "str": 44,
+            "str": 1,
             "mgi": 8
         },
         "gils": 0,

@@ -3,8 +3,8 @@ import Action from '../action';
 
 export default class ActionMateria extends Action {
 
-    constructor(character, materia) {
-        super(character);
+    constructor(unit, materia) {
+        super(unit);
 
         // attach materia to this action
         this.materia = materia;
@@ -17,10 +17,14 @@ export default class ActionMateria extends Action {
     }
 
     isAvailable() {
-        return (this.materia.cost <= this.character.mp)
+        return (this.materia.data.cost <= this.unit.mp && !this.using);
     }
 
     execute(fn) {
+
+        // materia cost
+        this.unit.mp -= this.materia.data.cost;
+
         let targets = this.getTargets(this.materia.data.targets);
 
         // Each lvl>2 pwr+10%
@@ -30,7 +34,7 @@ export default class ActionMateria extends Action {
 
         this.animAttack(targets, damages, fn);
 
-        console.log(this.character.ref, this.materia.ref);
+        this.battle.history.add('battle', this.unit.ref + ' attacks with ' + this.ref + ' and deals ' + damages.hits + ' damages');
     }
 
 }

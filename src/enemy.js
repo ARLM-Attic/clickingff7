@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import Unit from './unit';
+import Weapon from './equipment/weapon';
 import ActionEnemy from './actions/enemy'
 
 export default class Enemy extends Unit {
@@ -119,10 +120,9 @@ export default class Enemy extends Unit {
 
     /**
      *
-     * @returns {number}
      */
     getDrops() {
-        let drop = this.enemy.data.drop;
+        let drop = this.data.drop;
 
         // no drops
         if (!drop) return;
@@ -131,10 +131,10 @@ export default class Enemy extends Unit {
         if (rng <= drop.rate) {
             switch (drop.type) {
                 case 'item':
-                    this.game.addItem(
+                    /*this.game.addItem(
                         Item.get(this.game, drop.ref)
                     );
-                    this.battle.history.add('battle', 'Item obtained: ' + drop.ref);
+                    this.battle.history.add('battle', 'Item obtained: ' + drop.ref);*/
                     break;
                 case 'weapon':
                     this.game.addWeapon(

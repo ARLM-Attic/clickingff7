@@ -44,6 +44,11 @@
                                     </div>
                                 </div>
                                 <div class="uk-progress">
+                                    <div class="uk-progress-bar" style="width: {{character.progress('mp')}}%;">
+                                        {{character.mp}}MP
+                                    </div>
+                                </div>
+                                <div class="uk-progress">
                                     <div class="uk-progress-bar" style="width: {{character.progress('xp')}}%;">
                                         {{character.xp}}p
                                     </div>
@@ -55,26 +60,19 @@
                                 </div>
                                 <ul class="uk-list uk-subnav">
                                     <li>
-                                        <img ng-src="img/icons/weapons/{{character.getStatus()}}.png"
-                                             class="tm-icon-button"
+                                        <img ng-src="{{character.getStatusImg()}}"
+                                             class="tm-icon-button active"
                                              data-uk-tooltip="{pos:'bottom', cls:'help'}"
                                              title="toggle status"
                                              ng-click="g.toggleStatus(character)"/>
                                     </li>
-                                    <li>
-                                        <img ng-src="img/icons/limit.png"
-                                             class="tm-icon-button"
-                                             ng-class="{'active': character.hasLimit()}"
-                                             data-uk-tooltip="{pos:'bottom', cls:'help'}"
-                                             title="limit"/>
-                                    </li>
                                     <li ng-repeat="action in character.actions">
                                         <img ng-src="{{action.img}}"
                                              class="tm-icon-button"
-                                             ng-class="{'active': action.isActive()}"
+                                             ng-class="{'active': action.isAvailable()}"
                                              data-uk-tooltip="{pos:'bottom', cls:'help'}"
-                                             title="action.ref"
-                                             ng-click="g.makeAction(action)"/>
+                                             title="{{action.ref}}"
+                                             ng-click="g.doAction(action)"/>
                                     </li>
                                 </ul>
                             </div>

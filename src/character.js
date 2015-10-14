@@ -1,6 +1,9 @@
 import Unit from './unit';
 import Weapon from './equipment/weapon';
 import ActionAttack from './actions/attack';
+import ActionMateria from './actions/materia';
+import ActionDefense from './actions/defense';
+import ActionLimit from './actions/limit';
 import _ from 'lodash';
 
 export default class Character extends Unit {
@@ -101,6 +104,9 @@ export default class Character extends Unit {
         // hp
         this.hp = data.hp;
 
+        // mp
+        this.mp = data.mp;
+
         // xp
         this.xp = data.xp;
 
@@ -150,6 +156,17 @@ export default class Character extends Unit {
      */
     backup() {
         this.active = false;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    getStatusImg() {
+        let img;
+        if (this.status == 'attack') img = 'weapons/' + this.data.weapon.type;
+        if (this.status == 'defense') img = 'armor';
+        return '/img/icons/' + img + '.png';
     }
 
     /**
@@ -215,10 +232,11 @@ export default class Character extends Unit {
 
     /**
      * Actions from materia equipment
-     * @param data
      */
-    refreshActions(data = []) {
+    refreshActions() {
         this.actions = this.getActionsFromEquipment();
+        // todo add limit action
+        //this.actions.unshift(new ActionLimit(this));
     }
 
     /**
@@ -226,7 +244,11 @@ export default class Character extends Unit {
      * @returns {*}
      */
     ai(battle, fn) {
-        return new ActionAttack(this);
+        if (this.status == 'attack') {
+            return new ActionAttack(this);
+        } else if (this.status == 'defense') {
+            return new ActionDefense(this);
+        }
     }
 
     /**
@@ -275,7 +297,7 @@ export default class Character extends Unit {
     save() {
         let materias;
 
-        var res = _.pick(this, 'id', 'lvl', 'hp', 'xp', 'ref', 'status', 'active');
+        var res = _.pick(this, 'id', 'lvl', 'hp', 'mp', 'xp', 'ref', 'status', 'active');
 
         if (this.defense) {
             res.defense = true;

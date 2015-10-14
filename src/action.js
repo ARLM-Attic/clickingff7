@@ -22,6 +22,9 @@ export default class Action {
         // image
         this.image = null;
 
+        // using
+        this.using = false;
+
         if (data) {
             this.load(data);
         }
@@ -115,6 +118,9 @@ export default class Action {
         // element resistance
 
         // defending
+        if (targets.status == 'defense') {
+            base *= 0.5;
+        }
 
         // critical attack
         rng = _.random(100);
@@ -136,7 +142,6 @@ export default class Action {
         // random variance
         rng = _.random(3);
         base = Math.floor(base * (1 + rng / 100));
-        base = 10;
 
         res.hits = base;
 
@@ -161,6 +166,10 @@ export default class Action {
         // element resistance
 
         // defending
+        if (targets.defense) {
+            base = Math.floor(base * 0.5);
+            res.msg = 'defense';
+        }
 
         // critical attack
 

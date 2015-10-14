@@ -28,10 +28,10 @@ export default class Battle {
 
         // no of enemies wave
         this.wave = 0;
-        
+
         // list of system actions
         this.actions = [];
-        
+
         // list of player actions
         this.playerActions = [];
 
@@ -40,7 +40,7 @@ export default class Battle {
 
         // selected target: unit
         this.target = null;
-        
+
         // history logs
         this.history = new History();
     }
@@ -57,7 +57,7 @@ export default class Battle {
         if (data.boss) {
             this.boss = data.boss;
         }
-        
+
         this.wave = data.wave;
     }
 
@@ -89,9 +89,9 @@ export default class Battle {
             this.enemies.push(Enemy.get(this, e));
         }
     }
-    
+
     /**
-     * 
+     *
      */
     canFightBoss() {
         return (this.wave > 10);
@@ -128,7 +128,7 @@ export default class Battle {
             }
             i.cts = 0;
         }
-        
+
         // check events before the battle begins
         this.check();
     }
@@ -174,7 +174,7 @@ export default class Battle {
      */
     run() {
         this.timer = this.game.$timeout(() => {
-            
+
             // move all units
             for (let i of this.units()) {
                 if (i.cts < i.ctsMax) {
@@ -217,10 +217,22 @@ export default class Battle {
         }
 
         // checking the oldest action
-        let action = actions.shift();
-        
+        let action;
+        let isAction = false;
+        let isPlayerAction= false;
+        if (this.playerActions.length > 0) {
+            action = this.playerActions.shift();
+            isPlayerAction = true;
+        } else if (this.actions.length > 0) {
+            action = this.actions.shift();
+            isAction = true;
+        }
+
         action.setBattle(this);
         action.execute(() => {
+
+            // free the action
+            action.using = false;
 
             // checking health
             let health = this.getHealth();
@@ -253,17 +265,19 @@ export default class Battle {
 
                 // new enemies wave
                 this.chooseEnemies();
-                
+
                 // [saving]
                 this.game.save();
-                
+
                 // battle begin
                 this.start();
                 return;
             }
 
-            // resuming unit cts
-            action.unit.cts = 0;
+            if (isAction) {
+                // resuming unit cts
+                action.unit.cts = 0;
+            }
 
             // recursive until actions is empty
             this.check();
@@ -277,6 +291,7 @@ export default class Battle {
      */
     addAction(action) {
         this.actions.push(action);
+        action.using = true;
     }
 
     /**
@@ -285,6 +300,7 @@ export default class Battle {
      */
     addPlayerAction(action) {
         this.playerActions.push(action);
+        action.using = true;
     }
 
     /**

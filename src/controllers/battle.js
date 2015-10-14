@@ -33,22 +33,45 @@ class BattleController extends Controller {
     }
 
     /**
+     *
+     * @param character
+     */
+    toggleStatus(character) {
+        let status = character.status;
+        if (status == 'attack') {
+            character.status = 'defense';
+        } else if (status == 'defense') {
+            character.status = 'attack';
+        }
+    }
+
+    /**
+     *
+     * @param action
+     */
+    doAction(action) {
+        if (action.isAvailable()) {
+            this.battle.addPlayerAction(action);
+        }
+    }
+
+    /**
      * 
      */
     fightBoss() {
         
-        if (!this.game.battle.canFightBoss) {
+        if (!this.battle.canFightBoss) {
             return;
         }
         
-        this.game.battle.setPause(true);
+        this.battle.setPause(true);
         
-        this.game.battle.chooseBoss();
+        this.battle.chooseBoss();
         
         // [saving]
         this.game.save();
         
-        this.game.battle.start();
+        this.battle.start();
         
     }
     
@@ -56,7 +79,7 @@ class BattleController extends Controller {
      * 
      */
     quit() {
-        this.game.battle.setPause(true);
+        this.battle.setPause(true);
         this.game.battle = null;
 
         // chain break

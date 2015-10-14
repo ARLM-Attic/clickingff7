@@ -2,8 +2,8 @@ import Action from '../action';
 
 export default class ActionLimit extends Action {
 
-    constructor(character) {
-        super(character);
+    constructor(unit) {
+        super(unit);
 
         this.ref = 'limit';
 
@@ -11,7 +11,7 @@ export default class ActionLimit extends Action {
     }
 
     isAvailable() {
-        return (this.character.limit == this.character.limitMax);
+        return (this.unit.limit == this.unit.limitMax);
     }
 
     execute() {
