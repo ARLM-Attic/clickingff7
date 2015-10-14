@@ -28,6 +28,12 @@ export default class Battle {
 
         // no of enemies wave
         this.wave = 0;
+        
+        // list of system actions
+        this.actions = [];
+        
+        // list of player actions
+        this.playerActions = [];
 
         // battle pause
         this.pause = false;
@@ -193,7 +199,7 @@ export default class Battle {
 
     /**
      *
-     * Check for actions (todo: or events)
+     * Check for actions, playerActions (todo: or events)
      * Check function ends with calling to run()
      * @param fn
      */
@@ -203,14 +209,16 @@ export default class Battle {
         this.setInternalPause(true);
 
         // no checking
-        if (this.actions.length == 0) {
+        let actions = _.union(this.playerActions, this.actions);
+        if (actions.length == 0) {
             this.setInternalPause(false);
             if (!this.pause) this.run();
             return;
         }
 
         // checking the oldest action
-        let action = this.actions.shift();
+        let action = actions.shift();
+        
         action.setBattle(this);
         action.execute(() => {
 
@@ -264,11 +272,19 @@ export default class Battle {
     }
 
     /**
-     * Add an action & check
+     * Add an action (by system)
      * @param action
      */
     addAction(action) {
         this.actions.push(action);
+    }
+
+    /**
+     * Add an action (by player)
+     * @param action
+     */
+    addPlayerAction(action) {
+        this.playerActions.push(action);
     }
 
     /**

@@ -197,6 +197,8 @@ export default class Character extends Unit {
         while (this.xp >= this.xpMax) {
             this.xp -= this.xpMax;
             this.lvl++;
+            
+            this.battle.history.add('battle', this.ref + ' went to level ' + this.lvl);
 
             // updating stats
             this.calcStats();
@@ -212,24 +214,11 @@ export default class Character extends Unit {
     }
 
     /**
-     *
+     * Actions from materia equipment
      * @param data
      */
     refreshActions(data = []) {
-        let res = [], opt;
-        let a = this.getActionsFromEquipment();
-
-        // attack
-        let attack = new ActionAttack(this);
-        attack.rate = 100 - _.sum(a, 'rate');
-        res.push(attack);
-
-        // materia actions
-        for (let i of a) {
-            res.push(i);
-        }
-
-        this.actions = res;
+        this.actions = this.getActionsFromEquipment();
     }
 
     /**

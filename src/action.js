@@ -207,14 +207,6 @@ export default class Action {
         $(selector).velocity("transition.slideUpIn", 1000, () => {
             $(selector).text("");
             unit.getDamaged(damage);
-
-            // rewards for the team
-            if (unit.hp == 0 && unit instanceof Enemy) {
-                for (let i of this.battle.game.team) {
-                    i.setXp(unit.data.xp);
-                }
-            }
-
             this.battle.game.$rootScope.$apply();
             if (fn) fn();
         });

@@ -55,27 +55,26 @@
                                 </div>
                                 <ul class="uk-list uk-subnav">
                                     <li>
-                                        <img ng-src="img/icons/weapons/{{character.data.weapon.type}}.png"
+                                        <img ng-src="img/icons/weapons/{{character.getStatus()}}.png"
                                              class="tm-icon-button"
-                                             ng-class="{'active': character.status == 'attack'}"
                                              data-uk-tooltip="{pos:'bottom', cls:'help'}"
-                                             title="attack mode"
-                                             ng-click="g.toggle(character, 'attack')"/>
-                                    </li>
-                                    <li>
-                                        <img ng-src="img/icons/armor.png"
-                                             class="tm-icon-button"
-                                             ng-class="{'active': character.status == 'defense'}"
-                                             data-uk-tooltip="{pos:'bottom', cls:'help'}"
-                                             title="defense mode"
-                                             ng-click="g.toggle(character, 'defense')"/>
+                                             title="toggle status"
+                                             ng-click="g.toggleStatus(character)"/>
                                     </li>
                                     <li>
                                         <img ng-src="img/icons/limit.png"
                                              class="tm-icon-button"
-                                             ng-class="{'active': character.status == 'limit'}"
+                                             ng-class="{'active': character.hasLimit()}"
                                              data-uk-tooltip="{pos:'bottom', cls:'help'}"
-                                             title="limit mode"/>
+                                             title="limit"/>
+                                    </li>
+                                    <li ng-repeat="action in character.actions">
+                                        <img ng-src="{{action.img}}"
+                                             class="tm-icon-button"
+                                             ng-class="{'active': action.isActive()}"
+                                             data-uk-tooltip="{pos:'bottom', cls:'help'}"
+                                             title="action.ref"
+                                             ng-click="g.makeAction(action)"/>
                                     </li>
                                 </ul>
                             </div>

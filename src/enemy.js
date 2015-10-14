@@ -98,6 +98,53 @@ export default class Enemy extends Unit {
 
         return new ActionEnemy(this, a);
     }
+    
+    /**
+     * 
+     */
+    getRewards() {
+       this.getXp();
+       this.getDrops();
+    }
+    
+    /**
+     *
+     * @returns {number}
+     */
+    getXp() {
+        for (let i of this.game.team) {
+            i.setXp(this.data.xp);
+        }
+    }
+
+    /**
+     *
+     * @returns {number}
+     */
+    getDrops() {
+        let drop = this.enemy.data.drop;
+
+        // no drops
+        if (!drop) return;
+
+        let rng = _.random(100);
+        if (rng <= drop.rate) {
+            switch (drop.type) {
+                case 'item':
+                    this.game.addItem(
+                        Item.get(this.game, drop.ref)
+                    );
+                    this.battle.history.add('battle', 'Item obtained: ' + drop.ref);
+                    break;
+                case 'weapon':
+                    this.game.addWeapon(
+                        Weapon.get(this.game, drop.ref)
+                    );
+                    this.battle.history.add('battle', 'Weapon obtained: ' + drop.ref);
+                    break;
+            }
+        }
+    }
 
     /**
      *

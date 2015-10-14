@@ -47,21 +47,15 @@ export default class Unit {
         this.hp -= damage.hits;
         if (this.hp <= 0) {
             this.hp = 0;
+            this.getRewards();
         }
     }
-
+    
     /**
-     * Get Tick Speed
-     * @returns {number}
+     * 
      */
-    getTS() {
-        let x = 0;
-        let fx = 0;
-        while (fx < this.dex) {
-            x++;
-            fx += 2 * (x + 1);
-        }
-        return (28 - Math.floor(x / 2));
+    getRewards() {
+        
     }
 
     /**
