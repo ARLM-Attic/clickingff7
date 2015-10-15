@@ -5,17 +5,27 @@ export default class ActionLimit extends Action {
     constructor(unit) {
         super(unit);
 
-        this.ref = 'limit';
+        this.limit = this.unit.limit;
 
         this.img = 'img/icons/limit.png';
     }
 
     isAvailable() {
-        return (this.unit.limit == this.unit.limitMax);
+        return (this.unit.lp == this.unit.lpMax && !this.using);
     }
 
-    execute() {
-        return this.materia.execute();
+    execute(fn) {
+
+        // limit cost
+        this.unit.lp = 0;
+
+        let targets = this.getTargets(this.limit.data.targets);
+
+        let damages = this.getDamages(this.limit.data.type, this.limit.data.pwr, targets);
+
+        this.animAttack(targets, damages, fn);
+
+        this.battle.history.add('battle', this.unit.ref + ' uses his limit ' + this.limit.ref + ' and deals ' + damages.hits + ' damages');
     }
 
 }

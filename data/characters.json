@@ -13,7 +13,8 @@
         "weapon": {
             "type": "broadsword",
             "ref": "busterSword"
-        }
+        },
+        "limit": "braver"
     },
     {
         "image": "/img/characters/barret.jpg",
@@ -29,7 +30,8 @@
         "weapon": {
             "type": "gun-arm",
             "ref": "gatlingGun"
-        }
+        },
+        "limit": "big-shot"
     },
     {
         "image": "/img/characters/tifa.jpg",
@@ -45,7 +47,8 @@
         "weapon": {
             "type": "knuckle",
             "ref": "leatherGlove"
-        }
+        },
+        "limit": "beat-rush"
     },
     {
         "image": "/img/characters/aerith.jpg",
@@ -61,7 +64,8 @@
         "weapon": {
             "type": "stave",
             "ref": "guardStick"
-        }
+        },
+        "limit": "healing-wind"
     },
     {
         "image": "/img/characters/redxiii.jpg",
@@ -77,7 +81,8 @@
         "weapon": {
             "type": "headdresse",
             "ref": "mythrilClip"
-        }
+        },
+        "limit": "sled-fang"
     },
     {
         "image": "/img/characters/yuffie.jpg",
@@ -93,7 +98,8 @@
         "weapon": {
             "type": "shuriken",
             "ref": "4pShuriken"
-        }
+        },
+        "limit": "greased-lightning"
     },
     {
         "image": "/img/characters/caitsith.jpg",
@@ -109,7 +115,8 @@
         "weapon": {
             "type": "megaphone",
             "ref": "yellowMp"
-        }
+        },
+        "limit": "dice"
     },
     {
         "image": "/img/characters/vincent.jpg",
@@ -125,7 +132,8 @@
         "weapon": {
             "type": "gun",
             "ref": "quicksilver"
-        }
+        },
+        "limit": "galian-beast"
     },
     {
         "image": "/img/characters/cid.jpg",
@@ -141,6 +149,7 @@
         "weapon": {
             "type": "spear",
             "ref": "spear"
-        }
+        },
+        "limit": "boost-jump"
     }
 ]

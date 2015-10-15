@@ -53,13 +53,14 @@ class Game {
         this.armors = [];
         this.accessories = [];
         this.materias = [];
+        this.limits = [];
 
         // general data has been loaded
         this.loaded = false;
 
         // Do the magic :-)
         //this.preload();
-        this.files = ['characters', 'weapons', 'armors', 'accessories', 'materias', 'stories', 'enemies'];
+        this.files = ['characters', 'weapons', 'armors', 'accessories', 'materias', 'stories', 'enemies', 'limits'];
     }
 
     /**
@@ -156,6 +157,10 @@ class Game {
 
             for (let i of save.materias) {
                 this.materias.push(new Materia(this, i));
+            }
+
+            for (let i of save.limits) {
+                this.limits.push(new Limit(this, i));
             }
 
             // team & backup
@@ -295,6 +300,11 @@ class Game {
         save.materias = [];
         for (let i of this.materias) {
             save.materias.push(i.save());
+        }
+
+        save.limits = [];
+        for (let i of this.limits) {
+            save.limits.push(i.save());
         }
 
         localStorage.save = JSON.stringify(save);

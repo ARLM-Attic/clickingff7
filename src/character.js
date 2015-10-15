@@ -1,5 +1,6 @@
 import Unit from './unit';
 import Weapon from './equipment/weapon';
+import Limit from './limit';
 import ActionAttack from './actions/attack';
 import ActionMateria from './actions/materia';
 import ActionDefense from './actions/defense';
@@ -42,6 +43,9 @@ export default class Character extends Unit {
         let weapon = Weapon.get(game, c.data.weapon.ref);
         game.addWeapon(weapon);
         c.equip(weapon);
+        
+        // limit
+        c.limit = Limit.get(game, c.data.limit);
 
         // actions
         c.refreshActions();
@@ -54,6 +58,9 @@ export default class Character extends Unit {
 
         // fill hp & mp
         c.recover();
+        
+        // lp
+        c.lp = 0;
 
         // xp
         c.xp = 0;
@@ -91,6 +98,9 @@ export default class Character extends Unit {
             let accessory = _.find(this.game.accessories, {id: data.accessory.id});
             this.equip(accessory, {});
         }
+        
+        // limit
+        this.limit = Limit.get(data.limit);
 
         // actions
         this.refreshActions(data.actions);
@@ -106,6 +116,9 @@ export default class Character extends Unit {
 
         // mp
         this.mp = data.mp;
+        
+        // lp
+        this.lp = data.lp;
 
         // xp
         this.xp = data.xp;
@@ -235,8 +248,7 @@ export default class Character extends Unit {
      */
     refreshActions() {
         this.actions = this.getActionsFromEquipment();
-        // todo add limit action
-        //this.actions.unshift(new ActionLimit(this));
+        this.actions.unshift(new ActionLimit(this));
     }
 
     /**
@@ -297,7 +309,7 @@ export default class Character extends Unit {
     save() {
         let materias;
 
-        var res = _.pick(this, 'id', 'lvl', 'hp', 'mp', 'xp', 'ref', 'status', 'active');
+        var res = _.pick(this, 'id', 'lvl', 'hp', 'mp', 'lp', 'xp', 'ref', 'status', 'active');
 
         if (this.defense) {
             res.defense = true;
@@ -322,12 +334,8 @@ export default class Character extends Unit {
         if (this.accessory) {
             res.accessory = _.pick(this.accessory, 'id');
         }
-
-        // save activated actions
-        res.actions = [];
-        for (let i of this.actions) {
-            res.actions.push(i.save());
-        }
+        
+        res.limit = this.limit.ref;
 
         return res;
     }
