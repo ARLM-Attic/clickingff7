@@ -45,10 +45,19 @@ export default class Unit {
      */
     getDamaged(damage) {
         this.hp -= damage.hits;
+        this.setLp(Math.ceil(damage.hits / 10));
         if (this.hp <= 0) {
             this.hp = 0;
             this.getRewards();
         }
+    }
+
+    /**
+     *
+     * @param lp
+     */
+    setLp(lp) {
+
     }
     
     /**

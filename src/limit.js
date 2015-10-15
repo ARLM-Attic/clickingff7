@@ -5,9 +5,6 @@ export default class Limit {
     constructor(game, data) {
         // game reference
         this.game = game;
-        
-        // unlocked
-        this.unlocked = false;
 
         // load limit data
         if (data) {
@@ -23,8 +20,6 @@ export default class Limit {
         l.id = _.uniqueId('i');
 
         l.ref = l.data.ref;
-        
-        l.unlocked = l.data.unlocked;
 
         return l;
     }
@@ -35,13 +30,11 @@ export default class Limit {
         this.id = data.id;
 
         this.ref = data.ref;
-        
-        this.unlocked = data.unlocked;
 
     }
     
     save() {
-        return _.pick(this, 'id', 'unlocked');
+        return _.pick(this, 'id', 'ref');
     }
 
 }

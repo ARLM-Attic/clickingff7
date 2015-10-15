@@ -11,7 +11,7 @@ export default class ActionLimit extends Action {
     }
 
     isAvailable() {
-        return (this.unit.lp == this.unit.lpMax && !this.using);
+        return (this.unit.lp >= this.unit.lpMax && !this.using);
     }
 
     execute(fn) {

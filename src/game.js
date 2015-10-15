@@ -6,6 +6,7 @@ import Weapon from './equipment/weapon';
 import Armor from './equipment/armor';
 import Accessory from './equipment/accessory';
 import Materia from './materia';
+import Limit from './limit';
 import _ from 'lodash';
 
 class Game {
@@ -243,6 +244,14 @@ class Game {
      */
     addMateria(materia) {
         this.materias.push(materia);
+    }
+
+    /**
+     * Add a limit
+     * @param limit
+     */
+    addLimit(limit) {
+        this.limits.push(limit);
     }
 
     /**

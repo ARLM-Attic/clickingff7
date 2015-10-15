@@ -43,9 +43,11 @@ export default class Character extends Unit {
         let weapon = Weapon.get(game, c.data.weapon.ref);
         game.addWeapon(weapon);
         c.equip(weapon);
-        
+
         // limit
-        c.limit = Limit.get(game, c.data.limit);
+        let limit = Limit.get(game, c.data.limit);
+        game.addLimit(limit);
+        c.limit = limit;
 
         // actions
         c.refreshActions();
@@ -58,7 +60,7 @@ export default class Character extends Unit {
 
         // fill hp & mp
         c.recover();
-        
+
         // lp
         c.lp = 0;
 
@@ -98,9 +100,9 @@ export default class Character extends Unit {
             let accessory = _.find(this.game.accessories, {id: data.accessory.id});
             this.equip(accessory, {});
         }
-        
+
         // limit
-        this.limit = Limit.get(data.limit);
+        this.limit = _.find(this.game.limits, {id: data.limit.id});
 
         // actions
         this.refreshActions(data.actions);
@@ -116,7 +118,7 @@ export default class Character extends Unit {
 
         // mp
         this.mp = data.mp;
-        
+
         // lp
         this.lp = data.lp;
 
@@ -128,6 +130,10 @@ export default class Character extends Unit {
 
         // team or backup
         this.active = data.active;
+    }
+
+    get lpMax() {
+        return this.lvl * 100;
     }
 
     /**
@@ -227,12 +233,20 @@ export default class Character extends Unit {
         while (this.xp >= this.xpMax) {
             this.xp -= this.xpMax;
             this.lvl++;
-            
+
             this.battle.history.add('battle', this.ref + ' went to level ' + this.lvl);
 
             // updating stats
             this.calcStats();
         }
+    }
+
+    /**
+     *
+     * @param lp
+     */
+    setLp(lp) {
+        this.lp += lp;
     }
 
     /**
@@ -334,8 +348,8 @@ export default class Character extends Unit {
         if (this.accessory) {
             res.accessory = _.pick(this.accessory, 'id');
         }
-        
-        res.limit = this.limit.ref;
+
+        res.limit = _.pick(this.limit, 'id');
 
         return res;
     }
