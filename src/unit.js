@@ -82,7 +82,7 @@ export default class Unit {
      * @returns {number}
      */
     progress(stat) {
-        return Math.floor(this[stat] * 100 / this[stat + 'Max']);
+        return Math.floor(this[stat] * 100 / this[stat + 'Max'] / 2);
     }
 
 }

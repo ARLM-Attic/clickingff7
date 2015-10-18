@@ -65,16 +65,51 @@ html, body {
   font-size: 1.3em;
 }
 
-.progress-hp .md-bar {
-  background-color: darkgreen;
+.infos {
+  font-size: 10px;
 }
 
-.progress-mp .md-bar {
-  background-color: darkgreen;
+.lvl {
+  background-color: #000;
+  color: #fff;
+  padding: 0px 3px;
+  font-size: 10px;
+  margin-right: 2px;
 }
 
-.progress-limit .md-bar {
+.progress {
+  position: relative;
+  width: 50px;
+  height: 6px;
+  margin-bottom: 5px;
+  font-size: 8px;
+}
+
+.progress-bar {
+  position: absolute;
+  left: 13px;
+  top: 6px;
+  bottom: -8px;
+}
+
+.progress-hp .progress-bar {
+  background-color: darkseagreen;
+}
+
+.progress-mp .progress-bar {
+  background-color: cornflowerblue;
+}
+
+.progress-lp .progress-bar {
   background-color: hotpink;
+}
+
+.progress-xp .progress-bar {
+  background-color: plum;
+}
+
+.progress-cts .progress-bar {
+  background-color: palegoldenrod;
 }
 
 .icon-weapon {

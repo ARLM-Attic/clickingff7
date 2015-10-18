@@ -242,8 +242,12 @@ export default class Battle {
                 // chain fail
                 this.game.story.chain = 0;
 
+                // [saving]
+                this.game.save();
+
                 // redirect
                 this.game.$location.path('/home');
+                this.game.$rootScope.$apply();
                 return;
             }
 
@@ -255,8 +259,15 @@ export default class Battle {
                     // story complete
                     this.game.story.complete();
 
+                    // end this battle
+                    this.game.battle = null;
+
+                    // [saving]
+                    this.game.save();
+
                     // redirect
                     this.game.$location.path('/story');
+                    this.game.$rootScope.$apply();
                     return;
                 }
 
