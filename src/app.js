@@ -7,6 +7,7 @@ import RewardsController from './controllers/rewards';
 import LostController from './controllers/lost';
 import EquipController from './controllers/equip';
 import MateriaController from './controllers/materia';
+import PlayController from './controllers/play';
 import Route from './route';
 
 import Game from './game';
@@ -25,6 +26,7 @@ function config($routeProvider, $translateProvider) {
     $translateProvider.determinePreferredLanguage();
 
     $routeProvider.
+        when('/play', Route.get('play')).
         when('/home', Route.get('home')).
         when('/story', Route.get('story')).
         when('/battle', Route.get('battle')).
@@ -69,6 +71,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('LostController', LostController)
     .controller('EquipController', EquipController)
     .controller('MateriaController', MateriaController)
+    .controller('PlayController', PlayController)
     .service('Game', Game);
 
 export default 'clickingff7';

@@ -106,26 +106,10 @@ body {
   color: darkred;
   font-size: 0.8em;
 }
-.sts_0 {
-  background-color: #edb5f7;
-}
-.sts_1 {
-  background-color: #e6a7f0;
-}
-.sts_2 {
-  background-color: #e099e9;
-}
-.sts_3 {
-  background-color: #d98ce2;
-}
-.sts_4 {
-  background-color: #d37edc;
-}
-.sts_5 {
-  background-color: #cd71d5;
-}
-.sts_6 {
-  background-color: #c663ce;
+.place {
+  height: 70px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 /* Modifier `uk-navbar`
  ========================================================================== */

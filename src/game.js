@@ -57,6 +57,9 @@ class Game {
         this.limits = [];
 
         // general data has been loaded
+        this.preloaded = false;
+
+        // game has been loaded
         this.loaded = false;
 
         // Do the magic :-)
@@ -81,8 +84,8 @@ class Game {
                 if (this.files.length > 0) {
                     this.preload(q);
                 } else {
-                    this.loaded = true;
-                    this.run(q);
+                    this.preloaded = true;
+                    q.resolve();
                 }
             })
             .error(() => {
@@ -91,27 +94,13 @@ class Game {
     }
 
     /**
-     * Run the game, after preloading
-     */
-    run(q) {
-        // load save
-        if (localStorage.save) {
-            let save = JSON.parse(localStorage.save);
-            this.loadGame(save);
-        } else {
-            this.newGame();
-        }
-
-        // set selected character
-        this.selectedCharacter = this.team[0];
-
-        q.resolve();
-    }
-
-    /*
      * NEW GAME
+     * @param nSave
      */
-    newGame() {
+    newGame(nSave) {
+
+        this.nSave = nSave;
+
         // add all characters
         // note : cloud & barret are in the team
         this.addCharacter(Character.get(this, 'cloud'), true);
@@ -135,14 +124,24 @@ class Game {
         this.addMateria(Materia.get(this, 'fire'));
 
         this.addStory(1, true);
+
+        // set selected character
+        this.selectedCharacter = this.team[0];
+
+        // loaded
+        this.loaded = true;
     }
 
     /**
      * LOAD GAME
-     * @param save
+     * @param nSave
      */
-    loadGame(save) {
+    loadGame(nSave) {
         try {
+
+            let save = JSON.parse(localStorage['save' + nSave]);
+
+            this.nSave = nSave;
 
             for (let i of save.weapons) {
                 this.weapons.push(new Weapon(this, i));
@@ -190,6 +189,12 @@ class Game {
 
                 this.$location.path('/battle');
             }
+
+            // set selected character
+            this.selectedCharacter = this.team[0];
+
+            // loaded
+            this.loaded = true;
 
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
@@ -316,7 +321,7 @@ class Game {
             save.limits.push(i.save());
         }
 
-        localStorage.save = JSON.stringify(save);
+        localStorage['save' + this.nSave] = JSON.stringify(save);
     }
 
 }
