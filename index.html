@@ -24,7 +24,7 @@
 
         <div class="uk-navbar-brand">clicking ff7</div>
 
-        <ul class="uk-navbar-nav uk-float-right">
+        <ul class="uk-navbar-nav uk-float-right" ng-if="g.loaded">
             <li ng-class="{'uk-active' : g.isActive('/home')}">
                 <a ng-click="g.goGame()">
                     Home
@@ -48,6 +48,11 @@
             <li ng-class="{'uk-active' : g.isActive('/phs')}">
                 <a ng-click="g.goPHS()">
                     PHS
+                </a>
+            </li>
+            <li>
+                <a ng-click="g.quit()">
+                    Quit
                 </a>
             </li>
         </ul>

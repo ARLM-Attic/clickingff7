@@ -322,6 +322,15 @@ class Game {
         }
 
         localStorage['save' + this.nSave] = JSON.stringify(save);
+        
+        localStorage.nSave = this.nSave;
+    }
+    
+    /**
+     * Quit the current game
+     */
+    quit() {
+        delete localStorage.nSave;
     }
 
 }

@@ -6,17 +6,12 @@ class IndexController extends Controller {
         super(game, $location);
     }
 
-    gameFn() {
-        return this.game.mode;
-    }
-
+    /**
+     * Active route?
+     */
     isActive(route) {
-        let path = this.$location.path()
+        let path = this.$location.path();
         return (path == route || path.indexOf(route) > -1);
-    }
-
-    isChannel(host) {
-        return this.$location.host() === host;
     }
 
     /**
@@ -52,6 +47,21 @@ class IndexController extends Controller {
      */
     goPHS() {
         this.$location.path("/phs");
+    }
+    
+    /**
+     * Quit the current game
+     */
+    quit() {
+        
+        // [saving]
+        this.game.save();
+        
+        // quit
+        this.game.quit();
+        
+        // redirect
+        this.$location.path('/play');
     }
 
 }
