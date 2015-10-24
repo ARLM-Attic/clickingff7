@@ -6,6 +6,10 @@ class PlayController extends Controller {
         super(game, $location);
     }
 
+    redirect() {
+        // do nothing
+    }
+
     init() {
         let places = [];
         for (let i of [1, 2, 3]) {
@@ -25,6 +29,8 @@ class PlayController extends Controller {
      * @param nSave
      */
     newGame(nSave) {
+        localStorage.nSave = nSave;
+
         this.game.newGame(nSave);
 
         // [saving]
@@ -38,7 +44,10 @@ class PlayController extends Controller {
      * @param nSave
      */
     loadGame(nSave) {
+        localStorage.nSave = nSave;
+
         this.game.loadGame(nSave);
+
         this.$location.path('/home');
     }
 

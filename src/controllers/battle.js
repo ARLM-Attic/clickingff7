@@ -18,9 +18,10 @@ class BattleController extends Controller {
      *
      */
     redirect() {
-        if (this.game.battle) {
-            this.init();
-        } else {
+
+        super.redirect();
+
+        if (!this.game.battle) {
             this.$location.path('/home');
         }
     }

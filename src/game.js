@@ -23,38 +23,12 @@ class Game {
         // binding
         this.$rootScope.game = this;
 
-        // one mode per time
-        this.mode = 'free';
-
-        // timer
-        this.timer = null;
-
-        // gils
-        this.gils = 200;
-
-        // language
-        this.language = 'en';
-
-        // current time
-        this.time = 0;
-
         // current version
         this.version = "2.0.0-alpha.1";
 
         // general data (characters, weapons, ..)
+        // used by preload()
         this.store = new Store();
-
-        this.characters = [];
-        this.team = [];
-        this.backup = [];
-        this.stories = [];
-        this.story = null; // current story
-        this.battle = null; // current battle
-        this.weapons = [];
-        this.armors = [];
-        this.accessories = [];
-        this.materias = [];
-        this.limits = [];
 
         // general data has been loaded
         this.preloaded = false;
@@ -62,8 +36,13 @@ class Game {
         // game has been loaded
         this.loaded = false;
 
-        // Do the magic :-)
-        //this.preload();
+        // timer
+        this.timer = null;
+
+        // language
+        this.language = 'en';
+
+        // files fo preload
         this.files = ['characters', 'weapons', 'armors', 'accessories', 'materias', 'stories', 'enemies', 'limits'];
     }
 
@@ -99,6 +78,8 @@ class Game {
      */
     newGame(nSave) {
 
+        this.reset();
+
         this.nSave = nSave;
 
         // add all characters
@@ -125,11 +106,7 @@ class Game {
 
         this.addStory(1, true);
 
-        // set selected character
-        this.selectedCharacter = this.team[0];
-
-        // loaded
-        this.loaded = true;
+        this.postload();
     }
 
     /**
@@ -138,6 +115,8 @@ class Game {
      */
     loadGame(nSave) {
         try {
+
+            this.reset();
 
             let save = JSON.parse(localStorage['save' + nSave]);
 
@@ -190,11 +169,11 @@ class Game {
                 this.$location.path('/battle');
             }
 
-            // set selected character
-            this.selectedCharacter = this.team[0];
+            this.time = save.time;
+            this.gils = save.gils;
 
             // loaded
-            this.loaded = true;
+            this.postload();
 
         } catch (err) {
             throw new Error('[Save not valid] ' + err);
@@ -202,11 +181,26 @@ class Game {
     }
 
     /**
+     *
+     */
+    postload() {
+
+        // set selected character
+        this.selectedCharacter = this.team[0];
+
+        // loaded complete
+        this.loaded = true;
+
+        // timer
+        this.autoTimer();
+    }
+
+    /**
      * Add a character
      * @param character
      * @param active
      */
-    addCharacter(character, active=false) {
+    addCharacter(character, active = false) {
         character.active = active;
         this.characters.push(character);
     }
@@ -273,10 +267,28 @@ class Game {
     }
 
     /**
+     * Auto-chrono
+     */
+    autoTimer() {
+        this.$timeout.cancel(this.timer);
+        this.timer = this.$timeout(() => {
+            this.time++;
+            this.autoTimer();
+        }, 1000);
+    }
+
+    /**
+     * Stop chrono
+     */
+    stopTimer() {
+        this.$timeout.cancel(this.timer);
+    }
+
+    /**
      * SAVE GAME
      */
     save() {
-        let save = {};
+        let save = _.pick(this, 'gils', 'time');
 
         save.characters = [];
         for (let i of this.characters) {
@@ -322,14 +334,37 @@ class Game {
         }
 
         localStorage['save' + this.nSave] = JSON.stringify(save);
-        
-        localStorage.nSave = this.nSave;
     }
-    
+
+    reset() {
+
+        // gils
+        this.gils = 200;
+
+        // current time
+        this.time = 0;
+
+        this.characters = [];
+        this.team = [];
+        this.backup = [];
+        this.stories = [];
+        this.story = null; // current story
+        this.battle = null; // current battle
+        this.weapons = [];
+        this.armors = [];
+        this.accessories = [];
+        this.materias = [];
+        this.limits = [];
+    }
+
     /**
      * Quit the current game
      */
     quit() {
+        this.loaded = false;
+
+        this.stopTimer();
+
         delete localStorage.nSave;
     }
 

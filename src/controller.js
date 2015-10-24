@@ -3,13 +3,12 @@ export default class Controller {
     constructor(game, $location) {
         this.game = game;
         this.$location = $location;
-        
-        // if current ingame
-        if (localStorage.nSave) {
-            this.loadGame(localStorage.nSave);
-        }
 
+        // redirect rules
         this.redirect();
+
+        // init controller
+        this.init();
     }
 
     /**
@@ -17,9 +16,23 @@ export default class Controller {
      * @override
      */
     redirect() {
-        if (this.init) {
-            this.init();
+
+        // if current ingame
+        if (!this.game.loaded) {
+            if (localStorage.nSave) {
+                this.game.loadGame(localStorage.nSave);
+            } else if (this.$location.path() != '/play') {
+                this.$location.path('/play');
+            }
         }
+
+    }
+
+    /**
+     *
+     */
+    init() {
+
     }
 
 }

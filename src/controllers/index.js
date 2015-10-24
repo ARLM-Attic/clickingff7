@@ -6,6 +6,10 @@ class IndexController extends Controller {
         super(game, $location);
     }
 
+    redirect() {
+        // do nothing
+    }
+
     /**
      * Active route?
      */

@@ -24,7 +24,7 @@
 
         <div class="uk-navbar-brand">clicking ff7</div>
 
-        <ul class="uk-navbar-nav uk-float-right" ng-if="g.loaded">
+        <ul class="uk-navbar-nav uk-float-right" ng-if="g.game.loaded">
             <li ng-class="{'uk-active' : g.isActive('/home')}">
                 <a ng-click="g.goGame()">
                     Home
@@ -61,42 +61,19 @@
 
 </nav>
 
-<!--md-toolbar class="md-theme-indigo">
-    <h1 class="md-toolbar-tools">clicking ff7</h1>
-</md-toolbar>
-<md-content>
-
-    <md-button ng-click="g.goStatus()" ng-class="{ 'md-primary': g.isActive('/status')}">
-        {{"Status"|translate}}
-    </md-button>
-    <md-button ng-click="g.goEquip()" ng-class="{ 'md-primary': g.isActive('/equip')}">
-        {{"Equip"|translate}}
-    </md-button>
-    <md-button ng-click="g.goMateria()" ng-class="{ 'md-primary': g.isActive('/materia')}">
-        {{"Materia"|translate}}
-    </md-button>
-    <md-button ng-click="g.goPHS()" ng-class="{ 'md-primary': g.isActive('/phs')}">
-        {{"PHS"|translate}}
-    </md-button>
-</md-content>
-</md-sidenav-->
-
 <div class="uk-container uk-container-center" ng-view></div>
 
-<!--footer>
-    <div class="wrapper">
-        <div>
-            ©2014 <a href="http://menencia.com" target="_blank">menencia.com</a>, version <a
-                href="https://github.com/Menencia/clickingff7/releases"
-                target="_blank" id="step12"><big>{{game.version}}</big></a>
-        </div>
-        <div>
-            <a href="https://github.com/Menencia/clickingff7" target="_blank">Github</a> -
-            <a href="https://github.com/Menencia/clickingff7/issues" target="_blank">Browse Issues</a> -
-            <a href="https://github.com/Menencia/clickingff7/issues/new" target="_blank" id="step13">New Issue</a>
+<div class="uk-container uk-container-center" ng-if="g.game.loaded">
+    <div class="uk-grid uk-grid-margin">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <img src="img/icons/gils.png"> {{g.game.gils}}
+                |
+                <i class="uk-icon-clock-o"></i> {{g.game.time|time}}
+            </div>
         </div>
     </div>
-</footer-->
+</div>
 
 <script src="jspm_packages/github/components/jquery@2.1.4/jquery.min.js"></script>
 <script src="jspm_packages/github/uikit/uikit@2.22.0/js/uikit.min.js"></script>
