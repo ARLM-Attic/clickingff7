@@ -43,7 +43,17 @@ class Game {
         this.language = 'en';
 
         // files fo preload
-        this.files = ['characters', 'weapons', 'armors', 'accessories', 'materias', 'stories', 'enemies', 'limits'];
+        this.files = [
+            'characters',
+            'weapons',
+            'armors',
+            'accessories',
+            'materias',
+            'stories',
+            'enemies',
+            'scenes',
+            'limits'
+        ];
     }
 
     /**
@@ -107,6 +117,8 @@ class Game {
         this.addStory(1, true);
 
         this.postload();
+
+        this.$location.path('/story');
     }
 
     /**

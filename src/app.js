@@ -19,8 +19,13 @@ import 'angular-translate-loader-static-files';
 function config($routeProvider, $translateProvider) {
 
     $translateProvider.useStaticFilesLoader({
-        prefix: 'languages/',
-        suffix: '.json'
+        files: [{
+            prefix: 'languages/main-',
+            suffix: '.json'
+        },{
+            prefix: 'languages/scenes-',
+            suffix: '.json'
+        }]
     });
 
     $translateProvider.determinePreferredLanguage();

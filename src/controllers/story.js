@@ -6,6 +6,16 @@ class StoryController extends Controller {
         super(game, $location);
     }
 
+    init() {
+        this.story = this.game.story;
+
+        if (!this.story.played) {
+
+            // play story scenes
+            this.story.play();
+        }
+    }
+
     /**
      *
      * @param story

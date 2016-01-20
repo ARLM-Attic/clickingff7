@@ -1,4 +1,5 @@
 import Battle from './battle';
+import Talk from './talk';
 import _ from 'lodash';
 
 export default class Story {
@@ -7,6 +8,9 @@ export default class Story {
 
         // game reference
         this.game = game;
+
+        // scene already played?
+        this.played = false;
 
         // completed once at least
         this.completed = false;
@@ -30,6 +34,8 @@ export default class Story {
 
         s.data = game.store.getStory(ref);
 
+        s.scene = game.store.getScene(ref).content;
+
         s.ref = s.data.ref;
 
         return s;
@@ -41,9 +47,20 @@ export default class Story {
      */
     load(data) {
         this.data = this.game.store.getStory(data.ref);
+        this.scene = this.game.store.getScene(data.ref).content;
         this.ref = this.data.ref;
         this.completed = (typeof data.completed === 'undefined');
+        this.played = (typeof data.played === 'undefined');
         this.chain = data.chain;
+    }
+
+    /**
+     * Play story scenes
+     */
+    play() {
+        this.talk = new Talk(this);
+
+
     }
 
     /**
@@ -85,6 +102,9 @@ export default class Story {
         let save = _.pick(this, 'ref', 'chain');
         if (!this.completed) {
             save.completed = false;
+        }
+        if (!this.played) {
+            save.played = false;
         }
         return save;
     }

@@ -61,6 +61,14 @@ export default class Store {
         }
     }
 
+    getScene(ref) {
+        try {
+            return _.find(this.scenes, {ref: ref});
+        } catch (err) {
+            throw new Error('Story not found');
+        }
+    }
+
     getEnemy(ref) {
         try {
             return _.find(this.enemies, {ref: ref});
