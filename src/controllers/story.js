@@ -12,7 +12,7 @@ class StoryController extends Controller {
         if (!this.story.played) {
 
             // play story scenes
-            this.story.play();
+            this.$location.path('/talk');
         }
     }
 

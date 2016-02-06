@@ -8,6 +8,7 @@ import LostController from './controllers/lost';
 import EquipController from './controllers/equip';
 import MateriaController from './controllers/materia';
 import PlayController from './controllers/play';
+import TalkController from './controllers/talk';
 import Route from './route';
 
 import Game from './game';
@@ -40,6 +41,7 @@ function config($routeProvider, $translateProvider) {
         when('/equip', Route.get('equip')).
         when('/materia', Route.get('materia')).
         when('/phs', Route.get('phs')).
+        when('/talk', Route.get('talk')).
         otherwise({
             redirectTo: '/home'
         });
@@ -77,6 +79,7 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('EquipController', EquipController)
     .controller('MateriaController', MateriaController)
     .controller('PlayController', PlayController)
+    .controller('TalkController', TalkController)
     .service('Game', Game);
 
 export default 'clickingff7';

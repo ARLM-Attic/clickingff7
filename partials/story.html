@@ -25,12 +25,6 @@
 
             <div class="uk-panel-title">Chapter information</div>
 
-            <div id="scene" ng-if="!g.story.played">
-                <div>{{g.story.talk.line.speaker}}</div>
-                <div>{{g.story.talk.current}}</div>
-                <a href="" ng-click="g.story.talk.nextLine()">v</a>
-            </div>
-
             <div class="uk-grid">
                 <div class="uk-width-1-3">
                     <img ng-src="{{g.story.data.image}}" alt="">
@@ -47,6 +41,9 @@
                     </span>
                     <span ng-if="g.isCurrent()">
                         {{'selected'|translate}}
+                    </span>
+                    <span ng-if="g.story.played">
+                        {{'played'|translate}}
                     </span>
                     <span ng-if="!g.isCurrent()">
                         <a href="" class="uk-button uk-button-primary" ng-click="g.select()">{{'select'|translate}}</a>

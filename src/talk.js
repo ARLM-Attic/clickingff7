@@ -36,7 +36,7 @@ export default class Talk {
             if (!this.isFullText()) {
                 this.play();
             }
-        }, 500);
+        }, 50);
     }
 
     /**
@@ -89,6 +89,12 @@ export default class Talk {
             this.pickLine();
         } else {
             this.story.played = true;
+
+            // [saving]
+            this.game().save();
+
+            // redirect
+            this.game().$location.path('/story');
         }
     }
 
