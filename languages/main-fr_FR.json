@@ -1,0 +1,49 @@
+{
+    "Stamina": "Endurance",
+
+    "story 1": "Réacteur N°1",
+    "story 1 desc": "Cloud vient de rejoindre Avalanche. Avec Barret, leur chef, ils ont prévu de détruire un réacteur MAKO qui épuise l'énergie de la Planète.",
+
+    "chapter": "Chapitre",
+    "fight": "Combattre",
+
+    "cloud": "Cloud",
+    "barret": "Barret",
+
+    "hp": "hp",
+    "mp": "mp",
+    "limit": "limite",
+    "str": "for",
+    "def": "def",
+    "mgi": "mag",
+    "res": "rés",
+    "dex": "vit",
+    "lck": "chc",
+
+    "busterSword": "Epée broyeuse",
+    "gatlingGun": "Gatling gun",
+    "assaultGun": "Assault gun",
+
+    "bronzeBangle": "Bijou de bronze",
+
+    "talisman": "Amulette",
+
+    "attack": "Attaque",
+    "attack desc": "100% de chance de lancer une attaque physique",
+    "bolt": "Eclair",
+    "bolt desc": "[%s%] Attaque magique de foudre",
+    "fire": "Feu",
+    "bolt desc": "[%s%] Attaque magique de feu",
+
+    "weapon": "Arme",
+    "weapons": "Armes disponibles",
+    "armor": "Armure",
+    "armors": "Armures disponibles",
+    "accessory": "Accessoire",
+    "accessories": "Accessoires disponibles",
+    "materias": "Matérias disponibles",
+    "empty": "vide",
+
+    "remove": "Retirer",
+    "valid": "Valider"
+}

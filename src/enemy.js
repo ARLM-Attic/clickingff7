@@ -1,71 +1,157 @@
-class Enemy {
+import _ from 'lodash';
+import Unit from './unit';
+import Weapon from './equipment/weapon';
+import ActionEnemy from './actions/enemy'
+
+export default class Enemy extends Unit {
 
     /**
-     * Init
-     * @param game
+     *
+     * @param battle
+     * @param ref
      */
-        constructor(game) {
-        this.game = game;
+    static get(battle, ref) {
+        let c = new Enemy(battle.game);
+
+        c.data = battle.game.store.getEnemy(ref);
+
+        // level
+        c.lvl = battle.story.data.level;
+
+        // stats according the level
+        c.calcStats();
+
+        // css reference
+        c.id = _.uniqueId(ref);
+
+        c.ref = ref;
+
+        // fill hp & mp
+        c.recover();
+
+        return c;
     }
 
     /**
-     * Get the enemy to the given level
-     * @param levelSum
+     *
+     * @param data
+     */
+    load(data) {
+        this.data = this.game.store.getEnemy(data.ref);
+
+        // level
+        this.lvl = battle.story.data.level;
+
+        // stats according the level
+        this.calcStats();
+
+        // css reference
+        this.id = _.uniqueId(data.ref);
+
+        this.ref = data.ref;
+
+        // fill hp & mp
+        this.recover();
+    }
+
+    /**
+     *
+     */
+    calcStats() {
+        this.hpMax = this._calcStat('hp', 1, 700);
+        this.mpMax = this._calcStat('mp', 1, 70);
+        this.str = this._calcStat('str');
+        this.def = this._calcStat('def');
+        this.mgi = this._calcStat('mgi');
+        this.res = this._calcStat('res');
+        this.dex = this._calcStat('dex');
+        this.lck = this._calcStat('lck');
+    }
+
+    /**
+     *
+     * @param stat
+     * @param base
+     * @param prog
+     * @returns {number}
      * @private
      */
-        _toLevel(levelSum) {
-
-        // Difficulty
-        levelSum *= (1 + (this.game.difficulty - 2) * 20 / 100);
-        levelSum = Math.ceil(levelSum);
-
-        this.level = Math.ceil(levelSum / 3);
-
-        this._hpMax = Math.ceil(((this.hpMax - 3) * 10 / 100 + 1) * 25 * levelSum);
-        this._hits = Math.ceil(((this.hits - 3) * 10 / 100 + 1) * levelSum);
-        this._xp = Math.ceil(((this.xp - 3) * 10 / 100 + 1) * 5 * levelSum);
-        this._ap = Math.ceil(((this.ap - 3) * 10 / 100 + 1) * 2 * levelSum);
-        this._gils = Math.ceil(((this.gils - 3) * 10 / 100 + 1) * (30 + levelSum));
+    _calcStat(stat, base = 1, prog = 5) {
+        return this.data[stat] * base + Math.floor(this.data[stat] * prog * this.lvl / 100);
     }
 
     /**
-     * Returns enemy HP
-     * @return {int}
+     *
+     * @param battle
+     * @param fn
      */
-        getHpMax() {
-        return this._hpMax;
+    ai(battle, fn) {
+        let rand = _.random(1, 100);
+        let actions = this.data.actions;
+        let sum = 0;
+        let i = 0;
+        let a;
+        do {
+            a = actions[i];
+            sum += a.rate;
+            i++;
+        } while (rand > sum && i < actions.length);
+
+        return new ActionEnemy(this, a);
+    }
+    
+    /**
+     * 
+     */
+    getRewards() {
+       this.getXp();
+       this.getDrops();
+    }
+    
+    /**
+     *
+     * @returns {number}
+     */
+    getXp() {
+        for (let i of this.game.team) {
+            i.setXp(this.data.xp);
+        }
     }
 
     /**
-     * Returns enemy pwr
-     * @return {int}
+     *
      */
-        getHits() {
-        return this._hits;
+    getDrops() {
+        let drop = this.data.drop;
+
+        // no drops
+        if (!drop) return;
+
+        let rng = _.random(100);
+        if (rng <= drop.rate) {
+            switch (drop.type) {
+                case 'item':
+                    /*this.game.addItem(
+                        Item.get(this.game, drop.ref)
+                    );
+                    this.battle.history.add('battle', 'Item obtained: ' + drop.ref);*/
+                    break;
+                case 'weapon':
+                    this.game.addWeapon(
+                        Weapon.get(this.game, drop.ref)
+                    );
+                    this.battle.history.add('battle', 'Weapon obtained: ' + drop.ref);
+                    break;
+            }
+        }
     }
 
     /**
-     * returns enemy XP reward
-     * @return {int}
+     *
+     * @returns {*}
      */
-        xpReward() {
-        return this._xp;
-    }
-
-    /**
-     * returns enemy AP reward
-     * @return {int}
-     */
-        apReward() {
-        return this._ap;
-    }
-
-    /**
-     * returns enemy gils reward
-     * @return {int}
-     */
-        gilsReward() {
-        return this._gils;
+    save() {
+        return _.pick(this, 'ref');
     }
 
 }

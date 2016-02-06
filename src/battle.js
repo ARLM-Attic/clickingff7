@@ -1,88 +1,354 @@
-class Battle {
+import Enemy from './enemy';
+import History from './history';
+import _ from 'lodash';
 
-    constructor(game) {
+export default class Battle {
+
+    constructor(game, data) {
         this.game = game;
-        this.isBattle = false;
+        this.story = game.story;
+
+        this.init();
+    }
+
+    init() {
+
+        // list of enemies to fight
+        // Enemy[]
+        this.enemies = [];
+
+        // if battle is win
+        this.rewards = null;
+
+        // if battle is lost
+        this.lost = 0;
+
+        // boss battle?
+        this.boss = false;
+
+        // no of enemies wave
+        this.wave = 0;
+
+        // list of system actions
+        this.actions = [];
+
+        // list of player actions
+        this.playerActions = [];
+
+        // battle pause
+        this.pause = false;
+
+        // selected target: unit
+        this.target = null;
+
+        // history logs
+        this.history = new History();
     }
 
     /**
-     * Characters start auto-attacking
+     *
+     * @param data
      */
-        startRandom() {
-        if (!this.isBattle) {
-            this.isBattle = true;
+    load(data) {
+        for (let i of data.enemies) {
+            this.enemies.push(Enemy.get(this, i));
+        }
 
-            this.game.enemies.fightRandom();
-            this.game.enemies.refresh();
-            this.game.enemies.autoFighting();
+        if (data.boss) {
+            this.boss = data.boss;
+        }
+
+        this.wave = data.wave;
+    }
+
+    /**
+     * Choose randomly enemies & update wave number
+     */
+    chooseEnemies() {
+        let enemies = this.story.data.enemies;
+        let nbr = 1;//_.random(1, 3);
+        let choose = _.sample(enemies, nbr);
+
+        this.wave++;
+        this.enemies = [];
+        for (let e of choose) {
+            this.enemies.push(Enemy.get(this, e));
         }
     }
 
     /**
-     * Returns true if zone boss is available
-     * @returns {boolean}
+     *
      */
-        canFightBoss() {
-        var levelMax = this.game.characters.levelMax;
-        var zone = this.game.zones.current();
-        return (!this.isBattle && zone.nbFights >= zone.MAX_FIGHTS && !zone.completed);
-    }
+    chooseBoss() {
+        let boss = this.story.data.boss;
 
-    /**
-     * Characters start auto-attacking
-     */
-        startBoss() {
-        if (!this.isBattle) {
-            this.isBattle = true;
+        this.boss = true;
 
-            this.game.enemies.fightBoss();
-            this.game.enemies.refresh();
-            this.game.enemies.autoFighting();
+        this.enemies = [];
+        for (let e of boss) {
+            this.enemies.push(Enemy.get(this, e));
         }
     }
 
     /**
-     * Characters stop attacking and wait for next fight
-     * @param  {boolean} victory
+     *
      */
-        end(victory) {
-        this.isBattle = false;
+    canFightBoss() {
+        return (this.wave > 10);
+    }
 
-        this.game.enemies.stopFighting();
+    /**
+     * Returns alive units
+     * @returns {Array|*}
+     */
+    units() {
+        let units;
+        units = _.union(this.game.team, this.enemies);
+        units = _.filter(units, (u) => {
+            return u.hp > 0;
+        });
+        return units;
+    }
 
-        var enemies = this.game.enemies.list;
-        var characters = this.game.characters.getTeam();
-        var materias = this.game.materias.getEquipped();
+    /**
+     * Units begin to fight
+     */
+    start() {
+        this.history.add('battle', 'New wave #' + this.wave);
 
-        for (var enemy of enemies) {
+        // list of actions
+        this.actions = [];
 
-            // Rewards if victory
-            if (victory) {
-                this.game.gils += enemy.gilsReward();
+        // todo list of events
+        this.events = [];
 
-                if (enemy.boss && this.game.zones.level + 1 > this.game.zones.levelMax) {
-                    // Complete zone
-                    this.game.zones.complete();
-                }
+        for (let i of this.units()) {
+            if (!i.battle) {
+                i.setBattle(this);
+            }
+            i.cts = 0;
+        }
 
-                // XP for characters
-                var xp = enemy.xpReward();
-                for (var character of characters) {
-                    character.setXp(xp);
-                }
+        // check events before the battle begins
+        this.check();
+    }
 
-                // AP for materias
-                var ap = enemy.apReward();
-                for (var materia of materias) {
-                    materia.setAp(ap);
-                }
-
-                this.game.zones.current().nbFights++;
+    /**
+     * Internal pause (by system)
+     * Internal pause is priority
+     */
+    setInternalPause(state) {
+        if (!this.pause) {
+            if (state) {
+                this.stop();
+            } else {
+                this.run();
             }
         }
-
-        this.game.enemies.remove();
-        this.game.enemies.refresh();
-        this.game.characters.refresh();
+        this.internalPause = state;
     }
+
+    /**
+     * Pause (by player)
+     */
+    setPause(state) {
+        if (!this.internalPause) {
+            if (state) {
+                this.stop();
+            } else {
+                this.run();
+            }
+        }
+        this.pause = state;
+    }
+
+    /**
+     * Toggle pause (by player)
+     */
+    togglePause() {
+        this.setPause(!this.pause);
+    }
+
+    /**
+     * Units move
+     */
+    run() {
+        this.timer = this.game.$timeout(() => {
+
+            // move all units
+            for (let i of this.units()) {
+                if (i.cts < i.ctsMax) {
+                    i.cts += 100;
+                }
+                if (i.cts >= i.ctsMax) {
+                    this.addAction(i.ai(this));
+                }
+            }
+
+            this.check();
+
+        }, 100);
+    }
+
+    /**
+     * Units stop
+     */
+    stop() {
+        this.game.$timeout.cancel(this.timer);
+    }
+
+    /**
+     *
+     * Check for actions, playerActions (todo: or events)
+     * Check function ends with calling to run()
+     * @param fn
+     */
+    check(fn) {
+
+        // start checking
+        this.setInternalPause(true);
+
+        // no checking
+        let actions = _.union(this.playerActions, this.actions);
+        if (actions.length == 0) {
+            this.setInternalPause(false);
+            if (!this.pause) this.run();
+            return;
+        }
+
+        // checking the oldest action
+        let action;
+        let isAction = false;
+        let isPlayerAction= false;
+        if (this.playerActions.length > 0) {
+            action = this.playerActions.shift();
+            isPlayerAction = true;
+        } else if (this.actions.length > 0) {
+            action = this.actions.shift();
+            isAction = true;
+        }
+
+        action.setBattle(this);
+        action.execute(() => {
+
+            // free the action
+            action.using = false;
+
+            // checking health
+            let health = this.getHealth();
+
+            if (health.team == 0) {
+
+                // chain fail
+                this.game.story.chain = 0;
+
+                // [saving]
+                this.game.save();
+
+                // redirect
+                this.game.$location.path('/home');
+                this.game.$rootScope.$apply();
+                return;
+            }
+
+            if (health.enemies == 0) {
+
+                // complete story if boss battle
+                if (this.boss) {
+
+                    // story complete
+                    this.game.story.complete();
+
+                    // end this battle
+                    this.game.battle = null;
+
+                    // [saving]
+                    this.game.save();
+
+                    // redirect
+                    this.game.$location.path('/story');
+                    this.game.$rootScope.$apply();
+                    return;
+                }
+
+                // chain success
+                this.game.story.chain++;
+
+                // new enemies wave
+                this.chooseEnemies();
+
+                // [saving]
+                this.game.save();
+
+                // battle begin
+                this.start();
+                return;
+            }
+
+            if (isAction) {
+                // resuming unit cts
+                action.unit.cts = 0;
+            }
+
+            // recursive until actions is empty
+            this.check();
+
+        });
+    }
+
+    /**
+     * Add an action (by system)
+     * @param action
+     */
+    addAction(action) {
+        this.actions.push(action);
+        action.using = true;
+    }
+
+    /**
+     * Add an action (by player)
+     * @param action
+     */
+    addPlayerAction(action) {
+        this.playerActions.push(action);
+        action.using = true;
+    }
+
+    /**
+     *
+     * @returns {{}}
+     */
+    getHealth() {
+        let res = {};
+
+        res.team = _.reduce(this.game.team, function (sum, ally) {
+            return sum + ally.hp;
+        }, 0);
+
+        res.enemies = _.reduce(this.enemies, function (sum, ally) {
+            return sum + ally.hp;
+        }, 0);
+
+        return res;
+    }
+
+    /**
+     *
+     * @returns {{}}
+     */
+    save() {
+        let save = _.pick(this, 'wave');
+
+        save.enemies = [];
+        for (let i of this.enemies) {
+            save.enemies.push(i.ref);
+        }
+
+        if (this.boss) {
+            save.boss = true;
+        }
+
+        return save;
+    }
+
 }

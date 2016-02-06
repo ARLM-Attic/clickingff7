@@ -1,36 +1,43 @@
-<div class="c1">
+<div class="uk-grid uk-grid-margin">
 
-    <h3>{{'Team'|translate}}</h3>
+    <div class="uk-width-1-2">
 
-    <div ng-repeat="character in game.characters.getTeam()" class="phs_character">
-        <img ng-src="{{character.image}}" alt="character" width="80" style="float: left"
-             ng-click="character.leaveTeam()"/>
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Team</div>
 
-        <div class="main">
-            <div class="progress characters_xp">
-                <div class="xp_progress" ng-style="{width: character.xpProgress(200) + 'px'}"></div>
-                <span class="bar-label">{{character.xp}} / {{character.getXpMax()}} EXP</span>
-            </div>
-
-            <div>{{character.name}} <strong>(LVL{{character.level}})</strong></div>
-            <div ng-if="character.level > 0">
-                <span class="label">hp</span> {{character.getHpMax()}}
-                <span class="label">mp</span> {{character.getMpMax()}}
-                <span class="label">pwr</span> {{character.getHits()}}
-            </div>
+            <ul class="uk-list uk-subnav">
+                <li ng-repeat="c in g.game.team">
+                    <figure class="uk-overlay">
+                        <img ng-src="{{c.data.image}}" alt="" style="width:100px" />
+                        <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-top">
+                            {{c.ref|translate}}
+                        </figcaption>
+                        <a href="" class="uk-position-cover" ng-click="g.leaveTeam(c)"></a>
+                    </figure>
+                </li>
+            </ul>
         </div>
-        <div style="clear: left"></div>
+
     </div>
 
-</div><!--
+    <div class="uk-width-1-2">
 
---><div class="c3">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Backup</div>
 
-    <h3>{{'Backup'|translate}}</h3>
+            <uk class="uk-list uk-subnav">
+                <li ng-repeat="c in g.game.backup">
+                    <figure class="uk-overlay">
+                        <img ng-src="{{c.data.image}}" alt="" style="width:70px" />
+                        <figcaption class="uk-overlay-panel uk-overlay-background uk-overlay-top">
+                            {{c.ref|translate}}
+                        </figcaption>
+                        <a href="" class="uk-position-cover" ng-click="g.joinTeam(c)"></a>
+                    </figure>
+                </li>
+            </uk>
+        </div>
 
-    <span ng-repeat="character in game.characters.getBackup()" class="phs_character">
-        <img ng-src="{{character.image}}" alt="character" width="80" style="float: left"
-             ng-click="character.joinTeam()"/>
-    </span>
+    </div>
 
 </div>

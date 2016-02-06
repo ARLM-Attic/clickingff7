@@ -1,16 +1,16 @@
-var gulp = require('gulp'),
-    traceur = require('gulp-traceur')
-paths = {
-    scripts: ['src/*.js', 'src/**/*.js']
-};
+var gulp    = require('gulp'),
+    traceur = require('gulp-traceur'),
+    paths   = {
+        scripts: ['src/*.js', 'src/**/*.js']
+    };
 
 gulp.task('scripts', function () {
     gulp.src(paths.scripts)
-        .pipe(traceur())
+        .pipe(traceur({modules: 'instantiate'}))
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     gulp.watch(paths.scripts, ['scripts']);
 });
 

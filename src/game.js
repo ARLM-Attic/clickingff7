@@ -1,192 +1,287 @@
-/**
- * Game class
- */
+import Character from './character';
+import Story from './story';
+import Store from './store';
+import Battle from './battle';
+import Weapon from './equipment/weapon';
+import Armor from './equipment/armor';
+import Accessory from './equipment/accessory';
+import Materia from './materia';
+import Limit from './limit';
+import _ from 'lodash';
 
 class Game {
 
-    constructor($rootScope, $cookieStore, $http, $timeout, $translate) {
+    constructor($rootScope, $http, $timeout, $translate, $location) {
 
         // angular vars
         this.$rootScope = $rootScope;
-        this.$cookieStore = $cookieStore;
         this.$http = $http;
         this.$timeout = $timeout;
         this.$translate = $translate;
-
-        // detect first load
-        this.loaded = false;
-
-        // fight mode
-        // @deprecated
-        this.mode = "normal";
+        this.$location = $location;
 
         // binding
         this.$rootScope.game = this;
 
+        // current version
+        this.version = "2.0.0-alpha.1";
+
+        // general data (characters, weapons, ..)
+        // used by preload()
+        this.store = new Store();
+
+        // general data has been loaded
+        this.preloaded = false;
+
+        // game has been loaded
+        this.loaded = false;
+
         // timer
         this.timer = null;
 
-        // load all resources
-        this.loader = new Loader(this);
+        // language
+        this.language = 'en';
+
+        // files fo preload
+        this.files = [
+            'characters',
+            'weapons',
+            'armors',
+            'accessories',
+            'materias',
+            'stories',
+            'enemies',
+            'scenes',
+            'limits'
+        ];
     }
 
     /**
-     * Get language
-     * @param language
-     * @param def
-     * @returns {*}
+     * Recursive loading
+     * @todo display progression
+     * @param q
      */
-        getLanguage(language, def) {
-        var languages = ['en', 'fr', 'es'];
-        for (var l of languages) {
-            if (l === language) {
-                return language;
+    preload(q) {
+        let file = this.files[0];
+
+        this.$http.get(`/data/${file}.json`)
+            .success((data) => {
+                this.store[file] = data;
+
+                this.files.shift();
+
+                if (this.files.length > 0) {
+                    this.preload(q);
+                } else {
+                    this.preloaded = true;
+                    q.resolve();
+                }
+            })
+            .error(() => {
+                // todo handle error
+            });
+    }
+
+    /**
+     * NEW GAME
+     * @param nSave
+     */
+    newGame(nSave) {
+
+        this.reset();
+
+        this.nSave = nSave;
+
+        // add all characters
+        // note : cloud & barret are in the team
+        this.addCharacter(Character.get(this, 'cloud'), true);
+        this.addCharacter(Character.get(this, 'barret'), true);
+
+        this.addCharacter(Character.get(this, 'tifa'));
+        this.addCharacter(Character.get(this, 'aerith'));
+        this.addCharacter(Character.get(this, 'redxiii'));
+        this.addCharacter(Character.get(this, 'yuffie'));
+        this.addCharacter(Character.get(this, 'caitsith'));
+        this.addCharacter(Character.get(this, 'vincent'));
+        this.addCharacter(Character.get(this, 'cid'));
+
+        this.buildTeam();
+
+        this.addWeapon(Weapon.get(this, 'assaultGun'));
+        this.addArmor(Armor.get(this, 'bronzeBangle'));
+        this.addAccessory(Accessory.get(this, 'talisman'));
+        this.addMateria(Materia.get(this, 'bolt'));
+        this.addMateria(Materia.get(this, 'bolt'));
+        this.addMateria(Materia.get(this, 'fire'));
+
+        this.addStory(1, true);
+
+        this.postload();
+
+        this.$location.path('/story');
+    }
+
+    /**
+     * LOAD GAME
+     * @param nSave
+     */
+    loadGame(nSave) {
+        try {
+
+            this.reset();
+
+            let save = JSON.parse(localStorage['save' + nSave]);
+
+            this.nSave = nSave;
+
+            for (let i of save.weapons) {
+                this.weapons.push(new Weapon(this, i));
             }
+
+            for (let i of save.armors) {
+                this.armors.push(new Armor(this, i));
+            }
+
+            for (let i of save.accessories) {
+                this.accessories.push(new Accessory(this, i));
+            }
+
+            for (let i of save.materias) {
+                this.materias.push(new Materia(this, i));
+            }
+
+            for (let i of save.limits) {
+                this.limits.push(new Limit(this, i));
+            }
+
+            // team & backup
+            // need weapons/armors/accessories/materias
+
+            for (let i of save.characters) {
+                this.characters.push(new Character(this, i));
+            }
+
+            this.buildTeam();
+
+            for (let i of save.stories) {
+                let story = new Story(this, i);
+                this.stories.push(story);
+
+                // select current story
+                if (save.story && save.story.ref == story.ref) {
+                    this.story = story;
+                }
+            }
+
+            if (save.battle) {
+
+                this.battle = new Battle(this);
+                this.battle.load(save.battle);
+
+                this.$location.path('/battle');
+            }
+
+            this.time = save.time;
+            this.gils = save.gils;
+
+            // loaded
+            this.postload();
+
+        } catch (err) {
+            throw new Error('[Save not valid] ' + err);
         }
-        return 'en';
     }
 
     /**
      *
      */
-        run() {
+    postload() {
+
+        // set selected character
+        this.selectedCharacter = this.team[0];
+
+        // loaded complete
         this.loaded = true;
 
-        // temp models
-        this.battle = new Battle(this);
-        this.shop = new Shop(this);
-        this.enemies = new Enemies(this);
-
-        // PRELOAD
-        this.preload();
-
-        // search for save
-        this.saves = [];
-        var s = localStorage['save1'];
-        var save;
-        if (s && (save = JSON.parse(atob(s)))) {
-            if (version_compare(save.version, '1.1.0', '>=')) {
-                this.saves.push(save);
-            } else {
-                save = null;
-                this.reset();
-            }
-        }
-
-        // load save
-        if (save) {
-            this.load(save);
-            this.zones.checkLastZone();
-        } else {
-            this.reset();
-            this.buildLevel(1);
-        }
-
-        // POSTLOAD
-        this.postload();
-    }
-
-    /**
-     * Preload all savable variables
-     */
-        preload() {
-        // savable models
-        this.characters = new Characters(this);
-        this.zones = new Zones(this);
-        this.weapons = new Weapons(this);
-        this.materias = new Materias(this);
-        this.items = new Items(this);
-
-        // savable vars
-        this.gils = 200;
-        this.language = this.getLanguage(this.$translate.preferredLanguage());
-        this.difficulty = 2;
-        this.time = 0;
-        this.version = "1.1.2";
-    }
-
-    /**
-     * Refresh the game with data loaded
-     */
-        postload() {
-        this.$translate.use(this.language);
-
-        this.shop.refresh();
-
-        this.characters.refresh();
-        this.characters.select();
-
+        // timer
         this.autoTimer();
     }
 
-    /*
-     * Basic inventory
+    /**
+     * Add a character
+     * @param character
+     * @param active
      */
-    buildLevel(level) {
-        // build zone
-        this.zones.add(new window['Zone' + level](this), true);
+    addCharacter(character, active = false) {
+        character.active = active;
+        this.characters.push(character);
+    }
 
-        this.characters.available();
+    /**
+     *
+     */
+    buildTeam() {
+        this.team = _.where(this.characters, {active: true});
+        this.backup = _.where(this.characters, {active: false});
+    }
 
-        // data to load characters
-        var levelMax = this.characters.levelMax ? this.characters.levelMax : 1;
-        var data = {level: levelMax};
+    /**
+     *
+     * @param weapon
+     */
+    addWeapon(weapon) {
+        this.weapons.push(weapon);
+    }
 
-        switch (level) {
-            case 1:
-                // add cloud in the team
-                this.characters.add(new Cloud(this).load(data), true);
-                this.weapons.add(new BusterSword(this), true);
+    /**
+     *
+     * @param armor
+     */
+    addArmor(armor) {
+        this.armors.push(armor);
+    }
 
-                // add barret in the team
-                this.characters.add(new Barret(this).load(data), true);
-                this.weapons.add(new GatlingGun(this), true);
+    /**
+     *
+     * @param accessory
+     */
+    addAccessory(accessory) {
+        this.accessories.push(accessory);
+    }
 
-                // add materias
-                this.materias.add(new Restore(this), true);
-                this.materias.add(new Bolt(this), true);
+    /**
+     * Add a materia
+     * @param materia
+     */
+    addMateria(materia) {
+        this.materias.push(materia);
+    }
 
-                // add items
-                this.items.add(new Potion(this), true);
-                this.items.add(new Potion(this), true);
+    /**
+     * Add a limit
+     * @param limit
+     */
+    addLimit(limit) {
+        this.limits.push(limit);
+    }
 
-                break;
-            case 2:
-                // add tifa in the team
-                this.characters.add(new Tifa(this).load(data), true);
-                this.weapons.add(new LeatherGlove(this), true);
-                break;
-            case 3:
-                // add aerith in the team
-                this.characters.add(new Aerith(this).load(data), true);
-                this.weapons.add(new GuardStick(this), true);
-                break;
-            case 4:
-                // add barret & tifa in the team
-                for (var c of this.characters.list) {
-                    if (c.constructor.name === 'Barret' || c.constructor.name === 'Tifa') {
-                        c.inTeam = true;
-                    }
-                }
-                break;
-            case 5:
-                // add redxiii in the team
-                this.characters.add(new RedXIII(this).load(data), true);
-                this.weapons.add(new MythrilClip(this), true);
-                break;
-            case 9:
-                // add yuffie in the team
-                this.characters.add(new Yuffie(this).load(data), true);
-                this.weapons.add(new FPtShuriken(this), true);
-                break;
+    /**
+     * Add a story
+     * @param ref
+     * @param selected
+     */
+    addStory(ref, selected) {
+        let story = Story.get(this, ref);
+        this.stories.push(story);
+        if (selected) {
+            this.story = story;
         }
-
     }
 
     /**
      * Auto-chrono
      */
-        autoTimer() {
+    autoTimer() {
         this.$timeout.cancel(this.timer);
         this.timer = this.$timeout(() => {
             this.time++;
@@ -195,107 +290,98 @@ class Game {
     }
 
     /**
-     * Export the game
-     * @returns {{characters: *, zones: *, weapons: *, materias: *, items: *, gils: (number|Game.gils|*), time: number, version: string}}
+     * Stop chrono
      */
-        export() {
-        return {
-            characters: this.characters.export(),
-            zones     : this.zones.export(),
-            weapons   : this.weapons.export(),
-            materias  : this.materias.export(),
-            items     : this.items.export(),
-            gils      : this.gils,
-            language  : this.language,
-            difficulty: this.difficulty,
-            time      : this.time,
-            version   : this.version
-        };
+    stopTimer() {
+        this.$timeout.cancel(this.timer);
     }
 
     /**
-     * Load a save
-     * @param save
-     * @param confirm
+     * SAVE GAME
      */
-        load(save, confirm = true) {
-        if (!confirm) {
-            return;
+    save() {
+        let save = _.pick(this, 'gils', 'time');
+
+        save.characters = [];
+        for (let i of this.characters) {
+            save.characters.push(i.save());
         }
 
-        // characters
-        for (var c of save.characters.list) {
-            var character = new window[c.ref](this).load(c);
-            this.characters.add(character, c.inTeam);
+        save.stories = [];
+        for (let i of this.stories) {
+            save.stories.push(i.save());
         }
 
-        this.characters.hp = save.characters.hp;
-        this.characters.mp = save.characters.mp;
-        this.characters.limit = save.characters.limit;
-
-        // zones
-        for (var z of save.zones.list) {
-            var zone = new window[z.ref](this).load(z);
-            this.zones.add(zone);
+        if (this.story) {
+            save.story = this.story.save();
         }
 
-        this.zones.level = save.zones.level;
-        this.zones.levelMax = save.zones.levelMax;
-
-        this.characters.available();
-
-        // weapons
-        for (var w of save.weapons) {
-            var weapon = new window[w.ref](this).load(w);
-            this.weapons.add(weapon, w.equipped);
+        if (this.battle) {
+            save.battle = this.battle.save();
         }
 
-        // materias
-        for (var m of save.materias) {
-            var materia = new window[m.ref](this).load(m);
-            this.materias.add(materia, m.equipped);
+        save.weapons = [];
+        for (let i of this.weapons) {
+            save.weapons.push(i.save());
         }
 
-        // items
-        for (var i of save.items) {
-            var item = new window[i.ref](this).load(i);
-            this.items.add(item, i.equipped);
+        save.armors = [];
+        for (let i of this.armors) {
+            save.armors.push(i.save());
         }
 
-        this.language = save.language;
-        this.difficulty = save.difficulty;
+        save.accessories = [];
+        for (let i of this.accessories) {
+            save.accessories.push(i.save());
+        }
 
-        this.time = save.time;
-        this.gils = save.gils;
+        save.materias = [];
+        for (let i of this.materias) {
+            save.materias.push(i.save());
+        }
 
-        this.loaded = true;
+        save.limits = [];
+        for (let i of this.limits) {
+            save.limits.push(i.save());
+        }
+
+        localStorage['save' + this.nSave] = JSON.stringify(save);
+    }
+
+    reset() {
+
+        // gils
+        this.gils = 200;
+
+        // current time
+        this.time = 0;
+
+        this.characters = [];
+        this.team = [];
+        this.backup = [];
+        this.stories = [];
+        this.story = null; // current story
+        this.battle = null; // current battle
+        this.weapons = [];
+        this.armors = [];
+        this.accessories = [];
+        this.materias = [];
+        this.limits = [];
     }
 
     /**
-     * @param confirm
+     * Quit the current game
      */
-        save(confirm = true) {
-        if (!confirm) {
-            return;
-        }
+    quit() {
+        this.loaded = false;
 
-        var s = this.export();
-        this.saves[0] = s;
+        this.stopTimer();
 
-        var ss = btoa(JSON.stringify(s));
-        localStorage['save1'] = ss;
-        this.lastExport = ss;
-        //this.$cookieStore.put('save1', ss);
-    }
-
-    /**
-     * Remove the COOKIE & reset the game
-     */
-        reset() {
-        this.saves = [];
-
-        localStorage.removeItem('save1');
-        //this.$cookieStore.remove('game');
+        delete localStorage.nSave;
     }
 
 }
+
+Game.$inject = ['$rootScope', '$http', '$timeout', '$translate', '$location'];
+
+export default Game;

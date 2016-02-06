@@ -1,55 +1,125 @@
-<nav class="actions">
-    <div class="block">
-        <ul>
-            <li ng-repeat="character in game.characters.getTeam()" ng-click="character.select()"
-                ng-class="{current: character.name === game.characters.selected.name}">
-                {{character.name}}
-            </li>
-        </ul>
+<div class="uk-grid uk-grid-margin">
+
+    <div class="uk-width-1-3">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Team</div>
+            <span ng-repeat="c in g.game.team">
+                <a href="" ng-click="g.changeCharacter(c)">
+                    <img ng-src="{{c.data.image}}" style="width:40px;"/>
+                </a>
+            </span>
+        </div>
     </div>
-</nav>
 
-<div class="c1">
+    <div class="uk-width-2-3">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Backup</div>
+            <span ng-repeat="c in g.game.backup">
+                <a href="" ng-click="g.changeCharacter(c)">
+                    <img ng-src="{{c.data.image}}" style="width:40px;"/>
+                </a>
+            </span>
+        </div>
+    </div>
 
-    <img ng-src="{{game.characters.selected.image}}" width="80" alt="current_character" style="float: left"/>
+</div>
 
-    <div class="main">
-        <div>{{game.characters.selected.name}} <strong>(LVL{{game.characters.selected.level}})</strong></div>
-        <div ng-if="game.characters.selected.level > 0">
-            <span class="label">hp</span> {{game.characters.selected.getHpMax()}}
-            <span class="label">mp</span> {{game.characters.selected.getMpMax()}}
-            <span class="label">pwr</span> {{game.characters.selected.getHits()}}
+<div class="uk-grid uk-grid-margin">
+
+    <div class="uk-width-1-2">
+
+        <ng-include src="'partials/includes/card-character.html'"></ng-include>
+
+    </div>
+
+    <div class="uk-width-1-2">
+
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">
+                {{'equipment'|translate}}
+            </div>
+            <div>
+
+                <ul class="uk-list">
+                    <li>
+                        <img ng-src="/img/icons/weapons/{{g.character.data.weapon.type}}.png"/>
+                        <a href="" ng-click="g.show('weapon')">
+                            <span ng-if="g.character.weapon">
+                                {{g.character.weapon.ref|translate}}
+                            </span>
+                            <span ng-if="!g.character.weapon">
+                                {{'empty'|translate}}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <img ng-src="/img/icons/armor.png"/>
+                        <a href="" ng-click="g.show('armor')">
+                            <span ng-if="g.character.armor">
+                                {{g.character.armor.ref|translate}}
+                            </span>
+                            <span ng-if="!g.character.armor">
+                                {{'empty'|translate}}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <img ng-src="/img/icons/accessory.png"/>
+                        <a href="" ng-click="g.show('accessory')">
+                            <span ng-if="g.character.accessory">
+                                {{g.character.accessory.ref|translate}}
+                            </span>
+                            <span ng-if="!g.character.accessory">
+                                {{'empty'|translate}}
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
         </div>
 
-        <p>
-            {{"Equipped weapon"|translate}}<br/>
-            <img ng-src="/img/icons/weapons/{{game.characters.selected.weapon().type}}.png" />
-            {{game.characters.selected.weapon().name}}
-            <span class="desc">({{"Power"|translate}} {{game.characters.selected.weapon().hits}})</span>
-        </p>
-
-        <p>
-            {{"Nb materia"|translate}} +{{game.characters.selected.weapon().maxMaterias}}
-        </p>
     </div>
 
-</div><!--
+</div>
 
---><div class="c3">
-    <div ng-if="game.characters.selected.getOthersWeapons().length !== 0">
-        <table style="width: 100%">
-            <tr>
-                <th>{{"Name"|translate}}</th>
-                <th></th>
-            </tr>
-            <tr ng-repeat="weapon in game.characters.selected.getOthersWeapons()" class="weapon">
-                <td>{{weapon.name}}</td>
-                <td><span ng-click="weapon.equip()" class="button">{{"Equip"|translate}}</span></td>
-            </tr>
-        </table>
+<div class="uk-grid uk-grid-margin" ng-show="g.showList">
+
+    <div class="uk-width-1-2">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">
+                Equipment information
+                <a href="" ng-click="g.remove()" ng-if="g.type != 'weapon' && g.equipment">remove</a>
+            </div>
+
+            <div ng-if="g.equipment">
+                {{g.equipment.ref|translate}} ({{g.equipment.data.holes}} slots)<br />
+
+                <ul class="uk-list">
+                    <li ng-repeat="(key, stat) in g.equipment.data.stats">
+                        {{key}}: {{stat}}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 
-    <div class="no-data" ng-if="game.characters.selected.getOthersWeapons().length === 0">
-        {{"No weapons"|translate}}
+    <div class="uk-width-1-2">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Available</div>
+
+            <ul class="uk-list">
+                <li ng-repeat="e in g.list">
+                    <a href="" ng-click="g.change(e)">
+                        {{e.ref|translate}}
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
+
 </div>

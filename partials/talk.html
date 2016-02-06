@@ -1,0 +1,28 @@
+<div class="uk-grid uk-grid-margin">
+
+    <div class="uk-width-1-2">
+
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Informations</div>
+            {{g.ref}}
+        </div>
+
+    </div>
+
+    <div class="uk-width-1-2">
+
+        <div class="uk-panel uk-panel-box uk-panel-header" ng-show="g.story">
+
+            <div class="uk-panel-title">Talk scene</div>
+
+            <div id="scene" ng-if="!g.story.played">
+                <div>{{g.story.talk.line.speaker}}</div>
+                <div>{{g.story.talk.current}}</div>
+                <a href="" ng-click="g.story.talk.nextLine()">v</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

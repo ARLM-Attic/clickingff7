@@ -1,536 +1,180 @@
+@import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+html,
 body {
-    margin: 0;
-    padding: 0;
-    color: #444;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-color: #eee;
-    font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+/* Toolbar area */
+.menu {
+  background-color: transparent;
+  border: none;
+  height: 38px;
+  margin: 16px;
+  width: 36px;
+}
+/* Battle */
+.tm-icon-button {
+  border: 1px solid #666;
+  border-radius: 15px;
+  padding: 2px;
+  opacity: 0.3;
+}
+.tm-icon-button.active {
+  opacity: 1;
+}
+.tm-icon-button:hover {
+  cursor: pointer;
+  border-color: #000;
+}
+.tm-icon-button.inactive {
+  opacity: 0.3;
+}
+.damage {
+  position: absolute;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 0px 0px 10px #000;
+  font-family: 'Press Start 2P', cursive;
+  z-index: 9999;
+}
+/* Status */
+.label {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-family: 'Roboto', sans-serif;
+}
+.stat {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+.infos {
+  font-size: 10px;
+}
+.lvl {
+  background-color: #000;
+  color: #fff;
+  padding: 0px 3px;
+  font-size: 10px;
+  margin-right: 2px;
 }
-
-header {
-    text-align: center;
-    font-weight: bold;
-    font-size: 30px;
-    text-transform: uppercase;
-    margin-top: 30px;
-}
-
-.page {
-    width: 1000px;
-    margin: auto;
-    position: relative;
-    padding: 20px;
-    border: 1px solid #444;
-    background-color: #fff;
-    z-index: 1;
-    min-height: 500px;
-}
-
-footer {
-    text-align: center;
-    color: #999;
-    margin-bottom: 30px;
-}
-
-footer a, footer a:visited {
-    text-decoration: none;
-    color: #999;
-    font-weight: bold;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-footer .current:before {
-    content: '[';
-}
-
-footer .current:after {
-    content: ']';
-}
-
-.help {
-    position: absolute;
-    font-weight: normal;
-    font-size: 14px;
-    margin-top: 11px;
-    margin-left: 5px;
-    color: #900;
-}
-
-.help:hover {
-    cursor: pointer;
-}
-
-.link {
-    font-weight: normal;
-    font-size: 14px;
-    color: #009;
-}
-
-.link:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-/* [style commun] */
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-nav li {
-    padding: 5px;
-}
-
-nav li.disabled {
-    color: #999;
-}
-
-nav li:not(.disabled):hover {
-    background-color: #eee;
-    cursor: pointer;
-}
-
-nav .current {
-    font-weight: bold;
-}
-
-.menu-action {
-    /* essential */
-    text-overflow: ellipsis;
-    width: 120px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.pull-right {
-    float: right;
-}
-
-.button {
-    padding: 5px;
-    border: 1px solid #bbb;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #eee;
-}
-
-.new {
-    font-size: 10px;
-    font-weight: bold;
-    color: #FFF;
-    margin-top: 2px;
-    background-color: #900;
-    border-radius: 5px;
-    padding: 2px;
-}
-
-.main {
-    margin-left: 90px;
-}
-
-.no-data {
-    margin-top: 100px;
-    text-align: center;
-    font-size: 16px;
-    color: #999;
-    text-transform: uppercase;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-table th {
-    text-align: left;
-    text-transform: uppercase;
-    height: 30px;
-}
-
-table tr:first-child {
-    border-bottom: 1px solid #999;
-}
-
-table tr:not(:first-child):not(.nothing):hover {
-    background-color: #eee;
-}
-
-table td {
-    height: 30px;
-}
-
-table tr.materia td {
-    padding-top: 10px;
-}
-
-table tr.item td {
-    padding-top: 10px;
-}
-
-.nothing td {
-    padding-top: 50px;
-    text-align: center;
-    font-size: 16px;
-    color: #999;
-    text-transform: uppercase;
-}
-
-/* description materia et objets */
-.desc {
-    font-size: 12px;
-}
-
-.hover {
-    cursor: pointer;
-}
-
-.total {
-    width: 50px;
-    text-align: center;
-}
-
-.total .b {
-    font-size: 12px;
-    font-weight: bold;
-}
-
-/* style du menu principal */
-
-.game-menu {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    border: 1px solid #444;
-    z-index: 2;
-    padding: 20px;
-    background-color: #fff;
-}
-
-/* style de la zone de lieu */
-
-.game-location {
-    position: absolute;
-    bottom: -10px;
-    right: -10px;
-    border: 1px solid #444;
-    z-index: 2;
-    padding: 20px;
-    background-color: #fff;
-}
-
-.game-infos {
-    position: absolute;
-    width: 140px;
-    bottom: 60px;
-    right: -10px;
-    border: 1px solid #444;
-    z-index: 2;
-    padding: 20px;
-    background-color: #fff;
-}
-
-/* style pour la vue */
-
-.game-view {
-    padding: 0 160px;
-}
-
-/* style de la page /game */
-
-.actions {
-    position: absolute;
-    width: 200px;
-    top: -10px;
-    left: -60px;
-    z-index: 2;
-}
-
-.block {
-    border: 1px solid #444;
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 10px;
-}
-
-.no-padding {
-    padding: 0;
-}
-
-.c1, .c3 {
-    display: inline-block;
-    width: 334px;
-    vertical-align: top;
-    box-sizing: content-box;
-}
-
-.c1 {
-    margin-right: 5px;
-    border-right: 1px solid #bbb;
-}
-
-.c3 {
-    padding-left: 5px;
-    border-left: 1px solid #bbb;
-}
-
-/* style pour le personnage */
-
-.bars {
-    height: 100px;
-    position: relative;
-}
-
-.characters_hits, .enemies_hits {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-
-.hit {
-    width: 40px;
-    text-align: center;
-}
-
-.hit_1 {
-    font-size: 30px;
-}
-
-.hit_2 {
-    font-size: 26px;
-}
-
-.hit_3 {
-    font-size: 22px;
-}
-
-.hit_4 {
-    font-size: 18px;
-}
-
-.hit_5 {
-    font-size: 14px;
-}
-
-.card {
-    margin-bottom: 10px;
-    clear: left;
-}
-
-.card .avatar {
-    float: left;
-    margin-right: 5px;
-}
-
-.card .line {
-    font-size: 12px;
-    font-weight: bold;
-    padding-top: 5px;
-}
-
-.card_enemy {
-    position: relative;
-}
-
-.avatar_enemy {
-    position: absolute;
-    z-index: 0;
-}
-
-.main_enemy {
-    position: absolute;
-    left: 90px;
-    background-color: rgba(255, 255, 255, 0.6);
-    z-index: 1;
-}
-
-.card .main {
-
-}
-
-/* style pour l'ennemi */
-
-.no-enemies {
-    text-align: center;
-    font-size: 16px;
-    color: #999;
-}
-
-/* SECTION materias */
-
-.materia {
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-/* style pour les barres */
-
-.bar-label {
-    position: absolute;
-    right: 0;
-    color: #000;
-}
-
 .progress {
-    position: relative;
-    margin-top: 2px;
-    text-align: center;
-    font-size: 11px;
-    color: #fff;
-    height: 18px;
-    margin-top: 5px;
-    border-top: 1px solid #999;
+  position: relative;
+  width: 50px;
+  height: 6px;
+  margin-bottom: 5px;
+  font-size: 8px;
 }
-
-.game_load {
-    width: 300px;
-    margin: auto;
+.progress-bar {
+  position: absolute;
+  left: 13px;
+  top: 6px;
+  bottom: -8px;
 }
-
-.game_load_progress {
-    background-color: #ccc;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
+.progress-hp .progress-bar {
+  background-color: darkseagreen;
 }
-
-.enemy_hp {
-    width: 300px;
+.progress-mp .progress-bar {
+  background-color: cornflowerblue;
 }
-
-.enemy_hp_progress {
-    background-color: #D49B9B;
-    position: absolute;
-    height: 18px;
-    top: 0;
-    left: 0;
+.progress-lp .progress-bar {
+  background-color: hotpink;
 }
-
-.enemy_mp {
-    width: 300px;
+.progress-xp .progress-bar {
+  background-color: plum;
 }
-
-.enemy_mp_progress {
-    background-color: #656565;
-    position: absolute;
-    height: 18px;
-    top: 0;
-    right: 0;
+.progress-cts .progress-bar {
+  background-color: palegoldenrod;
 }
-
-.characters_hp {
-    width: 300px;
+.icon-weapon {
+  position: relative;
+  top: 4px;
 }
-
-.characters_hp_progress {
-    background-color: #BEECBE;
-    position: absolute;
-    height: 18px;
-    top: 0;
-    left: 0;
+.empty {
+  font-style: italic;
+  color: #999;
 }
-
-.characters_mp {
-    width: 300px;
+.stat-up::after {
+  content: "\25B2";
+  color: darkgreen;
+  font-size: 0.8em;
 }
-
-.characters_mp_progress {
-    background-color: #C9DBF8;
-    position: absolute;
-    height: 18px;
-    top: 0;
-    left: 0;
+.stat-down::after {
+  content: "\25BC";
+  color: darkred;
+  font-size: 0.8em;
 }
-
-.characters_limit {
-    width: 300px;
+.place {
+  height: 70px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
-
-.characters_limit_progress {
-    background-color: #F0BE98;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
+/* Modifier `uk-navbar`
+ ========================================================================== */
+.tm-navbar {
+  background: #444;
 }
-
-.characters_xp {
-    width: 200px;
+.tm-navbar .uk-navbar-nav > li > a {
+  color: #eee;
 }
-
-.xp_progress {
-    background-color: #C6B7D6;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
+.tm-navbar .uk-navbar-nav > li {
+  margin-left: 20px;
 }
-
-.materia_ap {
-    width: 200px;
+/* Hover */
+.tm-navbar .uk-navbar-nav > li:hover > a,
+.tm-navbar .uk-navbar-nav > li > a:focus,
+.tm-navbar .uk-navbar-nav > li.uk-open > a {
+  background: #00a8e6;
+  color: #ffffff;
 }
-
-.materia_ap_progress {
-    background-color: #C6B7D6;
-    position: absolute;
-    height: 9px;
-    top: 0;
-    left: 0;
+/* Active */
+.tm-navbar .uk-navbar-nav > li.uk-active > a {
+  color: #000;
+  background-color: #fff;
 }
-
-.xp_progress,
-.ap_progress,
-.enemy_hp_progress,
-.enemy_mp_progress,
-.characters_hp_progress,
-.characters_mp_progress,
-.characters_limit_progress {
-    -webkit-transition: 0.5s linear all;
-    -moz-transition: 0.5s linear all;
-    -o-transition: 0.5s linear all;
-    transition: 0.5s linear all;
+/* OnClick */
+.tm-navbar .uk-navbar-nav > li > a:active {
+  background-color: transparent;
 }
-
-.weakness, .resistance {
-    width: 16px;
-    margin-bottom: -3px;
+/* Brand */
+.tm-navbar .uk-navbar-brand {
+  color: #aaa;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 18px;
 }
-
-/* phs section */
-
-.phs_character img {
-    margin-right: 5px;
-    cursor: pointer;
-    border: 1px solid #fff;
+.tm-navbar .uk-dropdown-navbar {
+  background-color: #444;
 }
-
-.phs_character:hover img {
-    border: 1px solid #000;
+/* Modifier `uk-nav-navbar`
+ ========================================================================== */
+/*
+ * Items
+ */
+.tm-navbar .uk-nav-navbar > li > a {
+  color: #eee;
+  background-color: #444;
 }
-
-/* save section */
-
-.save_character {
-    margin-right: 5px;
+/*
+ * Hover
+ * 1. Apply hover style also to focus state
+ * 2. Remove default focus style
+ */
+.tm-navbar .uk-nav-navbar > li > a:hover,
+.tm-navbar .uk-nav-navbar > li > a:focus {
+  background: #00a8e6;
+  color: #ffffff;
 }
-
-#area-export, #area-import {
-    display: none;
+/* Active */
+.tm-navbar .uk-nav-navbar > li.uk-active > a {
+  color: #ccc;
+  background: transparent;
 }
-
-.areaExport, .areaImport {
-    width: 280px;
-    height: 280px;
+/*
+ * Sub-object: `uk-nav-divider`
+ */
+.tm-navbar .uk-nav-navbar .uk-nav-divider {
+  border-top: 1px solid #dddddd;
+  background-color: #444;
 }

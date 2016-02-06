@@ -1,0 +1,47 @@
+<div class="uk-panel uk-panel-box uk-panel-header">
+
+    <div class="uk-panel-title">{{g.character.ref}}</div>
+
+    <div class="uk-grid">
+
+        <div class="uk-width-1-4">
+
+            <img ng-src="{{g.character.data.image}}" alt="">
+
+        </div>
+
+        <div class="uk-width-3-4">
+
+            <div class="uk-progress">
+                <div class="uk-progress-bar" style="width: {{g.character.progress('hp')}}%;">
+                        <span class="{{g.stat('hpMax', 'change')}}">
+                            {{g.character.hp}}HP
+                        </span>
+                </div>
+            </div>
+
+            <div class="uk-progress">
+                <div class="uk-progress-bar" style="width: {{g.character.progress('xp')}}%;">
+                    {{g.character.xpRemain}}xp
+                </div>
+            </div>
+
+            <dl class="uk-description-list-horizontal">
+                <dt>{{'str'|translate}}</dt>
+                <dd class="stat {{g.stat('str', 'change')}}">{{g.stat('str')}}</dd>
+                <dt>{{'def'|translate}}</dt>
+                <dd class="stat {{g.stat('def', 'change')}}">{{g.stat('def')}}</dd>
+                <dt>{{'mgi'|translate}}</dt>
+                <dd class="stat {{g.stat('mgi', 'change')}}">{{g.stat('mgi')}}</dd>
+                <dt>{{'res'|translate}}</dt>
+                <dd class="stat {{g.stat('res', 'change')}}">{{g.stat('res')}}</dd>
+                <dt>{{'dex'|translate}}</dt>
+                <dd class="stat {{g.stat('dex', 'change')}}">{{g.stat('dex')}}</dd>
+                <dt>{{'lck'|translate}}</dt>
+                <dd class="stat {{g.stat('lck', 'change')}}">{{g.stat('lck')}}</dd>
+            </dl>
+
+        </div>
+    </div>
+
+</div>
