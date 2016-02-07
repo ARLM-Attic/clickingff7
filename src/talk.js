@@ -17,6 +17,9 @@ export default class Talk {
         // @var String
         this.current = '';
 
+        // @var int
+        this.refreshWaitingType();
+
         // source line
         // @var Line
         this.pickLine();
@@ -35,6 +38,8 @@ export default class Talk {
             this.current = this.line.text.substr(0, ++this.i);
             if (!this.isFullText()) {
                 this.play();
+            } else {
+                this.refreshWaitingType();
             }
         }, 50);
     }
@@ -84,9 +89,11 @@ export default class Talk {
     nextLine() {
         if (!this.isFullText()) {
             this.resume();
+            this.refreshWaitingType();
         } else if (this.nbLine + 1 < this.scene.length) {
             this.nbLine++;
             this.pickLine();
+            this.refreshWaitingType();
         } else {
             this.story.played = true;
 
@@ -96,6 +103,20 @@ export default class Talk {
             // redirect
             this.game().$location.path('/story');
         }
+    }
+
+    /**
+     *
+     */
+    refreshWaitingType() {
+        if (!this.line || !this.isFullText()) {
+            this.waitingType = 1;
+        } else if (this.nbLine + 1 < this.scene.length) {
+            this.waitingType = 2;
+        } else {
+            this.waitingType = 3;
+        }
+
     }
 
 

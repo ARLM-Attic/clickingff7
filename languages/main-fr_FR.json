@@ -3,6 +3,11 @@
 
     "story 1": "Réacteur N°1",
     "story 1 desc": "Cloud vient de rejoindre Avalanche. Avec Barret, leur chef, ils ont prévu de détruire un réacteur MAKO qui épuise l'énergie de la Planète.",
+    "story selected": "Chapitre actuellement sélectionné.",
+    "story played": "Revoir la discussion.",
+    "display talk": "Afficher",
+    "next talk": "Suivant",
+    "close talk": "Fermer",
 
     "chapter": "Chapitre",
     "fight": "Combattre",

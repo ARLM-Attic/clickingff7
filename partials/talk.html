@@ -15,10 +15,20 @@
 
             <div class="uk-panel-title">Talk scene</div>
 
-            <div id="scene" ng-if="!g.story.played">
-                <div>{{g.story.talk.line.speaker}}</div>
-                <div>{{g.story.talk.current}}</div>
-                <a href="" ng-click="g.story.talk.nextLine()">v</a>
+            <div id="scene" class="uk-grid">
+                <div class="uk-width-1-6 uk-align-center">
+                    <span ng-if="g.story.talk.line.speaker">
+                        <img ng-src="/img/characters/{{g.story.talk.line.speaker}}.jpg" />
+                    </span>
+                </div>
+                <div class="uk-width-5-6">{{g.story.talk.current}}</div>
+                <div class="uk-width-1-1 uk-text-right">
+                    <a href="" ng-click="g.story.talk.nextLine()" class="uk-button uk-button-primary">
+                        <span ng-if="g.story.talk.waitingType == 1">{{'display talk'|translate}}</span>
+                        <span ng-if="g.story.talk.waitingType == 2">{{'next talk'|translate}}</span>
+                        <span ng-if="g.story.talk.waitingType == 3">{{'close talk'|translate}}</span>
+                    </a>
+                </div>
             </div>
 
         </div>

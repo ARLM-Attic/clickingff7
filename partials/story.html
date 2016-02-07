@@ -36,18 +36,18 @@
 
                     <p>{{'story '+g.story.ref+' desc'|translate}}</p>
 
-                    <span ng-if="g.story.completed">
-                        {{'completed'|translate}}
-                    </span>
-                    <span ng-if="g.isCurrent()">
-                        {{'selected'|translate}}
-                    </span>
-                    <span ng-if="g.story.played">
-                        {{'played'|translate}}
-                    </span>
-                    <span ng-if="!g.isCurrent()">
+                    <div ng-if="g.story.completed">
+                        {{'story completed'|translate}}
+                    </div>
+                    <div ng-if="g.isCurrent()">
+                        {{'story selected'|translate}}
+                    </div>
+                    <div ng-if="g.story.played">
+                        <a href="#/talk">{{'story played'|translate}}</a>
+                    </div>
+                    <div ng-if="!g.isCurrent()">
                         <a href="" class="uk-button uk-button-primary" ng-click="g.select()">{{'select'|translate}}</a>
-                    </span>
+                    </div>
 
                 </div>
             </div>
