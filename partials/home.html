@@ -3,7 +3,7 @@
     <div class="uk-width-1-2">
 
         <div class="uk-panel uk-panel-box uk-panel-header">
-            <div class="uk-panel-title">Team</div>
+            <div class="uk-panel-title">Équipe</div>
 
             <ul class="uk-list uk-subnav">
                 <li ng-repeat="c in g.game.team">
@@ -22,7 +22,7 @@
     <div class="uk-width-1-2">
         <div class="uk-panel uk-panel-box uk-panel-header">
 
-            <div class="uk-panel-title">Zone</div>
+            <div class="uk-panel-title">Histoire</div>
 
             <div class="uk-grid">
                 <div class="uk-width-1-3">
@@ -34,6 +34,10 @@
                     <h2>{{'story '+g.game.story.ref|translate}}</h2>
 
                     <p>{{'story '+g.game.story.ref+' desc'|translate}}</p>
+
+                    <p>Personnages : <span ng-repeat="ref in g.game.story.data.characters">
+                        {{ref|translate}}<span ng-if="!$last">,</span><span ng-if="$last">.</span>
+                    </span></p>
 
                     <a href="" class="uk-button uk-button-primary" ng-click="g.fight()">{{'fight'|translate}}</a>
 

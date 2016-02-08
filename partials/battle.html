@@ -42,6 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="progress progress-cts">
+
                                     <div class="progress-bar" style="width: {{character.progress('cts')}}px">
                                     </div>
                                 </div>
@@ -65,8 +66,13 @@
                                              ng-click="g.doAction(action)"/>
                                     </li>
                                 </ul>
-                            </ul>
 
+                            </div>
+                            <div class="uk-width-1-1">
+                                <div ng-if="!character.inStory()" class="battle-error">
+                                    <i class="uk-icon-warning"></i>
+                                    {{'battle no exp'|translate}}
+                                </div>
                             </div>
 
                         </div>

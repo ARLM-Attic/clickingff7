@@ -114,7 +114,10 @@ export default class Enemy extends Unit {
      */
     getXp() {
         for (let i of this.game.team) {
-            i.setXp(this.data.xp);
+            // only chapter members receive xp
+            if ($.inArray(i.ref, this.game.story.data.characters) >= 0) {
+                i.setXp(this.data.xp);
+            }
         }
     }
 

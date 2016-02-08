@@ -36,6 +36,10 @@
 
                     <p>{{'story '+g.story.ref+' desc'|translate}}</p>
 
+                    <p>Personnages : <span ng-repeat="ref in g.story.data.characters">
+                        {{ref|translate}}<span ng-if="!$last">,</span><span ng-if="$last">.</span>
+                    </span></p>
+
                     <div ng-if="g.story.completed">
                         {{'story completed'|translate}}
                     </div>

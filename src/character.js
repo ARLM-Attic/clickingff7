@@ -190,6 +190,14 @@ export default class Character extends Unit {
 
     /**
      *
+     * @returns {boolean}
+     */
+    inStory() {
+        return ($.inArray(this.ref, this.game.story.data.characters) >= 0);
+    }
+
+    /**
+     *
      * @param equipment
      * @param materias
      */
