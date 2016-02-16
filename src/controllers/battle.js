@@ -28,13 +28,6 @@ class BattleController extends Controller {
 
     /**
      *
-     */
-    togglePause() {
-        this.game.battle.togglePause();
-    }
-
-    /**
-     *
      * @param character
      */
     toggleStatus(character) {
@@ -60,7 +53,6 @@ class BattleController extends Controller {
      * 
      */
     quit() {
-        this.battle.setPause(true);
         this.game.battle = null;
 
         // chain break

@@ -35,9 +35,6 @@ export default class Battle {
         // list of player actions
         this.playerActions = [];
 
-        // battle pause
-        this.pause = false;
-
         // selected target: unit
         this.target = null;
 
@@ -138,35 +135,12 @@ export default class Battle {
      * Internal pause is priority
      */
     setInternalPause(state) {
-        if (!this.pause) {
-            if (state) {
-                this.stop();
-            } else {
-                this.run();
-            }
+        if (state) {
+            this.stop();
+        } else {
+            this.run();
         }
         this.internalPause = state;
-    }
-
-    /**
-     * Pause (by player)
-     */
-    setPause(state) {
-        if (!this.internalPause) {
-            if (state) {
-                this.stop();
-            } else {
-                this.run();
-            }
-        }
-        this.pause = state;
-    }
-
-    /**
-     * Toggle pause (by player)
-     */
-    togglePause() {
-        this.setPause(!this.pause);
     }
 
     /**
@@ -212,7 +186,7 @@ export default class Battle {
         let actions = _.union(this.playerActions, this.actions);
         if (actions.length == 0) {
             this.setInternalPause(false);
-            if (!this.pause) this.run();
+            this.run();
             return;
         }
 
