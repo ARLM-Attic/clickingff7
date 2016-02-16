@@ -35,11 +35,30 @@ export default class Battle {
         // list of player actions
         this.playerActions = [];
 
+        // battle pause
+        this.pause = false;
+
         // selected target: unit
         this.target = null;
 
         // history logs
         this.history = new History();
+    }
+
+    /**
+     *
+     * @param data
+     */
+    load(data) {
+        for (let i of data.enemies) {
+            this.enemies.push(Enemy.get(this, i));
+        }
+
+        if (data.boss) {
+            this.boss = data.boss;
+        }
+
+        this.wave = data.wave;
     }
 
     /**
@@ -69,6 +88,13 @@ export default class Battle {
         for (let e of boss) {
             this.enemies.push(Enemy.get(this, e));
         }
+    }
+
+    /**
+     *
+     */
+    canFightBoss() {
+        return (this.wave > 10);
     }
 
     /**
@@ -112,12 +138,35 @@ export default class Battle {
      * Internal pause is priority
      */
     setInternalPause(state) {
-        if (state) {
-            this.stop();
-        } else {
-            this.run();
+        if (!this.pause) {
+            if (state) {
+                this.stop();
+            } else {
+                this.run();
+            }
         }
         this.internalPause = state;
+    }
+
+    /**
+     * Pause (by player)
+     */
+    setPause(state) {
+        if (!this.internalPause) {
+            if (state) {
+                this.stop();
+            } else {
+                this.run();
+            }
+        }
+        this.pause = state;
+    }
+
+    /**
+     * Toggle pause (by player)
+     */
+    togglePause() {
+        this.setPause(!this.pause);
     }
 
     /**
@@ -163,7 +212,7 @@ export default class Battle {
         let actions = _.union(this.playerActions, this.actions);
         if (actions.length == 0) {
             this.setInternalPause(false);
-            this.run();
+            if (!this.pause) this.run();
             return;
         }
 

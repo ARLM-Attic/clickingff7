@@ -5,12 +5,13 @@ class BattleController extends Controller {
     constructor(game, $location) {
         super(game, $location);
     }
-    
+
     /**
-     * 
+     *
      */
     init() {
-        this.game.battle.start();
+        this.battle = this.game.battle;
+        this.battle.start();
     }
 
     /**
@@ -23,6 +24,13 @@ class BattleController extends Controller {
         if (!this.game.battle) {
             this.$location.path('/home');
         }
+    }
+
+    /**
+     *
+     */
+    togglePause() {
+        this.game.battle.togglePause();
     }
 
     /**
@@ -52,6 +60,7 @@ class BattleController extends Controller {
      * 
      */
     quit() {
+        this.battle.setPause(true);
         this.game.battle = null;
 
         // chain break
