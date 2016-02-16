@@ -173,14 +173,6 @@ class Game {
                 }
             }
 
-            if (save.battle) {
-
-                this.battle = new Battle(this);
-                this.battle.load(save.battle);
-
-                this.$location.path('/battle');
-            }
-
             this.time = save.time;
             this.gils = save.gils;
 
@@ -314,10 +306,6 @@ class Game {
 
         if (this.story) {
             save.story = this.story.save();
-        }
-
-        if (this.battle) {
-            save.battle = this.battle.save();
         }
 
         save.weapons = [];
