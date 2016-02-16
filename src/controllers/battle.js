@@ -55,26 +55,6 @@ class BattleController extends Controller {
             this.battle.addPlayerAction(action);
         }
     }
-
-    /**
-     * 
-     */
-    fightBoss() {
-        
-        if (!this.battle.canFightBoss) {
-            return;
-        }
-        
-        this.battle.setPause(true);
-        
-        this.battle.chooseBoss();
-        
-        // [saving]
-        this.game.save();
-        
-        this.battle.start();
-        
-    }
     
     /**
      * 

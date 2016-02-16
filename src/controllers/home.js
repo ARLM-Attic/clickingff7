@@ -17,6 +17,16 @@ class HomeController extends Controller {
         this.$location.path('/battle');
     }
 
+    fightBoss() {
+        this.game.battle = new Battle(this.game);
+        this.game.battle.chooseBoss();
+        
+        // [saving]
+        this.game.save();
+        
+        this.$location.path('/battle');
+    }
+
     nextStory() {
         this.game.addStory(this.game.story.ref + 1, true);
 
