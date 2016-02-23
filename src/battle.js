@@ -131,19 +131,6 @@ export default class Battle {
     }
 
     /**
-     * Internal pause (by system)
-     * Internal pause is priority
-     */
-    setInternalPause(state) {
-        if (state) {
-            this.stop();
-        } else {
-            this.run();
-        }
-        this.internalPause = state;
-    }
-
-    /**
      * Units move
      */
     run() {
@@ -180,12 +167,11 @@ export default class Battle {
     check(fn) {
 
         // start checking
-        this.setInternalPause(true);
+        this.stop();
 
         // no checking
         let actions = _.union(this.playerActions, this.actions);
         if (actions.length == 0) {
-            this.setInternalPause(false);
             this.run();
             return;
         }
