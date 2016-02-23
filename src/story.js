@@ -77,11 +77,7 @@ export default class Story {
         this.completed = true;
 
         // search for next story
-        //let next = this.data.ref + 1;
-        //let story = _.find(this.game.stories, {ref: next});
-        //if (!story) {
-        //    this.game.story(Story.get(next));
-        //}
+        this.game.addStory(this.data.ref + 1, true);
     }
 
     /**

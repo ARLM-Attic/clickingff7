@@ -68,7 +68,8 @@ export default class Talk {
      */
     pickLine() {
         this.current = '';
-        this.line = this.scene[this.nbLine];
+        let t = this.scene[this.nbLine].split(': ');
+        this.line = {speaker: ((t[0] != 'narrator') ? t[0]: null), text: t[1]};
         this.line.text = this.game().$translate.instant(this.line.text);
         this.i = 0;
         this.play();

@@ -2,30 +2,23 @@
     {
         "ref": 1,
         "content": [
-            {
-                "speaker": null,
-                "text": "s1_000"
-            },
-            {
-                "speaker": "barret",
-                "text": "s1_001"
-            },
-            {
-                "speaker": "cloud",
-                "text": "s1_002"
-            },
-            {
-                "speaker": "barret",
-                "text": "s1_003"
-            },
-            {
-                "speaker": "cloud",
-                "text": "s1_004"
-            },
-            {
-                "speaker": "barret",
-                "text": "s1_005"
-            }
+            "narrator: s1_001",
+            "barret: s1_002",
+            "cloud: s1_003",
+            "barret: s1_004",
+            "cloud: s1_005",
+            "barret: s1_006"
+        ]
+    },
+    {
+        "ref": 2,
+        "content": [
+            "narrator: s2_001",
+            "barret: s2_002",
+            "tifa: s2_003",
+            "cloud: s2_004",
+            "tifa: s2_005",
+            "barret: s2_006"
         ]
     }
 ]

@@ -271,10 +271,14 @@ class Game {
      * @param selected
      */
     addStory(ref, selected) {
-        let story = Story.get(this, ref);
-        this.stories.push(story);
-        if (selected) {
-            this.story = story;
+        try {
+            let story = Story.get(this, ref);
+            this.stories.push(story);
+            if (selected) {
+                this.story = story;
+            }
+        } catch(e) {
+            console.log(e);
         }
     }
 
