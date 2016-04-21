@@ -1,23 +1,27 @@
 {
-  "dependencies": {
-    "gulp": "^3.8.11",
-    "gulp-traceur": "^0.14.1"
+  "name": "clickingff7",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "lite": "lite-server",
+    "typings": "typings",
+    "postinstall": "typings install"
   },
-  "jspm": {
-    "directories": {},
-    "dependencies": {
-      "angular": "github:angular/bower-angular@^1.4.5",
-      "angular-route": "github:angular/bower-angular-route@^1.4.5",
-      "angular-translate": "github:angular-translate/bower-angular-translate@^2.7.2",
-      "angular-translate-loader-static-files": "github:angular-translate/bower-angular-translate-loader-static-files@^2.7.2",
-      "jquery": "github:components/jquery@^2.1.4",
-      "lodash": "npm:lodash@^3.10.1",
-      "uikit": "github:uikit/uikit@^2.22.0",
-      "velocity": "github:julianshapiro/velocity@^1.2.2"
-    },
-    "devDependencies": {
-      "traceur": "github:jmcriffey/bower-traceur@0.0.91",
-      "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.91"
-    }
+  "license": "ISC",
+  "dependencies": {
+    "angular2": "2.0.0-beta.15",
+    "systemjs": "0.19.26",
+    "es6-shim": "^0.35.0",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "zone.js": "0.6.10"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "lite-server": "^2.2.0",
+    "typescript": "^1.8.10",
+    "typings":"^0.7.12"
   }
 }
