@@ -2,6 +2,7 @@ import {Injectable} from 'angular2/core';
 import {CHARACTERS} from './mock-characters';
 import {Store} from './store';
 import {Character} from './character';
+import _ from 'lodash';
 
 @Injectable()
 export class Game {
@@ -17,7 +18,7 @@ export class Game {
     this.store = store;
     this.store.characters = CHARACTERS;
 
-    console.log(this.store.characters);
+    console.log(this.store.characters, _.VERSION);
 
     // @todo ajouter lodash
 
