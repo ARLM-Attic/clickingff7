@@ -11,26 +11,33 @@ export class Game {
 
   store: Store;
 
-  characters: Character[];
+  characters: Character[] = [];
+  team: Character[];
+  backup: Character[];
 
   constructor(store: Store) {
 
     this.store = store;
     this.store.characters = CHARACTERS;
 
-    console.log(this.store.characters, _.VERSION);
-
-    // @todo ajouter lodash
-
     // new game
-    //addCharacter(Character.get('cloud'), true);
+    this.addCharacter(this.store.getCharacter('cloud'), true);
+    this.addCharacter(this.store.getCharacter('barret'), true);
+    this.addCharacter(this.store.getCharacter('tifa'));
 
+    this.buildTeam();
 
+    console.log(this.team);
   }
 
-  addCharacter(character: Character, inTeam: boolean = true) {
+  addCharacter(character: Character, inTeam: boolean = false) {
     character.active = inTeam;
     this.characters.push(character);
+  }
+
+  buildTeam() {
+    this.team = _.filter(this.characters, {active: true});
+    this.backup = _.filter(this.characters, {active: false});
   }
 
 }

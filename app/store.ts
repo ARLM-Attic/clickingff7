@@ -1,4 +1,5 @@
 import {Character} from './character';
+import _ from 'lodash';
 
 export class Store {
 
@@ -6,6 +7,10 @@ export class Store {
 
   constructor() {
 
+  }
+
+  getCharacter(ref: string): Character {
+    return _.find(this.characters, {ref: ref});
   }
 
 }
