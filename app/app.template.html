@@ -1,9 +1,58 @@
-<div class="menu">
-  <ul>
-    <li><a href="">Home</a></li>
-    <li><a href="">Story</a></li>
-    <li><a href="">PHS</a></li>
-  </ul>
+<header>
+  <div class="wrapper">
+    clicking ff7
+    <span (click)="help()" class="help" [hidden]="!loaded">{{"How to play?"}}</span>
+  </div>
+</header>
+
+<div class="page" [hidden]="!loaded">
+
+  <nav class="game-menu" id="step10">
+    <ul>
+      <li (click)="goGame()" [ngClass]="{ current: isActive('/game')}">{{"Game"}}</li>
+      <li (click)="goMap()" [ngClass]="{ current: isActive('/map')}">
+        <div class="pull-right new">NEW</div>
+        {{"Map"}}
+      </li>
+      <li (click)="goShop()" [ngClass]="{ current: isActive('/shop')}">{{"Shop"}}</li>
+      <li (click)="goEquip()" [ngClass]="{ current: isActive('/equip')}">{{"Equip"}}</li>
+      <li (click)="goMateria()" [ngClass]="{ current: isActive('/materia')}">{{"Materia"}}</li>
+      <li (click)="goItems()" [ngClass]="{ current: isActive('/items')}">{{"Items"}}</li>
+      <li (click)="goConfig()" [ngClass]="{ current: isActive('/config')}">{{"Config"}}</li>
+      <li (click)="goPHS()" [ngClass]="{ current: isActive('/phs')}">{{"PHS"}}</li>
+      <li (click)="goSave()" [ngClass]="{ current: isActive('/save')}">{{"Save"}}</li>
+    </ul>
+  </nav>
+
+  <div class="game-infos">
+    <div class="pull-right">{{time}}</div>
+    <div>{{"Time"}}:</div>
+    <div class="pull-right">{{gils}}</div>
+    <div>{{"Gil"}}:</div>
+  </div>
+
+  <div class="game-location" id="step11">
+    Zone name
+    <strong>
+      (#0)
+    </strong>
+  </div>
+
+  <game-view></game-view>
+
 </div>
 
-{{game.version}}
+<footer [hidden]="!loaded">
+  <div class="wrapper">
+    <div>
+      ©2014 <a href="http://menencia.com" target="_blank">menencia.com</a>, version <a
+            href="https://github.com/Menencia/clickingff7/releases"
+            target="_blank" id="step12"><big>{{version}}</big></a>
+    </div>
+    <div>
+      <a href="https://github.com/Menencia/clickingff7" target="_blank">Github</a> -
+      <a href="https://github.com/Menencia/clickingff7/issues" target="_blank">Browse Issues</a> -
+      <a href="https://github.com/Menencia/clickingff7/issues/new" target="_blank" id="step13">New Issue</a>
+    </div>
+  </div>
+</footer>

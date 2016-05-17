@@ -26,8 +26,6 @@ export class Game {
     this.addCharacter(this.store.getCharacter('tifa'));
 
     this.buildTeam();
-
-    console.log(this.team);
   }
 
   addCharacter(character: Character, inTeam: boolean = false) {
