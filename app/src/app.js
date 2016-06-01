@@ -3,8 +3,6 @@ import HomeController from './controllers/home';
 import PhsController from './controllers/phs';
 import StoryController from './controllers/story';
 import BattleController from './controllers/battle';
-import RewardsController from './controllers/rewards';
-import LostController from './controllers/lost';
 import EquipController from './controllers/equip';
 import MateriaController from './controllers/materia';
 import PlayController from './controllers/play';
@@ -74,8 +72,6 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('PhsController', PhsController)
     .controller('StoryController', StoryController)
     .controller('BattleController', BattleController)
-    .controller('RewardsController', RewardsController)
-    .controller('LostController', LostController)
     .controller('EquipController', EquipController)
     .controller('MateriaController', MateriaController)
     .controller('PlayController', PlayController)
