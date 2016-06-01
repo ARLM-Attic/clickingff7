@@ -1,10 +1,11 @@
 {
+  "name": "clickingff7",
   "dependencies": {
     "gulp": "^3.8.11",
-    "gulp-traceur": "^0.14.1"
+    "gulp-traceur": "^0.14.1",
+    "jspm": "^0.16.36"
   },
   "jspm": {
-    "directories": {},
     "dependencies": {
       "angular": "github:angular/bower-angular@^1.4.5",
       "angular-route": "github:angular/bower-angular-route@^1.4.5",
