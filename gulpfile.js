@@ -7,6 +7,9 @@ var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
 var imageop = require('gulp-image-optimization');
 var del = require('del');
+var rename = require('gulp-rename');
+var minifyCSS = require('gulp-minify-css');
+var concat = require('gulp-concat');
 
 var sourceFolder = './app';
 var destFolder = 'dist';
@@ -27,9 +30,11 @@ gulp.task('styles', function () {
                 console.log(err);
                 this.emit('end');
             }))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(destFolder));
-
+        .pipe(minifyCSS())
+        .pipe(rename('app.css'))
+        .pipe(sourcemaps.write('/'))
+        .pipe(gulp.dest(destFolder + '/css'))
+        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('html', function () {
@@ -74,10 +79,22 @@ gulp.task('jspm-config', function () {
         .pipe(gulp.dest(destFolder));
 });
 
+gulp.task('vendorStyles', function () {
+    return gulp.src([
+            depFolder + '/github/uikit/uikit@2.22.0/css/uikit.min.css',
+            depFolder + '/github/uikit/uikit@2.22.0/css/components/progress.min.css',
+            depFolder + '/github/uikit/uikit@2.22.0/css/components/tooltip.min.css'
+        ])
+        .pipe(concat('libraries.css'))
+        .pipe(gulp.dest(destFolder + '/css'))
+        .pipe(_if(needBrowserSync, browserSync.stream()));
+});
+
+
 gulp.task('default',
     gulpSequence(
         'clean',
-        ['jspm', 'jspm-config'],
+        ['jspm', 'jspm-config', 'vendorStyles'],
         ['scripts', 'styles', 'html', 'json', 'images']
     )
 );
