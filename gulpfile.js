@@ -5,10 +5,10 @@ var browserSync = require('browser-sync').create();
 var _if = require('gulp-if');
 var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
-var imageop = require('gulp-image-optimization');
+var imagemin = require('gulp-imagemin');
 var del = require('del');
 var rename = require('gulp-rename');
-var minifyCSS = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 
 var sourceFolder = './app';
@@ -30,7 +30,7 @@ gulp.task('styles', function () {
                 console.log(err);
                 this.emit('end');
             }))
-        .pipe(minifyCSS())
+        .pipe(cleanCSS())
         .pipe(rename('app.css'))
         .pipe(sourcemaps.write('/'))
         .pipe(gulp.dest(destFolder + '/css'))
@@ -51,7 +51,7 @@ gulp.task('json', function () {
 
 gulp.task('images', function () {
     return gulp.src(sourceFolder + '/img/**/*')
-        .pipe(imageop({
+        .pipe(imagemin({
             'optimizationLevel': 3,
             'progressive': true,
             'interlaced': true
