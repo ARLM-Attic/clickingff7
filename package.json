@@ -13,11 +13,7 @@
     "gulp-sequence": "^0.4.5",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-traceur": "^0.14.1",
-    "http-server": "^0.9.0",
     "jspm": "^0.16.36"
-  },
-  "scripts": {
-    "start": "http-server -a localhost -p 8080 -c-1 ./dist"
   },
   "jspm": {
     "dependencies": {

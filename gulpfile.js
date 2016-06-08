@@ -16,10 +16,24 @@ var destFolder = 'dist';
 var depFolder = './jspm_packages';
 var needBrowserSync = false;
 
+gulp.task('browserSync', function () {
+    needBrowserSync = true;
+    browserSync.init({
+        server: {
+            baseDir: destFolder,
+            middleware: function (req, res, next) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                next();
+            }
+        }
+    });
+});
+
 gulp.task('scripts', function () {
     gulp.src(sourceFolder + '/**/*.js')
         .pipe(traceur({modules: 'instantiate'}))
-        .pipe(gulp.dest(destFolder));
+        .pipe(gulp.dest(destFolder))
+        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('styles', function () {
@@ -50,13 +64,13 @@ gulp.task('json', function () {
 });
 
 gulp.task('images', function () {
-    return gulp.src(sourceFolder + '/img/**/*')
+    return gulp.src(sourceFolder + '/resources/images/**/*')
         .pipe(imagemin({
             'optimizationLevel': 3,
             'progressive': true,
             'interlaced': true
         }))
-        .pipe(gulp.dest(destFolder + '/img'))
+        .pipe(gulp.dest(destFolder + '/resources/images'))
         .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
@@ -106,13 +120,26 @@ gulp.task('vendorStyles', function () {
         .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
+gulp.task('vendorFonts', function () {
+    return gulp.src(depFolder + '/github/uikit/uikit@2.22.0/fonts/*')
+        .pipe(gulp.dest(destFolder + '/fonts'));
+});
 
 gulp.task('default',
     gulpSequence(
         'clean',
-        ['jspm', 'jspm-config', 'vendorStyles'],
+        ['jspm', 'jspm-config', 'vendorStyles', 'vendorFonts'],
         ['scripts', 'styles', 'html', 'json', 'images']
     )
 );
 
+gulp.task('build', ['default']);
 gulp.task('watch', ['watch-dev']);
+
+gulp.task('dev',
+    gulpSequence(
+        'browserSync',
+        'build',
+        'watch'
+    )
+);

@@ -1,0 +1,28 @@
+[
+    {
+        "image": "resources/images/stories/1.png",
+        "enemies": [
+            "MP", "MonoDrive",
+            "1stRay", "Grunt",
+            "Sweeper"
+        ],
+        "boss": ["GuardScorpion"],
+        "nbBattles": 1,
+        "level": 1,
+        "characters": ["cloud", "barret"],
+        "ref": 1
+    }
+    ,{
+        "image": "resources/images/stories/2.png",
+        "enemies": [
+            "MP", "MonoDrive",
+            "1stRay", "Grunt",
+            "Sweeper"
+        ],
+        "boss": ["GuardScorpion"],
+        "nbBattles": 1,
+        "level": 2,
+        "characters": ["cloud", "barret", "tifa"],
+        "ref": 2
+    }
+]

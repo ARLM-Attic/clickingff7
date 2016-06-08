@@ -1,6 +1,6 @@
 before_script:
   - npm install -g gulp
-script: gulp
+script: gulp build
 language: node_js
 node_js:
   - "5"
