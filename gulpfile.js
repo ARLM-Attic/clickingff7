@@ -60,8 +60,24 @@ gulp.task('images', function () {
         .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
-gulp.task('watch', function () {
-    gulp.watch(paths.scripts, ['scripts']);
+gulp.task('watch-dev', function () {
+
+    // Watch i18n/*.json files
+    gulp.watch(sourceFolder + '/i18n/*.json', ['json'])
+        .on('change', browserSync.reload);
+
+    // Watch *.js files
+    gulp.watch(sourceFolder + '/**/*.js', ['scripts']);
+
+    // Watch *.less files
+    gulp.watch(sourceFolder + '/**/*.less', ['styles']);
+
+    // Watch image files
+    gulp.watch(sourceFolder + '/resources/images/*', ['images'])
+        .on('change', browserSync.reload);
+
+    // Watch html files
+    gulp.watch(sourceFolder + '/**/*.html', ['html']);
 });
 
 gulp.task('clean', function () {
@@ -99,4 +115,4 @@ gulp.task('default',
     )
 );
 
-gulp.task('watch', ['watch']);
+gulp.task('watch', ['watch-dev']);
