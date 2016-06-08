@@ -1,0 +1,45 @@
+<div class="uk-grid uk-grid-margin">
+
+    <div class="uk-width-1-2">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Saves</div>
+            <div ng-repeat="p in g.places track by $index" class="place">
+
+                Slot #{{$index+1}}
+
+                <div ng-if="!p">
+                    <a href="" ng-click="g.newGame($index + 1)" class="uk-button uk-button-primary">New Game</a>
+                </div>
+                <div ng-if="p">
+                    <img
+                            ng-repeat="c in p.characters"
+                            ng-src="resources/images/characters/{{c.ref}}.jpg"
+                            alt=""
+                            style="width: 50px;"
+                            ng-if="c.active"/>
+
+                    <a href="" ng-click="g.loadGame($index + 1)" class="uk-button uk-button-primary">Load game</a>
+                    <a href="" ng-click="g.deleteGame($index + 1)" class="uk-button uk-button-danger">Delete</a>
+                    {{p.time|time}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-width-1-2">
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">What is this ?</div>
+            A incremental game, through the FF7 universe.
+        </div>
+
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Old versions</div>
+            <ul>
+                <li><a href="http://v0.clickingff7.com">0.x</a></li>
+                <li><a href="http://v1.clickingff7.com">1.x</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>

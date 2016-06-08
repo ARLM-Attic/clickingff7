@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="revisit-after" content="7 days"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1"/>
+
+    <title>Clicking FF7</title>
+
+    <link rel=stylesheet type="text/css" href="css/libraries.css"/>
+    <link rel=stylesheet type="text/css" href="css/app.css"/>
+</head>
+
+<body ng-controller="IndexController as g">
+
+<nav class="uk-navbar tm-navbar">
+
+    <div class="uk-container uk-container-center">
+
+        <div class="uk-navbar-brand">clicking ff7</div>
+
+        <ul class="uk-navbar-nav uk-float-right" ng-if="g.game.loaded">
+            <li ng-class="{'uk-active' : g.isActive('/home')}">
+                <a ng-click="g.goGame()">
+                    Home
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/story')}">
+                <a ng-click="g.goStory()">
+                    Story
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/equip')}">
+                <a ng-click="g.goEquip()">
+                    Equip
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/materia')}">
+                <a ng-click="g.goMateria()">
+                    Materia
+                </a>
+            </li>
+            <li ng-class="{'uk-active' : g.isActive('/phs')}">
+                <a ng-click="g.goPHS()">
+                    PHS
+                </a>
+            </li>
+            <li>
+                <a ng-click="g.quit()">
+                    Quit
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
+</nav>
+
+<div class="uk-container uk-container-center" ng-view></div>
+
+<div class="uk-container uk-container-center" ng-if="g.game.loaded">
+    <div class="uk-grid uk-grid-margin">
+        <div class="uk-width-1-1">
+            <div class="uk-panel uk-panel-box">
+                <img src="resources/images/icons/gils.png"> {{g.game.gils}}
+                |
+                <i class="uk-icon-clock-o"></i> {{g.game.time|time}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="jspm_packages/github/components/jquery@2.1.4/jquery.min.js"></script>
+<script src="jspm_packages/github/uikit/uikit@2.22.0/js/uikit.min.js"></script>
+<script src="jspm_packages/github/uikit/uikit@2.22.0/js/components/tooltip.min.js"></script>
+<script src="jspm_packages/system.js"></script>
+<script src="config.js"></script>
+<script>
+    System.import('commons/bootstrap');
+</script>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-44996905-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+
+</html>
