@@ -117,8 +117,6 @@ class Game {
         this.addStory(1, true);
 
         this.postload();
-
-        this.$location.path('/story');
     }
 
     /**

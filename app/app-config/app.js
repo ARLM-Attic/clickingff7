@@ -1,7 +1,6 @@
 import IndexController from 'commons/index.controller';
 import HomeController from 'home/home.controller';
 import PhsController from 'phs/phs.controller';
-import StoryController from 'story/story.controller';
 import BattleController from 'battle/battle.controller';
 import EquipController from 'equip/equip.controller';
 import MateriaController from 'materia/materia.controller';
@@ -32,7 +31,6 @@ function config($routeProvider, $translateProvider) {
     $routeProvider.
         when('/play', Route.get('play')).
         when('/home', Route.get('home')).
-        when('/story', Route.get('story')).
         when('/battle', Route.get('battle')).
         when('/rewards', Route.get('rewards')).
         when('/lost', Route.get('lost')).
@@ -70,7 +68,6 @@ var app = angular.module('clickingff7', ['ngRoute', 'pascalprecht.translate'])
     .controller('IndexController', IndexController)
     .controller('HomeController', HomeController)
     .controller('PhsController', PhsController)
-    .controller('StoryController', StoryController)
     .controller('BattleController', BattleController)
     .controller('EquipController', EquipController)
     .controller('MateriaController', MateriaController)
