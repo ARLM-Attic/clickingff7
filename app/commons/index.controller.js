@@ -26,13 +26,6 @@ class IndexController extends Controller {
     }
 
     /**
-     * Go to the story
-     */
-    goStory() {
-        this.$location.path("/story");
-    }
-
-    /**
      * Go to the equipment section
      */
     goEquip() {

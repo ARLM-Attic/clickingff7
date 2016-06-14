@@ -102,7 +102,7 @@ export default class Talk {
             this.game().save();
 
             // redirect
-            this.game().$location.path('/story');
+            this.game().$location.path('/home');
         }
     }
 

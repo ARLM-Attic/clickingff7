@@ -25,6 +25,12 @@
             <div class="uk-panel-title">Story</div>
 
             <div class="uk-grid">
+                <div ng-repeat="story in game.stories">
+                    {{story.ref}}
+                </div>
+            </div>
+
+            <div class="uk-grid">
                 <div class="uk-width-1-3">
                     <img ng-src="{{g.game.story.data.image}}" alt="">
                 </div>
@@ -33,14 +39,24 @@
 
                     <h2>{{'story '+g.game.story.ref|translate}}</h2>
 
-                    <p>{{'story '+g.game.story.ref+' desc'|translate}}</p>
+                    <div ng-if="g.game.story.played">
 
-                    <p>Personnages : <span ng-repeat="ref in g.game.story.data.characters">
-                        {{ref|translate}}<span ng-if="!$last">,</span><span ng-if="$last">.</span>
-                    </span></p>
+                        <p>{{'story '+g.game.story.ref+' desc'|translate}}</p>
 
-                    <a href="" class="uk-button uk-button-primary" ng-click="g.fight()">{{'fight'|translate}}</a>
-                    <a href="" class="uk-button uk-button-primary" ng-click="g.fightBoss()">{{'fight boss'|translate}}</a>
+                        <p>Personnages : <span ng-repeat="ref in g.game.story.data.characters">
+                            {{ref|translate}}<span ng-if="!$last">,</span><span ng-if="$last">.</span>
+                        </span></p>
+
+                        <a href="" class="uk-button uk-button-primary" ng-click="g.fight()">{{'fight'|translate}}</a>
+                        <a href="" class="uk-button uk-button-primary" ng-click="g.fightBoss()">{{'fight boss'|translate}}</a>
+
+                    </div>
+
+                    <div ng-if="!g.game.story.played">
+
+                        <a href="#/talk" class="uk-button uk-button-primary">{{'begin'|translate}}</a>
+
+                    </div>
 
                 </div>
             </div>
