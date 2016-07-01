@@ -1,20 +1,5 @@
 {
   "name": "clickingff7",
-  "dependencies": {
-    "browser-sync": "^2.12.10",
-    "del": "^2.2.0",
-    "gulp": "^3.8.11",
-    "gulp-clean-css": "^2.0.9",
-    "gulp-concat": "^2.6.0",
-    "gulp-if": "^2.0.1",
-    "gulp-imagemin": "^3.0.1",
-    "gulp-less": "^3.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sequence": "^0.4.5",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-traceur": "^0.14.1",
-    "jspm": "^0.16.36"
-  },
   "jspm": {
     "dependencies": {
       "angular": "github:angular/bower-angular@^1.4.5",
@@ -30,5 +15,26 @@
       "traceur": "github:jmcriffey/bower-traceur@0.0.91",
       "traceur-runtime": "github:jmcriffey/bower-traceur-runtime@0.0.91"
     }
+  },
+  "devDependencies": {
+    "browser-sync": "^2.12.10",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.9",
+    "gulp-concat": "^2.6.0",
+    "gulp-if": "^2.0.1",
+    "gulp-imagemin": "^3.0.1",
+    "gulp-less": "^3.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sequence": "^0.4.5",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-traceur": "^0.17.2",
+    "jasmine-core": "^2.4.1",
+    "jspm": "^0.16.36",
+    "karma": "^1.1.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-jspm": "^2.1.1",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "karma-spec-reporter": "0.0.26"
   }
 }

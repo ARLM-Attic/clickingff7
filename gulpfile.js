@@ -10,11 +10,22 @@ var del = require('del');
 var rename = require('gulp-rename');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
+var Server = require('karma').Server;
+
 
 var sourceFolder = './app';
 var destFolder = 'dist';
 var depFolder = './jspm_packages';
 var needBrowserSync = false;
+
+gulp.task('test', function (done) {
+    return new Server({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, function() {
+        done();
+    }).start();
+});
 
 gulp.task('browserSync', function () {
     needBrowserSync = true;
