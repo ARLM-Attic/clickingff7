@@ -1,24 +1,41 @@
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
 
+        browsers: [
+            'PhantomJS'
+        ],
+
         frameworks: [
-            //'jspm',
+            'jspm',
             'jasmine'
         ],
 
-        reporters: ['progress'],
+        jspm: {
+            loadFiles: [
+                'test/**/*.js'
+            ],
+            serveFiles: [
+                'app/**/*.js'
+            ]
+        },
 
-        browsers: ['PhantomJS'],
+        preprocessors: {
+            '{app,test}/**/*.js': ['babel']
+        },
 
-        //jspm: {
-        //    loadFiles: ['test/**/*.js'],
-        //    serveFiles: ['app/**/*.js']
-        //},
+        babelPreprocessor: {
+            options: {
+                presets: ['es2015'],
+                sourceMap: 'inline'
+            }
+        },
 
-        files: [
-            //'dist/commons/bootstrap.js',
-            'test/**/*.js'
-        ]
+        proxies: {
+            '/app/': '/base/app/',
+            '/test/': '/base/test/',
+            '/jspm_packages/': '/base/jspm_packages/'
+        },
 
-    })
+        reporters: ['progress']
+    });
 };

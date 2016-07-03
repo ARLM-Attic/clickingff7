@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var gulpSequence = require('gulp-sequence').use(gulp);
-var traceur = require('gulp-traceur');
+var babel = require('gulp-babel');
 var browserSync = require('browser-sync').create();
 var _if = require('gulp-if');
 var less = require('gulp-less');
@@ -16,7 +16,6 @@ var Server = require('karma').Server;
 var sourceFolder = './app';
 var destFolder = 'dist';
 var depFolder = './jspm_packages';
-var needBrowserSync = false;
 
 gulp.task('test', function (done) {
     return new Server({
@@ -28,23 +27,21 @@ gulp.task('test', function (done) {
 });
 
 gulp.task('browserSync', function () {
-    needBrowserSync = true;
     browserSync.init({
         server: {
-            baseDir: destFolder,
-            middleware: function (req, res, next) {
-                res.setHeader('Access-Control-Allow-Origin', '*');
-                next();
-            }
+            baseDir: destFolder
         }
     });
 });
 
 gulp.task('scripts', function () {
-    gulp.src(sourceFolder + '/**/*.js')
-        .pipe(traceur({modules: 'instantiate'}))
+    return gulp.src(sourceFolder + '/**/*.js')
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(destFolder))
-        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('styles', function () {
@@ -59,19 +56,16 @@ gulp.task('styles', function () {
         .pipe(rename('app.css'))
         .pipe(sourcemaps.write('/'))
         .pipe(gulp.dest(destFolder + '/css'))
-        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('html', function () {
     return gulp.src(sourceFolder + '/**/*.html')
         .pipe(gulp.dest(destFolder))
-        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('json', function () {
     return gulp.src(sourceFolder + '/**/*.json')
         .pipe(gulp.dest(destFolder))
-        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('images', function () {
@@ -82,7 +76,6 @@ gulp.task('images', function () {
             'interlaced': true
         }))
         .pipe(gulp.dest(destFolder + '/resources/images'))
-        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('watch-dev', function () {
@@ -112,7 +105,6 @@ gulp.task('clean', function () {
 gulp.task('jspm', function () {
     return gulp.src(depFolder + '/**/*')
         .pipe(gulp.dest(destFolder + '/jspm_packages'))
-        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('jspm-config', function () {
@@ -128,7 +120,6 @@ gulp.task('vendorStyles', function () {
         ])
         .pipe(concat('libraries.css'))
         .pipe(gulp.dest(destFolder + '/css'))
-        .pipe(_if(needBrowserSync, browserSync.stream()));
 });
 
 gulp.task('vendorFonts', function () {
@@ -149,8 +140,8 @@ gulp.task('watch', ['watch-dev']);
 
 gulp.task('dev',
     gulpSequence(
-        'browserSync',
         'build',
-        'watch'
+        'watch',
+        'browserSync'
     )
 );
