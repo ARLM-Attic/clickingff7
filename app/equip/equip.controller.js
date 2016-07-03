@@ -76,7 +76,7 @@ class EquipController extends Controller {
 
         // build list
         this.listRelics = _.filter(this.game.relics, (e) => {
-            return (ids.indexOf(e.id) == -1);
+            return (ids.indexOf(e.id) == -1 && (_.isUndefined(e.data.character) || e.data.character == this.character.ref));
         });
 
         this.mode = this.VIEW_RELICS;
@@ -128,7 +128,7 @@ class EquipController extends Controller {
 
         // build list
         this.listLimits = _.filter(this.game.limits, (e) => {
-            return (ids.indexOf(e.id) == -1);
+            return (ids.indexOf(e.id) == -1 && (_.isUndefined(e.data.character) || e.data.character == this.character.ref));
         });
 
         this.mode = this.VIEW_LIMITS;
