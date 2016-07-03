@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var gulpSequence = require('gulp-sequence').use(gulp);
 var babel = require('gulp-babel');
 var browserSync = require('browser-sync').create();
-var _if = require('gulp-if');
 var less = require('gulp-less');
 var sourcemaps = require('gulp-sourcemaps');
 var imagemin = require('gulp-imagemin');
@@ -85,17 +84,20 @@ gulp.task('watch-dev', function () {
         .on('change', browserSync.reload);
 
     // Watch *.js files
-    gulp.watch(sourceFolder + '/**/*.js', ['scripts']);
+    gulp.watch(sourceFolder + '/**/*.js', ['scripts'])
+        .on('change', browserSync.reload);
 
     // Watch *.less files
-    gulp.watch(sourceFolder + '/**/*.less', ['styles']);
+    gulp.watch(sourceFolder + '/**/*.less', ['styles'])
+        .on('change', browserSync.reload);
 
     // Watch image files
     gulp.watch(sourceFolder + '/resources/images/*', ['images'])
         .on('change', browserSync.reload);
 
     // Watch html files
-    gulp.watch(sourceFolder + '/**/*.html', ['html']);
+    gulp.watch(sourceFolder + '/**/*.html', ['html'])
+        .on('change', browserSync.reload);
 });
 
 gulp.task('clean', function () {
