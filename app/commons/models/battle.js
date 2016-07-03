@@ -1,4 +1,4 @@
-import Enemy from './enemy';
+import Enemy from './units/enemy';
 import History from './history';
 import _ from 'lodash';
 

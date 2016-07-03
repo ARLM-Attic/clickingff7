@@ -6,7 +6,13 @@ class EquipController extends Controller {
     constructor(game, $location, $routeParams) {
         super(game, $location);
 
+        this.VIEW_PROFILE = 'view-profile';
+        this.VIEW_TEAM = 'view-team';
+        this.VIEW_RELICS = 'view-relics';
+        this.VIEW_MATERIAS = 'view-materias';
+
         this.reset();
+
 
     }
 
@@ -16,72 +22,26 @@ class EquipController extends Controller {
     reset() {
 
         /**
-         * shortcut to global selected character
-         * @type {*|i}
+         *  Current selected character
          */
         this.character = this.game.selectedCharacter;
 
         /**
-         * current equipment type
-         * @type {null}
-         */
-        this.type = null;
-
-        /**
-         * current equipment selected to change
-         * @type {null}
-         */
-        this.equipment = null;
-
-        /**
-         * show the avalaible equipment
+         * available relics
          * @type {boolean}
          */
-        this.showList = false;
+        this.listRelics = [];
 
         /**
-         * refresh character stats
-         *
-         * manually called after equip/unequip
+         * available materias
          */
-        this.refreshStats();
+        this.listMaterias = [];
 
-    }
-
-    /**
-     *
-     * @param type
-     */
-    refreshList(type) {
-
-        let store = {
-            'weapon'   : 'weapons',
-            'armor'    : 'armors',
-            'accessory': 'accessories'
-        };
-
-        let wtype = this.character.data.weapon.type;
-        let id, ids = [];
-
-        if (type == 'weapon') {
-
-            id = (this.equipment) ? this.equipment.id : null;
-
-        } else {
-
-            for (let i of this.game.characters) {
-                if (i[type]) {
-                    ids.push(i[type].id);
-                }
-            }
-
-        }
-
-        // build list
-        this.list = _.filter(this.game[store[type]], (e) => {
-            return ((type == 'weapon' && e.data.type == wtype && e.id != id)
-            || (type != 'weapon' && ids.indexOf(e.id) == -1));
-        });
+        /**
+         *
+         * @type {string}
+         */
+        this.mode = this.VIEW_PROFILE;
 
     }
 
@@ -94,110 +54,105 @@ class EquipController extends Controller {
         this.reset();
     }
 
-
     /**
      *
-     * @param type {String}
      */
-    show(type) {
-        this.type = type;
-        this.equipment = this.character[type];
-        this.showList = true;
-        this.refreshList(type);
-    }
+    getRelics() {
 
-    /**
-     * Remove current equipment type
-     */
-    remove() {
-        this.character.unequip(this.type);
-        this.equipment = null;
+        let ids = [];
 
-        // refresh stats
-        this.refreshStats();
-
-        // reload lists
-        this.refreshList(this.type);
-
-        // [saving]
-        this.game.save();
-    }
-
-    /**
-     *
-     * @param s
-     */
-    refreshStats(s) {
-        this.final = {};
-        let stats = ['hpMax', 'mpMax', 'str', 'def', 'mgi', 'res', 'dex', 'lck'];
-        for (let i of stats) {
-
-            // base character stat
-            let curr = this.character[i], final = curr;
-
-            if (s) {
-
-                // if the character has a weapon and the stat
-                if (this.equipment && this.equipment.data.stats[i]) {
-                    final -= this.equipment.data.stats[i];
-                }
-
-                // add the selected stat
-                if (s[i]) {
-                    final += s[i];
-                }
-
+        // gather other characters relics
+        for (let i of this.game.characters) {
+            if (i.relic) {
+                ids.push(i.relic.id);
             }
-
-            this.final[i] = {};
-
-            this.final[i].value = final;
-
-            this.final[i].change = '';
-            if (final > curr)
-                this.final[i].change = 'stat-up';
-            if (final < curr)
-                this.final[i].change = 'stat-down';
-
         }
+
+        // build list
+        this.listRelics = _.filter(this.game.relics, (e) => {
+            return (ids.indexOf(e.id) == -1);
+        });
+
+        this.mode = this.VIEW_RELICS;
+
     }
 
     /**
      *
-     * @param stat
-     * @param key
-     * @returns {*}
      */
-    stat(stat, key = 'value') {
-        return this.final[stat][key];
+    getMaterias(m) {
+
+        // on mémorise celle qu'on veut enlever
+        this.selectedMateria = undefined;
+        if (!_.isUndefined(m)) {
+            this.selectedMateria = m;
+        }
+
+        let ids = [];
+
+        // gather other characters relics
+        for (let i of this.game.characters) {
+            if (i.relic && i.relic.materias) {
+                ids = _.union(ids, _.map(i.relic.materias, 'id'));
+            }
+        }
+
+        // build list
+        this.listMaterias = _.filter(this.game.materias, (e) => {
+            return (ids.indexOf(e.id) == -1);
+        });
+
+        this.mode = this.VIEW_MATERIAS;
+
     }
 
     /**
      *
      * @param replacement
      */
-    change(replacement) {
+    changeRelic(replacement) {
         //let materias = [];
 
         // remove current equipment if any
-        if (!_.isUndefined(this.equipment)) {
+        if (!_.isUndefined(this.character.relic)) {
             // materias = this.equipment.removeAllMateria();
-            this.character.unequip(this.type);
+            this.character.unequip();
         }
 
-        // equip replacement
-        //replacement.loadMaterias(materias);
-        this.character.equip(replacement);
-        this.equipment = replacement;
-
-        // refresh stats
-        this.refreshStats();
-
-        // reload lists
-        this.refreshList(this.type);
+        // equip replacement if any
+        if (!_.isUndefined(replacement)) {
+            //replacement.loadMaterias(materias);
+            this.character.equip(replacement);
+        }
 
         // [saving]
         this.game.save();
+
+        this.mode = this.VIEW_PROFILE;
+
+    }
+
+    /**
+     *
+     * @param replacement
+     */
+    changeMateria(replacement) {
+        //let materias = [];
+
+        // remove current mateia if any
+        if (!_.isUndefined(this.selectedMateria)) {
+            this.character.relic.unequip(this.selectedMateria);
+        }
+
+        // equip replacement if any
+        if (!_.isUndefined(replacement)) {
+            this.character.relic.equip(replacement);
+        }
+
+        // [saving]
+        this.game.save();
+
+        this.mode = this.VIEW_PROFILE;
 
     }
 

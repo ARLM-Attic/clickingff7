@@ -1,10 +1,9 @@
-import Unit from './unit';
-import Weapon from './equipment/weapon';
-import Limit from './limit';
-import ActionAttack from './actions/attack';
-import ActionMateria from './actions/materia';
-import ActionDefense from './actions/defense';
-import ActionLimit from './actions/limit';
+import Unit from '../unit';
+import Limit from '../limit';
+import ActionAttack from '../actions/attack';
+import ActionMateria from '../actions/materia';
+import ActionDefense from '../actions/defense';
+import ActionLimit from '../actions/limit';
 import _ from 'lodash';
 
 export default class Character extends Unit {
@@ -13,9 +12,7 @@ export default class Character extends Unit {
 
         super(game, data);
 
-        if (!this.weapon) this.weapon = null;
-        if (!this.armor) this.armor = null;
-        if (!this.accessory) this.accessory = null;
+        if (!this.relic) this.relic = null;
 
         // defense mode
         if (!this.status) {
@@ -38,11 +35,6 @@ export default class Character extends Unit {
 
         // stats according the level
         c.calcStats();
-
-        // initial weapon
-        let weapon = Weapon.get(game, c.data.weapon.ref);
-        game.addWeapon(weapon);
-        c.equip(weapon);
 
         // limit
         let limit = Limit.get(game, c.data.limit);
@@ -83,22 +75,10 @@ export default class Character extends Unit {
         // stats according the level
         this.calcStats();
 
-        // weapon
-        if (data.weapon) {
-            let weapon = _.find(this.game.weapons, {id: data.weapon.id});
-            this.equip(weapon, data.weapon.materias);
-        }
-
-        // armor
-        if (data.armor) {
-            let armor = _.find(this.game.armors, {id: data.armor.id});
-            this.equip(armor, data.armor.materias);
-        }
-
-        // accessory
-        if (data.accessory) {
-            let accessory = _.find(this.game.accessories, {id: data.accessory.id});
-            this.equip(accessory, {});
+        // relic
+        if (data.relic) {
+            let relic = _.find(this.game.relics, {id: data.relic.id});
+            this.equip(relic, data.relic.materias);
         }
 
         // limit
@@ -182,10 +162,7 @@ export default class Character extends Unit {
      * @returns {string}
      */
     getStatusImg() {
-        let img;
-        if (this.status == 'attack') img = 'weapons/' + this.data.weapon.type;
-        if (this.status == 'defense') img = 'armor';
-        return 'resources/images/icons/' + img + '.png';
+        return 'resources/images/icons/accessory.png';
     }
 
     /**
@@ -198,37 +175,35 @@ export default class Character extends Unit {
 
     /**
      *
-     * @param equipment
+     * @param relic
      * @param materias
      */
-    equip(equipment, materias) {
-        let type = equipment.getType();
-        this[type] = equipment;
+    equip(relic, materias) {
+        this.relic = relic;
 
-        let stats = equipment.data.stats;
+        let stats = relic.data.stats;
         for (let i in stats) {
             this[i] += stats[i];
         }
 
         // load materias
-        this[type].loadMaterias(materias);
+        this.relic.loadMaterias(materias);
     }
 
     /**
      *
-     * @param type
      */
-    unequip(type) {
-        let equipment = this[type];
-        if (equipment) {
-            this[type] = undefined;
+    unequip() {
+        let relic = this.relic;
+        if (relic) {
+            this.relic = undefined;
 
-            let stats = equipment.data.stats;
+            let stats = relic.data.stats;
             for (let i in stats) {
                 this[i] -= stats[i];
             }
 
-            equipment.removeAllMateria();
+            relic.removeAllMateria();
         }
     }
 
@@ -269,7 +244,7 @@ export default class Character extends Unit {
      * Actions from materia equipment
      */
     refreshActions() {
-        this.actions = this.getActionsFromEquipment();
+        this.actions = this.getActionsFromRelic();
         this.actions.unshift(new ActionLimit(this));
     }
 
@@ -289,16 +264,13 @@ export default class Character extends Unit {
      *
      * @returns {Array}
      */
-    getActionsFromEquipment() {
+    getActionsFromRelic() {
         let materias = [], actions = [];
 
-        // grab "green" materias from weapon & armor
+        // grab "green" materias from relic
 
-        if (this.weapon) {
-            materias = _.union(materias, _.where(this.weapon.materias, {color: 'green'}));
-        }
-        if (this.armor) {
-            materias = _.union(materias, _.where(this.armor.materias, {color: 'green'}));
+        if (this.relic) {
+            materias = _.union(materias, _.where(this.relic.materias, {color: 'green'}));
         }
 
         // sort by materia level
@@ -337,24 +309,11 @@ export default class Character extends Unit {
             res.defense = true;
         }
 
-        if (this.weapon) {
-            res.weapon = _.pick(this.weapon, 'id');
-            materias = this.weapon.getMateriaIds();
-            if (!_.isEmpty(materias)) {
-                res.weapon.materias = materias;
+        if (this.relic) {
+            res.relic = _.pick(this.relic, 'id');
+            if (this.relic.materias.length > 0) {
+                res.relic.materias = _.map(this.relic.materias, 'id');
             }
-        }
-
-        if (this.armor) {
-            res.armor = _.pick(this.armor, 'id');
-            materias = this.armor.getMateriaIds();
-            if (!_.isEmpty(materias)) {
-                res.armor.materias = materias;
-            }
-        }
-
-        if (this.accessory) {
-            res.accessory = _.pick(this.accessory, 'id');
         }
 
         res.limit = _.pick(this.limit, 'id');

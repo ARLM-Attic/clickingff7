@@ -14,7 +14,7 @@
 
             <div class="uk-progress">
                 <div class="uk-progress-bar" style="width: {{g.character.progress('hp')}}%;">
-                        <span class="{{g.stat('hpMax', 'change')}}">
+                        <span>
                             {{g.character.hp}}HP
                         </span>
                 </div>
@@ -28,17 +28,11 @@
 
             <dl class="uk-description-list-horizontal">
                 <dt>{{'str'|translate}}</dt>
-                <dd class="stat {{g.stat('str', 'change')}}">{{g.stat('str')}}</dd>
-                <dt>{{'def'|translate}}</dt>
-                <dd class="stat {{g.stat('def', 'change')}}">{{g.stat('def')}}</dd>
+                <dd class="stat">{{g.character.str}}</dd>
                 <dt>{{'mgi'|translate}}</dt>
-                <dd class="stat {{g.stat('mgi', 'change')}}">{{g.stat('mgi')}}</dd>
-                <dt>{{'res'|translate}}</dt>
-                <dd class="stat {{g.stat('res', 'change')}}">{{g.stat('res')}}</dd>
+                <dd class="stat">{{g.character.mgi}}</dd>
                 <dt>{{'dex'|translate}}</dt>
-                <dd class="stat {{g.stat('dex', 'change')}}">{{g.stat('dex')}}</dd>
-                <dt>{{'lck'|translate}}</dt>
-                <dd class="stat {{g.stat('lck', 'change')}}">{{g.stat('lck')}}</dd>
+                <dd class="stat">{{g.character.dex}}</dd>
             </dl>
 
         </div>

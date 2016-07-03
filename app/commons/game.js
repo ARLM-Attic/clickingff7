@@ -1,10 +1,8 @@
-import Character from './models/character';
+import Character from './models/units/character';
 import Story from './models/story';
 import Store from './models/store';
 import Battle from './models/battle';
-import Weapon from './models/equipment/weapon';
-import Armor from './models/equipment/armor';
-import Accessory from './models/equipment/accessory';
+import Relic from './models/relic';
 import Materia from './models/materia';
 import Limit from './models/limit';
 import _ from 'lodash';
@@ -45,9 +43,7 @@ class Game {
         // files fo preload
         this.files = [
             'characters',
-            'weapons',
-            'armors',
-            'accessories',
+            'relics',
             'materias',
             'stories',
             'enemies',
@@ -107,10 +103,7 @@ class Game {
 
         this.buildTeam();
 
-        this.addWeapon(Weapon.get(this, 'assaultGun'));
-        this.addArmor(Armor.get(this, 'bronzeBangle'));
-        this.addAccessory(Accessory.get(this, 'talisman'));
-        this.addMateria(Materia.get(this, 'bolt'));
+        this.addRelic(Relic.get(this, 'busterSword'));
         this.addMateria(Materia.get(this, 'bolt'));
         this.addMateria(Materia.get(this, 'fire'));
 
@@ -132,16 +125,8 @@ class Game {
 
             this.nSave = nSave;
 
-            for (let i of save.weapons) {
-                this.weapons.push(new Weapon(this, i));
-            }
-
-            for (let i of save.armors) {
-                this.armors.push(new Armor(this, i));
-            }
-
-            for (let i of save.accessories) {
-                this.accessories.push(new Accessory(this, i));
+            for (let i of save.relics) {
+                this.relics.push(new Relic(this, i));
             }
 
             for (let i of save.materias) {
@@ -225,26 +210,10 @@ class Game {
 
     /**
      *
-     * @param weapon
+     * @param relic
      */
-    addWeapon(weapon) {
-        this.weapons.push(weapon);
-    }
-
-    /**
-     *
-     * @param armor
-     */
-    addArmor(armor) {
-        this.armors.push(armor);
-    }
-
-    /**
-     *
-     * @param accessory
-     */
-    addAccessory(accessory) {
-        this.accessories.push(accessory);
+    addRelic(relic) {
+        this.relics.push(relic);
     }
 
     /**
@@ -322,19 +291,9 @@ class Game {
             save.battle = this.battle.save();
         }
 
-        save.weapons = [];
-        for (let i of this.weapons) {
-            save.weapons.push(i.save());
-        }
-
-        save.armors = [];
-        for (let i of this.armors) {
-            save.armors.push(i.save());
-        }
-
-        save.accessories = [];
-        for (let i of this.accessories) {
-            save.accessories.push(i.save());
+        save.relics = [];
+        for (let i of this.relics) {
+            save.relics.push(i.save());
         }
 
         save.materias = [];
@@ -364,9 +323,7 @@ class Game {
         this.stories = [];
         this.story = null; // current story
         this.battle = null; // current battle
-        this.weapons = [];
-        this.armors = [];
-        this.accessories = [];
+        this.relics = [];
         this.materias = [];
         this.limits = [];
     }

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Enemy from './enemy'
+import Enemy from './units/enemy'
 import 'velocity';
 import 'velocity/velocity.ui.min';
 

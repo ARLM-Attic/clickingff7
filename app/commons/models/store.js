@@ -21,27 +21,11 @@ export default class Store {
         }
     }
 
-    getWeapon(ref) {
+    getRelic(ref) {
         try {
-            return _.find(this.weapons, {ref: ref});
+            return _.find(this.relics, {ref: ref});
         } catch (err) {
-            throw new Error('Weapon not found');
-        }
-    }
-
-    getArmor(ref) {
-        try {
-            return _.find(this.armors, {ref: ref});
-        } catch (err) {
-            throw new Error('Armor not found');
-        }
-    }
-
-    getAccessory(ref) {
-        try {
-            return _.find(this.accessories, {ref: ref});
-        } catch (err) {
-            throw new Error('Accessory not found');
+            throw new Error('Relic not found');
         }
     }
 

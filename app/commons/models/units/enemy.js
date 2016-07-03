@@ -1,7 +1,6 @@
+import Unit from '../unit';
+import ActionEnemy from '../actions/enemy'
 import _ from 'lodash';
-import Unit from './unit';
-import Weapon from './equipment/weapon';
-import ActionEnemy from './actions/enemy'
 
 export default class Enemy extends Unit {
 
@@ -139,11 +138,11 @@ export default class Enemy extends Unit {
                     );
                     this.battle.history.add('battle', 'Item obtained: ' + drop.ref);*/
                     break;
-                case 'weapon':
-                    this.game.addWeapon(
-                        Weapon.get(this.game, drop.ref)
+                case 'relic':
+                    this.game.addRelic(
+                        Relic.get(this.game, drop.ref)
                     );
-                    this.battle.history.add('battle', 'Weapon obtained: ' + drop.ref);
+                    this.battle.history.add('battle', 'Relic obtained: ' + drop.ref);
                     break;
             }
         }

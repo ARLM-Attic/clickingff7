@@ -1,0 +1,12 @@
+[
+    {
+        "ref": "busterSword",
+        "character": "cloud",
+        "stats": {
+            "str": 1,
+            "mgi": 2
+        },
+        "gils": 0,
+        "holes": 1
+    }
+]
