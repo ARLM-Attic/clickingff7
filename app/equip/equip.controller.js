@@ -10,6 +10,7 @@ class EquipController extends Controller {
         this.VIEW_TEAM = 'view-team';
         this.VIEW_RELICS = 'view-relics';
         this.VIEW_MATERIAS = 'view-materias';
+        this.VIEW_LIMITS = 'view-limits';
 
         this.reset();
 
@@ -36,6 +37,11 @@ class EquipController extends Controller {
          * available materias
          */
         this.listMaterias = [];
+
+        /**
+         * available limits
+         */
+        this.listLimits = [];
 
         /**
          *
@@ -108,6 +114,30 @@ class EquipController extends Controller {
 
     /**
      *
+     */
+    getLimits() {
+
+        let ids = [];
+
+        // gather other characters relics
+        for (let i of this.game.limits) {
+            if (i.relic) {
+                ids.push(i.relic.id);
+            }
+        }
+
+        // build list
+        this.listLimits = _.filter(this.game.limits, (e) => {
+            return (ids.indexOf(e.id) == -1);
+        });
+
+        this.mode = this.VIEW_LIMITS;
+
+    }
+
+
+    /**
+     *
      * @param replacement
      */
     changeRelic(replacement) {
@@ -137,9 +167,8 @@ class EquipController extends Controller {
      * @param replacement
      */
     changeMateria(replacement) {
-        //let materias = [];
 
-        // remove current mateia if any
+        // remove current materia if any
         if (!_.isUndefined(this.selectedMateria)) {
             this.character.relic.unequip(this.selectedMateria);
         }
@@ -147,6 +176,30 @@ class EquipController extends Controller {
         // equip replacement if any
         if (!_.isUndefined(replacement)) {
             this.character.relic.equip(replacement);
+        }
+
+        // [saving]
+        this.game.save();
+
+        this.mode = this.VIEW_PROFILE;
+
+    }
+
+
+    /**
+     *
+     * @param replacement
+     */
+    changeLimit(replacement) {
+
+        // remove current limit if any
+        if (!_.isUndefined(this.character.limit)) {
+            this.character.unequipLimit();
+        }
+
+        // equip replacement if any
+        if (!_.isUndefined(replacement)) {
+            this.character.equipLimit(replacement);
         }
 
         // [saving]

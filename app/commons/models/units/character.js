@@ -12,7 +12,8 @@ export default class Character extends Unit {
 
         super(game, data);
 
-        if (!this.relic) this.relic = null;
+        if (!this.relic) this.relic = undefined;
+        if (!this.limit) this.limit = undefined;
 
         // defense mode
         if (!this.status) {
@@ -35,11 +36,6 @@ export default class Character extends Unit {
 
         // stats according the level
         c.calcStats();
-
-        // limit
-        let limit = Limit.get(game, c.data.limit);
-        game.addLimit(limit);
-        c.limit = limit;
 
         // actions
         c.refreshActions();
@@ -82,7 +78,10 @@ export default class Character extends Unit {
         }
 
         // limit
-        this.limit = _.find(this.game.limits, {id: data.limit.id});
+        if (data.limit) {
+            let limit = _.find(this.game.limits, {id: data.limit.id});
+            this.equipLimit(limit);
+        }
 
         // actions
         this.refreshActions(data.actions);
@@ -209,6 +208,21 @@ export default class Character extends Unit {
 
     /**
      *
+     * @param limit
+     */
+    equipLimit(limit) {
+        this.limit = limit;
+    }
+
+    /**
+     *
+     */
+    unequipLimit() {
+        this.limit = undefined;
+    }
+
+    /**
+     *
      * @param xp
      */
     setXp(xp) {
@@ -316,7 +330,9 @@ export default class Character extends Unit {
             }
         }
 
-        res.limit = _.pick(this.limit, 'id');
+        if (this.limit) {
+            res.limit = _.pick(this.limit, 'id');
+        }
 
         return res;
     }

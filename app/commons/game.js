@@ -106,6 +106,7 @@ class Game {
         this.addRelic(Relic.get(this, 'busterSword'));
         this.addMateria(Materia.get(this, 'bolt'));
         this.addMateria(Materia.get(this, 'fire'));
+        this.addLimit(Limit.get(this, 'braver'));
 
         this.addStory(1, true);
 

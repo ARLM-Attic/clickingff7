@@ -84,6 +84,30 @@
             </div>
         </div>
 
+        <div class="uk-panel uk-panel-box uk-panel-header uk-margin-top">
+
+            <!-- Equipped relic -->
+            <div class="uk-panel-title">
+                {{'limit'|translate}}
+            </div>
+            <div>
+                <ul class="uk-list">
+                    <li>
+                        <a href="" ng-click="g.getLimits()">
+                            <span ng-if="g.character.limit">
+                                <img ng-src="resources/images/icons/weapons/{{g.character.limit.type}}.png"/>
+                                {{g.character.limit.ref|translate}}
+                            </span>
+                            <span ng-if="!g.character.limit">
+                                {{'empty'|translate}}
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
     </div>
 
 </div>
@@ -131,6 +155,30 @@
                 </li>
             </ul>
 
+        </div>
+
+    </div>
+
+</div>
+
+<div class="uk-grid uk-grid-margin" ng-if="g.mode == g.VIEW_LIMITS">
+
+    <div class="uk-width-1-1">
+
+        <!-- List of limits -->
+        <div class="uk-panel uk-panel-box uk-panel-header">
+            <div class="uk-panel-title">Limits available</div>
+
+            <ul class="uk-list">
+                <li ng-if="g.character.limit">
+                    <a href="" ng-click="g.changeLimit()">(remove)</a>
+                </li>
+                <li ng-repeat="e in g.listLimits">
+                    <a href="" ng-click="g.changeLimit(e)">
+                        {{e.ref|translate}}
+                    </a>
+                </li>
+            </ul>
         </div>
 
     </div>
